@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <style>
+             .iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 100vh; 
+    border: none;
+     z-index: 1; 
+  }
+  .boton-flotante {
+            position: fixed;
+            bottom: 20px;       /* Distancia desde abajo */
+            left: 50%;          /* Centrado horizontal */
+            transform: translateX(-50%); /* Ajuste para centrado perfecto */
+            z-index: 10;        /* Capa superior (mayor que el iframe) */
+            
+            /* Estilos estéticos del botón */
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-family: sans-serif;
+        }
+
+        .boton-flotante:hover {
+            background-color: #0056b3;
+        }
+        .oculto {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        </style>
+    </head>
+    <body>
+        <iframe class="iframe" src="https://69b0c3ae680a4922eb3fcb78--cute-pothos-0239a9.netlify.app" width="100%" height="1000%"></iframe>
+        <button class="boton-flotante" id="miBoton" onclick="window.location.href='https://drive.usercontent.google.com/download?id=1KZJKvAHdsk7fvkhrzr7M4FF6NtbWvzQA'">Descargar (Seleccione Nintendo DS)</button>
+        <script>
+         const boton = document.getElementById('miBoton');
+
+        // 1. Programamos la desaparición automática a los 10 segundos
+        let temporizador = setTimeout(() => {
+            ocultarBoton();
+        }, 10000);
+
+        // 2. Función reutilizable para ocultar
+        function ocultarBoton() {
+            boton.classList.add('oculto');
+            clearTimeout(temporizador); // Limpiamos el timer por si acaso
+        }
+
+        // 3. Escuchador de evento para el clic (addEventListener)
+        boton.addEventListener('click', () => {
+            ocultarBoton();
+            console.log("Botón ocultado mediante clic");
+        });
+    </script>
+    </body>
+</html>

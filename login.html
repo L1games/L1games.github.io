@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acceso de Administrador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style id="app-style">
+      .bg-pattern {
+        background-color: #f9fafb;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e5e7eb' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      
+      .login-card {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      
+      .form-input:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      
+      .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    </style>
+  </head>
+  <body class="bg-pattern min-h-screen flex items-center justify-center p-4">
+    <div class="login-card bg-white/90 rounded-lg p-8 w-full max-w-md">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">Panel de Administración</h1>
+        <p class="text-gray-500 mt-2">Ingresa tus credenciales para continuar</p>
+      </div>
+      
+      <form id="loginForm" class="space-y-6">
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none transition duration-150"
+            placeholder="Ingresa tu nombre de usuario"
+          >
+          <div id="usernameError" class="mt-1 text-sm text-red-600 hidden">Usuario incorrecto</div>
+        </div>
+        
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+          <div class="relative">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none transition duration-150"
+              placeholder="Ingresa tu contraseña"
+            >
+            <button
+              type="button"
+              id="togglePassword"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div id="passwordError" class="mt-1 text-sm text-red-600 hidden">Contraseña incorrecta</div>
+        </div>
+        
+        <button
+          type="submit"
+          id="submitButton"
+          class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150"
+        >
+          <span>Ingresar</span>
+        </button>
+        
+        <div id="loginSpinner" class="hidden flex justify-center items-center">
+          <div class="w-6 h-6 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <span class="ml-2 text-indigo-600">Verificando...</span>
+        </div>
+        
+        <div id="loginError" class="text-center text-red-600 hidden">
+          <p>Credenciales incorrectas. Por favor intenta nuevamente.</p>
+        </div>
+      </form>
+    </div>
+    
+    <audio id="errorAudio" src="https://ia600208.us.archive.org/35/items/youareanidiotgif/You%20are%20an%20idiot%21%21.mp3" preload="auto"></audio>
+    
+    <script id="app-script">
+      document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('loginForm');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const submitButton = document.getElementById('submitButton');
+        const loginSpinner = document.getElementById('loginSpinner');
+        const loginError = document.getElementById('loginError');
+        const errorAudio = document.getElementById('errorAudio');
+        const togglePassword = document.getElementById('togglePassword');
+        
+        // Toggle password visibility
+        togglePassword.addEventListener('click', function() {
+          const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+          password.setAttribute('type', type);
+          
+          // Toggle eye icon
+          togglePassword.innerHTML = type === 'password' ? 
+            '<i class="fa-solid fa-eye"></i>' : 
+            '<i class="fa-solid fa-eye-slash"></i>';
+        });
+        
+        loginForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          // Hide any previous error messages
+          loginError.classList.add('hidden');
+          document.getElementById('usernameError').classList.add('hidden');
+          document.getElementById('passwordError').classList.add('hidden');
+          
+          // Show loading state
+          submitButton.classList.add('hidden');
+          loginSpinner.classList.remove('hidden');
+          
+          // Simulate API request delay
+          setTimeout(() => {
+            const isValidUsername = username.value === 'root123456';
+            const isValidPassword = password.value === '123456root';
+            
+            if (isValidUsername && isValidPassword) {
+              // Valid credentials - redirect
+              window.location.href = './admin.html';
+            } else {
+              // Invalid credentials - play sound
+              errorAudio.play();
+              
+              // Show error message
+              loginError.classList.remove('hidden');
+              
+              // Show specific field errors
+              if (!isValidUsername) {
+                document.getElementById('usernameError').classList.remove('hidden');
+              }
+              
+              if (!isValidPassword) {
+                document.getElementById('passwordError').classList.remove('hidden');
+              }
+              
+              // Reset form display
+              submitButton.classList.remove('hidden');
+              loginSpinner.classList.add('hidden');
+            }
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

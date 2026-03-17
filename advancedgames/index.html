@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Games</title>
+    <link rel="icon" href="./../3d.jpg" type="image/png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+        }
+
+        header {
+            width: 100%;
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 30px;
+            text-align: center;
+            position: absolute;
+            top: -1px;
+        }
+        .Inibtn {
+            border: none;
+            background-color: #F5F5F5;
+            color: black;
+            cursor: pointer;
+            top: 0px;
+            left: 0px;
+            font-size: 30px;
+            text-align: center;
+            position: absolute;
+            padding: 17px;
+        }
+        .consoles {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            margin-top: 70px;
+            place-content: center;
+            gap: 230px;
+        }
+        .console {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+        .imgconsole {
+            width: 250px;
+            height: 200px;
+        }
+        .pconsole {
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: green;
+        }
+        .pconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(0.8);
+        }
+        #play1 {
+            background-color: red;
+        }
+        #neogeo {
+            background-color: deepskyblue;
+        }
+        .infoconsole {
+            width: 250px;
+            height: 100px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+        .consoleall {
+            display: grid;
+            grid-template-columns: repeat(20,auto);
+            place-content: center;     
+        }
+        #selectall {
+            background-color: #FF5454;
+            padding: 20px;
+            border-radius: 20px;
+            color: white;
+            border: none;
+        }
+        .buttonconsole {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            place-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+        .consoleselect:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+        .consoleselect {
+            color: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: none;
+        }
+        #ps1console {
+            background-color: red;
+        }
+        #panconsole {
+            background-color: green;
+        }
+        #neoconsole {
+            background-color: deepskyblue;
+        }
+        #selectall:hover {
+            transition: 0.2s ease;
+            transform: scale(0.8);
+        }
+        .gameconsole {
+            display: grid;
+            grid-template-columns: repeat(4, auto);
+            place-content: center;
+            gap: 60px;
+        }
+        .gamemenu {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border: 6px solid #FF5454;
+            border-radius: 15px;
+            height: 290px;
+            width: 210px;
+            justify-content: center;
+            align-items: center;
+        }
+        .agame {
+            border-radius: 10px;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 10px;
+            color: white;
+            text-decoration: none;
+        }
+        .agame:hover {
+            transition: 0.2s ease;
+            transform: scale(0.8);
+        }
+        .imggame {
+            position: relative;
+            height: 500px;
+            width: 230px;
+        }
+        #aps1 {
+            background-color: red;
+        }
+        #apan {
+            background-color: green;
+        }
+        #aneo {
+            background-color: deepskyblue;
+        }
+    </style>
+    <script src="nconsole.js" defer></script>
+</head>
+<body>
+    <header>Advanced Games</header>
+    <a class="Inibtn" href="/../index.html">🏠</a>
+    <div class="consoles">
+        <div class="console">
+            <p class="pconsole" id="play1">PlayStation 1</p>
+
+            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/PSX-Console-wController.png/1280px-PSX-Console-wController.png" />
+
+            <p class="infoconsole">Fue la primera consola de Sony, lanzada en 1994 contando con el sistema de discos CD, contando con un sistema 3D revolucionario y un gran catalogo de juegos.</p>
+        </div>
+        <div class="console">
+            <p class="infoconsole">Una consola de 32 Bits adelantada a su tiempo, salio en 1993 y contaba con un sistema de procesamiento 3D y audio superior a su competencia, costaba 700$ y fue competencia de la PS1.</p>
+
+            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXe5ZSJ1ak-Ty9eAveCyW4zCQ8fNW9JNezow&s" />
+
+            <p class="pconsole">Panasonic 3DO</p>
+        </div>
+        <div class="console">
+            <p class="pconsole" id="neogeo">Neo Geo Pocket</p>
+
+            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Neo-Geo-Pocket-Color-Blue-Left.jpg/120px-Neo-Geo-Pocket-Color-Blue-Left.jpg" />
+
+            <p class="infoconsole">La primera consola portatil de SNK, lanzada en 1998 y su futuro sistema a color en 1999, fue competencia de la Gameboy contando modelos retrocompatibles entre si.</p>
+        </div>
+    </div>
+    <div class="consoleall">
+        <button id="selectall">Advanced Games</button>
+    </div>
+    <div class="buttonconsole">
+        <button class="consoleselect" id="ps1console">PlayStation 1</button>
+        <button class="consoleselect" id="panconsole">Panasonic 3DO</button>
+        <button class="consoleselect" id="neoconsole">Neo Geo Pocket</button>
+    </div>
+    <div class="gameconsole">
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUcWvkW29JArq1i0-WOVS_hx9HVB5cDTrnpA&s" />
+
+            <a class="agame" id="aps1" href="./PS1/futbolperuano.html">Futbol Peruano 2000</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz0YYRbriCCwPuujtZFCmiXkSi0gLl7MrOQA&s" />
+
+            <a class="agame" id="aps1" href="./PS1/worldcup98.html">World Cup 98</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2A2VlL8NZnbxvrb9gOKw2a6KpWFriHuTmlA&s" />
+
+            <a class="agame" id="aps1" href="./PS1/crashbandicoot.html">Crash Bandicoot 2</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ43lLavmWcuFhRs8uoGepcTdEeEtKIltmzSw&s" />
+
+            <a class="agame" id="aps1" href="./PS1/metalgearsolid.html">Metal Gear Solid</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs9qD9Xv6wnuD1bHDm4zhXY1JJNx7RGBZMzg&s" />
+
+            <a class="agame" id="aps1" href="./PS1/granturismo.html">Gran Turismo</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnZYPlXljHvQEKf-_QZKfJqFH6q4AU3fD8aQ&s" />
+
+            <a class="agame" id="aps1" href="./PS1/tekken3.html">Tekken 3</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScGEB7TT7_nXAOAS-ZBEjMl-3yWbv57klW_w&s" />
+
+            <a class="agame" id="aps1" href="./PS1/skater2.html">Tony Hawks Pro Skater 2</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0ZknIyNyng1QytzXzchk3n7VFaTAucS1rsA&s" />
+
+            <a class="agame" id="aps1" href="./PS1/reacer4.html">R4 - Ridge Racer Type 4</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv0Bj2aDGgryiBtRtkpbX6Ho0uT0GS62kNtA&s" />
+
+            <a class="agame" id="aps1" href="./PS1/driver.html">Driver</a>
+        </div>
+        <div class="gamemenu" id="ps1game">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNEqwXdxiqmluHldK_--xdv5q3JtZCYujPag&s" />
+
+            <a class="agame" id="aps1" href="./PS1/ctr.html">CTR - Crash Team Racing</a>
+        </div>
+        <div class="gamemenu" id="neogame">
+            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNEqwXdxiqmluHldK_--xdv5q3JtZCYujPag&s" />
+
+            <a class="agame" id="apan" href="./PS1/ctr.html">CTR - Crash Team Racing</a>
+        </div>
+    </div>
+</body>
+</html>

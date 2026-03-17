@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoBlog - Tu espacio para aprender y actuar por el medio ambiente</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style id="app-style">
+    :root {
+      --color-cream: #f5f5dc;
+      --color-light-green: #8FBC8F;
+      --color-green: #556B2F;
+      --color-brown: #8B4513;
+      --color-light-brown: #A0785A;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #FAFAF5;
+      color: #333;
+    }
+    
+    .eco-header {
+      background-color: var(--color-green);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hero-section {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .hero-overlay {
+      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+    }
+    
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-primary {
+      background-color: var(--color-green);
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: #455a24;
+    }
+    
+    .btn-secondary {
+      background-color: var(--color-light-brown);
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #8c6a4f;
+    }
+    
+    .tag {
+      background-color: var(--color-light-green);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: inline-block;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        display: block;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .nav-links.show {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--color-green);
+        width: 200px;
+        padding: 20px;
+        border-radius: 0 0 0 10px;
+        z-index: 100;
+      }
+    }
+    
+    .loading-spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid var(--color-green);
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="eco-header sticky top-0 z-50 text-white">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <a href="javascript:void(0)" class="flex items-center">
+          <i class="fas fa-leaf text-2xl mr-2"></i>
+          <h1 class="text-xl font-bold">EcoBlog</h1>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-6">
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Inicio</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Artículos</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Sobre Nosotros</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Contacto</a>
+        </nav>
+        
+        <!-- Mobile Hamburger Button -->
+        <button id="hamburger-button" class="md:hidden text-white focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation Menu -->
+      <div id="mobile-menu" class="md:hidden hidden mt-3 pb-2">
+        <nav class="flex flex-col space-y-3">
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Inicio</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Artículos</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Sobre Nosotros</a>
+          <a href="javascript:void(0)" class="hover:text-green-200 font-medium">Contacto</a>
+          <button id="mobile-new-article" class="bg-white text-green-800 px-4 py-2 rounded-lg font-medium mt-2">
+            <i class="fas fa-plus-circle mr-2"></i>Nuevo Artículo
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section relative" style="background-image: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/forest-1072828_1280.jpg');">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="container mx-auto px-4 py-20 md:py-32 relative z-10">
+      <div class="max-w-3xl mx-auto text-center text-white">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Tu espacio para aprender y actuar por el medio ambiente</h2>
+        <p class="text-lg md:text-xl opacity-90">Descubre ideas, consejos y proyectos para un futuro más sostenible</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-12">
+    <!-- Articles Section -->
+    <section>
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Artículos Destacados</h2>
+        <button id="new-article-btn" class="btn-primary text-white px-4 py-2 rounded-lg hidden md:flex items-center">
+          <i class="fas fa-plus-circle mr-2"></i>Nuevo Artículo
+        </button>
+      </div>
+      
+      <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Articles will be loaded here -->
+        <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+          <img src="https://cdn.pixabay.com/photo/2018/04/06/00/25/trees-3294681_1280.jpg" alt="Reforestación" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <div class="flex flex-wrap mb-3">
+              <span class="tag">Forestación</span>
+              <span class="tag">Conservación</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">El impacto de la reforestación en ecosistemas degradados</h3>
+            <p class="text-gray-600 mb-2">5 Junio, 2025</p>
+            <p class="text-gray-700 mb-4">La reforestación es una estrategia clave para combatir el cambio climático y restaurar ecosistemas. Aprende cómo pequeñas acciones pueden marcar una gran diferencia...</p>
+            <button class="read-more-btn btn-primary text-white px-4 py-2 rounded-lg w-full">Leer más</button>
+          </div>
+        </div>
+        
+        <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+          <img src="https://cdn.pixabay.com/photo/2017/07/04/10/04/solar-panel-2470636_1280.jpg" alt="Energía Solar" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <div class="flex flex-wrap mb-3">
+              <span class="tag">Energía</span>
+              <span class="tag">Tecnología</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Avances en energía solar para hogares sostenibles</h3>
+            <p class="text-gray-600 mb-2">28 Mayo, 2025</p>
+            <p class="text-gray-700 mb-4">Las nuevas tecnologías están haciendo que la energía solar sea más accesible que nunca. Descubre las opciones disponibles para transformar tu hogar...</p>
+            <button class="read-more-btn btn-primary text-white px-4 py-2 rounded-lg w-full">Leer más</button>
+          </div>
+        </div>
+        
+        <div class="card bg-white rounded-xl overflow-hidden shadow-md">
+          <img src="https://cdn.pixabay.com/photo/2015/07/15/13/32/river-846312_1280.jpg" alt="Conservación del Agua" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <div class="flex flex-wrap mb-3">
+              <span class="tag">Agua</span>
+              <span class="tag">Recursos</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Conservación del agua: pequeñas acciones, gran impacto</h3>
+            <p class="text-gray-600 mb-2">15 Mayo, 2025</p>
+            <p class="text-gray-700 mb-4">El agua es nuestro recurso más preciado. Aprende técnicas simples de conservación que puedes implementar en tu día a día para reducir tu consumo...</p>
+            <button class="read-more-btn btn-primary text-white px-4 py-2 rounded-lg w-full">Leer más</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="mt-16 bg-green-50 rounded-xl p-8 md:p-12">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-6">Suscríbete a nuestro boletín</h2>
+        <p class="text-center text-gray-700 mb-8">Recibe los últimos artículos y noticias sobre sostenibilidad directamente en tu bandeja de entrada.</p>
+        
+        <form id="newsletter-form" class="flex flex-col md:flex-row gap-4">
+          <input type="email" id="email-input" placeholder="Tu correo electrónico" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+          <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg font-medium">Suscribirme</button>
+        </form>
+        <p id="email-validation-message" class="mt-2 text-red-500 hidden">Por favor, introduce un correo electrónico válido.</p>
+        <p id="success-message" class="mt-2 text-green-600 hidden">¡Gracias por suscribirte! Pronto recibirás nuestras novedades.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <i class="fas fa-leaf text-2xl mr-2 text-green-400"></i>
+            <h3 class="text-xl font-bold">EcoBlog</h3>
+          </div>
+          <p class="text-gray-400">Tu espacio para aprender y actuar por el medio ambiente.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+          <ul class="space-y-2">
+            <li><a href="javascript:void(0)" class="text-gray-400 hover:text-white">Inicio</a></li>
+            <li><a href="javascript:void(0)" class="text-gray-400 hover:text-white">Artículos</a></li>
+            <li><a href="javascript:void(0)" class="text-gray-400 hover:text-white">Sobre Nosotros</a></li>
+            <li><a href="./l1panel.html" class="text-gray-400 hover:text-white">Contacto</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Síguenos</h4>
+          <div class="flex space-x-4">
+            <a href="javascript:void(0)" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-facebook"></i></a>
+            <a href="javascript:void(0)" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+            <a href="javascript:void(0)" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+            <a href="javascript:void(0)" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p class="text-gray-400 mb-4">&copy; 2025 EcoBlog. Todos los derechos reservados.</p>
+        <!-- Download Button -->
+        <button id="download-page-btn" class="btn-secondary text-white px-4 py-2 rounded-lg mt-2 inline-flex items-center">
+          <i class="fas fa-download mr-2"></i>Descargar Página
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- New Article Modal -->
+  <div id="new-article-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-2xl w-full mx-4 overflow-y-auto max-h-screen">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Crear Nuevo Artículo</h3>
+          <button id="close-modal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        
+        <form id="new-article-form">
+          <div class="mb-4">
+            <label for="article-title" class="block text-gray-700 font-medium mb-2">Título</label>
+            <input type="text" id="article-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Escribe un título atractivo" required>
+          </div>
+          
+          <div class="mb-4">
+            <label for="article-tags" class="block text-gray-700 font-medium mb-2">Temas (separados por comas)</label>
+            <input type="text" id="article-tags" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Ej: Energía, Reciclaje, Agua" required>
+          </div>
+          
+          <div id="loading-state" class="hidden">
+            <div class="loading-spinner"></div>
+            <p class="text-center text-gray-700">Generando artículo...</p>
+          </div>
+          
+          <div class="flex justify-end mt-6">
+            <button type="button" id="cancel-article" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-medium mr-4">Cancelar</button>
+            <button type="submit" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">Generar Artículo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Modal -->
+  <div id="article-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full mx-4 overflow-y-auto max-h-screen">
+      <div class="p-6 md:p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 id="modal-article-title" class="text-2xl font-bold">Título del Artículo</h3>
+          <button id="close-article-modal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        
+        <div id="modal-article-tags" class="flex flex-wrap mb-4">
+          <!-- Tags will be inserted here -->
+        </div>
+        
+        <p id="modal-article-date" class="text-gray-600 mb-6">Fecha</p>
+        
+        <img id="modal-article-image" src="" alt="Artículo" class="w-full h-80 object-cover rounded-lg mb-6">
+        
+        <div id="modal-article-content" class="prose max-w-none">
+          <!-- Article content will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="app-script">
+    // Mobile menu toggle
+    const hamburgerButton = document.getElementById('hamburger-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    hamburgerButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // New Article Modal
+    const newArticleBtn = document.getElementById('new-article-btn');
+    const mobileNewArticleBtn = document.getElementById('mobile-new-article');
+    const newArticleModal = document.getElementById('new-article-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const cancelArticleBtn = document.getElementById('cancel-article');
+    
+    function openNewArticleModal() {
+      newArticleModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeNewArticleModal() {
+      newArticleModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      document.getElementById('new-article-form').reset();
+      document.getElementById('loading-state').classList.add('hidden');
+    }
+    
+    newArticleBtn.addEventListener('click', openNewArticleModal);
+    mobileNewArticleBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      openNewArticleModal();
+    });
+    closeModalBtn.addEventListener('click', closeNewArticleModal);
+    cancelArticleBtn.addEventListener('click', closeNewArticleModal);
+    
+    // Close modal when clicking outside
+    newArticleModal.addEventListener('click', (e) => {
+      if (e.target === newArticleModal) {
+        closeNewArticleModal();
+      }
+    });
+    
+    // Article Modal
+    const articleModal = document.getElementById('article-modal');
+    const closeArticleModalBtn = document.getElementById('close-article-modal');
+    const readMoreBtns = document.querySelectorAll('.read-more-btn');
+    
+    function openArticleModal(title, date, tags, imageUrl, content) {
+      document.getElementById('modal-article-title').textContent = title;
+      document.getElementById('modal-article-date').textContent = date;
+      
+      // Clear and add tags
+      const tagsContainer = document.getElementById('modal-article-tags');
+      tagsContainer.innerHTML = '';
+      tags.forEach(tag => {
+        const tagElement = document.createElement('span');
+        tagElement.className = 'tag';
+        tagElement.textContent = tag;
+        tagsContainer.appendChild(tagElement);
+      });
+      
+      document.getElementById('modal-article-image').src = imageUrl;
+      document.getElementById('modal-article-content').innerHTML = content;
+      
+      articleModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeArticleModal() {
+      articleModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+    
+    closeArticleModalBtn.addEventListener('click', closeArticleModal);
+    
+    // Close modal when clicking outside
+    articleModal.addEventListener('click', (e) => {
+      if (e.target === articleModal) {
+        closeArticleModal();
+      }
+    });
+    
+    // Handle "Read More" button clicks
+    readMoreBtns.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.card');
+        const title = card.querySelector('h3').textContent;
+        const date = card.querySelector('.text-gray-600').textContent;
+        const tagsElements = card.querySelectorAll('.tag');
+        const tags = Array.from(tagsElements).map(tag => tag.textContent);
+        const imageUrl = card.querySelector('img').src;
+        
+        // Sample content for demo
+        const content = `
+          <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+          <p class="mb-4">Proin dictum, diam ut pharetra bibendum, lorem ipsum aliquet nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+          <h4 class="text-xl font-bold mb-3 mt-6">Beneficios para el medio ambiente</h4>
+          <ul class="list-disc pl-5 mb-4">
+            <li class="mb-2">Reducción de emisiones de carbono</li>
+            <li class="mb-2">Conservación de recursos naturales</li>
+            <li class="mb-2">Mejora de la biodiversidad local</li>
+            <li class="mb-2">Creación de hábitats sostenibles</li>
+          </ul>
+          <p class="mb-4">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut non enim eleifend felis pretium feugiat. Vivamus quis mi. Phasellus a est. Phasellus magna.</p>
+          <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis in nunc fringilla tristique. Morbi mattis ullamcorper velit. Phasellus gravida semper nisi. Nullam vel sem.</p>
+        `;
+        
+        openArticleModal(title, date, tags, imageUrl, content);
+      });
+    });
+    
+    // Newsletter Form Validation
+    const newsletterForm = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('email-input');
+    const validationMessage = document.getElementById('email-validation-message');
+    const successMessage = document.getElementById('success-message');
+    
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailRegex.test(email)) {
+        validationMessage.classList.remove('hidden');
+        successMessage.classList.add('hidden');
+        return;
+      }
+      
+      validationMessage.classList.add('hidden');
+      successMessage.classList.remove('hidden');
+      emailInput.value = '';
+      
+      // In a real application, this would send the email to a server
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 5000);
+    });
+    
+    // New Article Form Submission
+    const newArticleForm = document.getElementById('new-article-form');
+    const loadingState = document.getElementById('loading-state');
+    
+    newArticleForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const title = document.getElementById('article-title').value.trim();
+      const tagsInput = document.getElementById('article-tags').value.trim();
+      
+      if (!title || !tagsInput) {
+        return;
+      }
+      
+      // Show loading state
+      loadingState.classList.remove('hidden');
+      
+      // Simulate API call to generate article
+      setTimeout(() => {
+        loadingState.classList.add('hidden');
+        closeNewArticleModal();
+        
+        // Create new article card
+        const tags = tagsInput.split(',').map(tag => tag.trim());
+        const articlesContainer = document.getElementById('articles-container');
+        
+        // Get a random image for the demo
+        const demoImages = [
+          'https://cdn.pixabay.com/photo/2015/09/09/16/05/forest-931706_1280.jpg',
+          'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_1280.jpg',
+          'https://cdn.pixabay.com/photo/2014/09/14/18/04/dandelion-445228_1280.jpg'
+        ];
+        const randomImage = demoImages[Math.floor(Math.random() * demoImages.length)];
+        
+        // Create new article card
+        const today = new Date();
+        const formattedDate = `${today.getDate()} ${today.toLocaleString('es', { month: 'long' })}, ${today.getFullYear()}`;
+        
+        const newArticleCard = document.createElement('div');
+        newArticleCard.className = 'card bg-white rounded-xl overflow-hidden shadow-md';
+        newArticleCard.innerHTML = `
+          <img src="${randomImage}" alt="${title}" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <div class="flex flex-wrap mb-3">
+              ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+            <h3 class="text-xl font-semibold mb-2">${title}</h3>
+            <p class="text-gray-600 mb-2">${formattedDate}</p>
+            <p class="text-gray-700 mb-4">Este es un artículo generado a partir de los temas seleccionados. En la versión completa, este contenido sería creado por Magic Loops.</p>
+            <button class="read-more-btn btn-primary text-white px-4 py-2 rounded-lg w-full">Leer más</button>
+          </div>
+        `;
+        
+        // Add it as the first article
+        articlesContainer.insertBefore(newArticleCard, articlesContainer.firstChild);
+        
+        // Add event listener to the new Read More button
+        const newReadMoreBtn = newArticleCard.querySelector('.read-more-btn');
+        newReadMoreBtn.addEventListener('click', () => {
+          const content = `
+            <p class="mb-4">Este es un artículo de demostración generado a partir de los temas que seleccionaste. En la versión final de la aplicación, este contenido sería generado automáticamente utilizando Magic Loops.</p>
+            <p class="mb-4">El artículo completo incluiría información detallada sobre ${tags.join(', ')}, con datos relevantes, consejos prácticos y ejemplos de aplicación.</p>
+            <h4 class="text-xl font-bold mb-3 mt-6">Principales puntos a considerar</h4>
+            <ul class="list-disc pl-5 mb-4">
+              <li class="mb-2">Información relevante sobre ${tags[0] || 'el tema principal'}</li>
+              <li class="mb-2">Datos interesantes y estadísticas actualizadas</li>
+              <li class="mb-2">Consejos prácticos para implementación</li>
+              <li class="mb-2">Recursos adicionales para profundizar</li>
+            </ul>
+            <p class="mb-4">Este es un prototipo funcional que muestra cómo funcionaría la interfaz. En la versión completa, el contenido generado sería mucho más extenso y personalizado según los temas elegidos.</p>
+            <p>¡Gracias por probar esta demostración!</p>
+          `;
+          
+          openArticleModal(title, formattedDate, tags, randomImage, content);
+        });
+        
+        // Save to localStorage for persistence
+        saveArticleToLocalStorage({
+          title,
+          tags,
+          date: formattedDate,
+          imageUrl: randomImage
+        });
+      }, 2000);
+    });
+    
+    // LocalStorage functions for article persistence
+    function saveArticleToLocalStorage(article) {
+      let articles = JSON.parse(localStorage.getItem('ecoblog-articles') || '[]');
+      articles.unshift(article);
+      localStorage.setItem('ecoblog-articles', JSON.stringify(articles));
+    }
+    
+    // Load saved articles on page load (would be implemented in a full version)
+    function loadArticlesFromLocalStorage() {
+      const savedArticles = JSON.parse(localStorage.getItem('ecoblog-articles') || '[]');
+      // Implementation would go here in a full version
+    }
+    
+    // Download Page functionality
+    const downloadPageBtn = document.getElementById('download-page-btn');
+    
+    downloadPageBtn.addEventListener('click', function() {
+      // Get the HTML content
+      const htmlContent = document.documentElement.outerHTML;
+      
+      // Create a Blob with the HTML content
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+      
+      // Create a temporary anchor element
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'EcoBlog.html';
+      
+      // Append to the document, click it, and remove it
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      // Release the URL object
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
