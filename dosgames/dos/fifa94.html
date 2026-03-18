@@ -2,35 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Juego DOS</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FIFA 94 Local - Fullscreen</title>
+    
     <link rel="stylesheet" href="./js-dos.css">
     <script src="./js-dos.js"></script>
 
     <style>
-        /* Ajustamos el contenedor para que ocupe un buen espacio */
-        #jsdos-container {
+        /* Reset para pantalla completa */
+        body, html {
+            margin: 0;
+            padding: 0;
             width: 100%;
-            height: 500px;
-            max-width: 800px;
-            margin: 20px auto;
-            border: 2px solid #333;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #jsdos-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        /* Mantiene los píxeles nítidos (estilo retro) */
+        canvas {
+            image-rendering: pixelated;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align: center;">Jugando desde Bundle</h1>
-    
     <div id="jsdos-container"></div>
 
     <script>
-        // Inicializamos el emulador apuntando al ID de nuestro div
+        // Importante: Asegúrate de que tu js-dos.js sea la versión 8 
+        // para que 'createDos' funcione correctamente.
         const container = document.getElementById("jsdos-container");
-        
-        // Ejecutamos el archivo .jsdos
-        Dos(container).run("fifa94.jsdos");
+
+        createDos(container, {
+            style: "none", // Quita bordes y botones extra para máxima inmersión
+        }).then((runtime) => {
+            // Cargamos tu bundle de FIFA 94
+            return runtime.run("./fifa94.jsdos");
+        }).catch((err) => {
+            console.error("Hubo un problema al cargar el juego:", err);
+            // Si ves este error en la consola, intenta renombrar fifa94.jsdos a fifa94.zip
+        });
     </script>
 
 </body>
