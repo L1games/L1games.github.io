@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FIFA 94 Local - Fullscreen</title>
-    
-    <link rel="stylesheet" href="./js-dos.css">
-    <script src="./js-dos.js"></script>
+    <title>FIFA 94 Retro - Fullscreen</title>
+
+    <link rel="stylesheet" href="js-dos.css">
+    <script src="js-dos.js"></script>
 
     <style>
-        /* Reset para pantalla completa */
+        /* Pantalla completa total sin márgenes */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
             background-color: #000;
+            overflow: hidden;
         }
 
-        #jsdos-container {
+        #app {
             width: 100vw;
             height: 100vh;
-            display: block;
         }
 
-        /* Mantiene los píxeles nítidos (estilo retro) */
+        /* Mejora la nitidez de los píxeles del FIFA */
         canvas {
             image-rendering: pixelated;
             object-fit: contain;
@@ -34,23 +33,41 @@
 </head>
 <body>
 
-    <div id="jsdos-container"></div>
+    <div id="app"></div>
 
     <script>
-        // Importante: Asegúrate de que tu js-dos.js sea la versión 8 
-        // para que 'createDos' funcione correctamente.
-        const container = document.getElementById("jsdos-container");
+        document.addEventListener("DOMContentLoaded", () => {
+            // Inicializamos el emulador usando la función 'Dos' (v7)
+            // Asegúrate de que el ID coincida con el div de arriba ("app")
+            const props = Dos(document.getElementById("app"), {
+                
+                // RUTA DEL JUEGO: 
+                // Si el archivo está en la misma carpeta que este HTML, solo pon el nombre.
+                // IMPORTANTE: Revisa si en GitHub es .jsdos o .zip y escríbelo igual.
+                url: "fifa94.zip", 
 
-        createDos(container, {
-            style: "none", // Quita bordes y botones extra para máxima inmersión
-        }).then((runtime) => {
-            // Cargamos tu bundle de FIFA 94
-            return runtime.run("./fifa94.zip");
-        }).catch((err) => {
-            console.error("Hubo un problema al cargar el juego:", err);
-            // Si ves este error en la consola, intenta renombrar fifa94.jsdos a fifa94.zip
+                autoStart: true, // El juego inicia solo
+                
+                // RUTA DEL MOTOR: 
+                // Al estar en GitHub raíz, el pathPrefix debe ser "./" 
+                // para que encuentre los archivos .wasm que necesita js-dos.
+                pathPrefix: "./",
+
+                onEvent: (event, ci) => {
+                    console.log("Evento js-dos:", event);
+                    
+                    if (event === "ci-ready") {
+                        window.ci = ci;
+                        // Forzar pantalla completa al estar listo
+                        if (typeof props.setFullScreen === "function") {
+                            props.setFullScreen(true);
+                        }
+                    }
+                }
+            });
+
+            window.props = props;
         });
     </script>
-
 </body>
 </html>
