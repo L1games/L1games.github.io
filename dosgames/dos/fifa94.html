@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FIFA 94 Retro - Fullscreen</title>
+    <title>FIFA 94 - Directo</title>
 
     <link rel="stylesheet" href="js-dos.css">
     <script src="js-dos.js"></script>
 
     <style>
-        /* Pantalla completa total sin márgenes */
         body, html {
             margin: 0;
             padding: 0;
@@ -24,7 +23,6 @@
             height: 100vh;
         }
 
-        /* Mejora la nitidez de los píxeles del FIFA */
         canvas {
             image-rendering: pixelated;
             object-fit: contain;
@@ -37,28 +35,25 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Inicializamos el emulador usando la función 'Dos' (v7)
-            // Asegúrate de que el ID coincida con el div de arriba ("app")
-            const props = Dos(document.getElementById("app"), {
+            const container = document.getElementById("app");
+
+            // Inicializamos js-dos (Versión 7)
+            const props = Dos(container, {
                 
-                // RUTA DEL JUEGO: 
-                // Si el archivo está en la misma carpeta que este HTML, solo pon el nombre.
-                // IMPORTANTE: Revisa si en GitHub es .jsdos o .zip y escríbelo igual.
+                // Como el .zip está en la misma carpeta que este HTML:
                 url: "fifa94.zip", 
 
-                autoStart: true, // El juego inicia solo
+                autoStart: true,
                 
-                // RUTA DEL MOTOR: 
-                // Al estar en GitHub raíz, el pathPrefix debe ser "./" 
-                // para que encuentre los archivos .wasm que necesita js-dos.
+                // El pathPrefix indica dónde están los archivos .wasm
+                // Al estar todo junto, se usa "./" o vacío ""
                 pathPrefix: "./",
 
                 onEvent: (event, ci) => {
-                    console.log("Evento js-dos:", event);
-                    
+                    console.log("Evento:", event);
                     if (event === "ci-ready") {
                         window.ci = ci;
-                        // Forzar pantalla completa al estar listo
+                        // Activar pantalla completa
                         if (typeof props.setFullScreen === "function") {
                             props.setFullScreen(true);
                         }
