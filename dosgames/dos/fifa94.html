@@ -1,68 +1,32 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FIFA 94 - Directo</title>
-
+    <title>FIFA 94 - Solución Emulators.js</title>
     <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
     <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
-
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden;
-        }
-
-        #app {
-            width: 100vw;
-            height: 100vh;
-        }
-
-        canvas {
-            image-rendering: pixelated;
-            object-fit: contain;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
+        #jsdos { width: 100vw; height: 100vh; }
     </style>
 </head>
 <body>
-
-    <div id="app"></div>
-
+    <div id="jsdos"></div>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const container = document.getElementById("app");
+        // CONFIGURACIÓN PARA EVITAR EL ERROR DE PATHPREFIX
+        // Forzamos a que busque emulators.js en el CDN oficial
+        const jsdosOptions = {
+            style: "none",
+        };
 
-            // Inicializamos js-dos (Versión 7)
-            const props = Dos(container, {
-                
-                // Como el .zip está en la misma carpeta que este HTML:
-                url: "fifa94.zip", 
-
-                autoStart: true,
-                
-                // El pathPrefix indica dónde están los archivos .wasm
-                // Al estar todo junto, se usa "./" o vacío ""
-                pathPrefix: "./",
-
-                onEvent: (event, ci) => {
-                    console.log("Evento:", event);
-                    if (event === "ci-ready") {
-                        window.ci = ci;
-                        // Activar pantalla completa
-                        if (typeof props.setFullScreen === "function") {
-                            props.setFullScreen(true);
-                        }
-                    }
-                }
-            });
-
-            window.props = props;
+        createDos(document.getElementById("jsdos"), jsdosOptions).then((runtime) => {
+            // Importante: El punto y la barra ./ aseguran que busque en la carpeta actual de GitHub
+            return runtime.run("./fifa.zip");
+        }).catch((err) => {
+            console.error("Error:", err);
         });
     </script>
+</body>
+</html>
 </body>
 </html>
