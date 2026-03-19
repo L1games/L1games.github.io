@@ -1,54 +1,35 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIFA 94 - Corrección Total</title>
+    <title>js-dos digger 8.xx</title>
 
-    <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
-    
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
-        #jsdos { width: 100vw; height: 100vh; }
+        html, body {
+            height: 100%;
+        }
+
+
+        #dos {
+            width: 100%;
+            height: 100%;
+        }
     </style>
+
+    <!-- js-dos style sheet -->
+    <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
+
+    <!-- js-dos -->
+    <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
 </head>
 <body>
 
-    <div id="jsdos"></div>
-
-    <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
+    <div id="dos" style="width: 100%; height: 100%"></div>
 
     <script>
-        // SOLUCIÓN AL PATHPREFIX: 
-        // Forzamos a la librería a buscar emulators.js en el servidor oficial, 
-        // no en tu carpeta de GitHub.
-        window.emulatorsPath = "https://v8.js-dos.com/latest/";
-
-        // SOLUCIÓN A "NOT DEFINED":
-        // Usamos un intervalo para esperar a que la librería esté lista antes de usarla
-        const checkLibrary = setInterval(() => {
-            if (typeof createDos !== "undefined") {
-                clearInterval(checkLibrary); // Detenemos la espera
-                console.log("js-dos listo. Iniciando emulador...");
-                
-                startEmulator();
-            }
-        }, 100); // Revisa cada 100ms si ya existe createDos
-
-        function startEmulator() {
-            const container = document.getElementById("jsdos");
-            
-            createDos(container, {
-                style: "none",
-            }).then((runtime) => {
-                // IMPORTANTE: Asegúrate de que el archivo se llame fifa.zip en GitHub
-                return runtime.run("./fifa94.zip");
-            }).catch((err) => {
-                console.error("Error al ejecutar el juego:", err);
-            });
-        }
+        Dos(document.getElementById("dos"), {
+            url: "fifa.jsdos",
+        });
     </script>
-</body>
-</html>
 </body>
 </html>
