@@ -1,1 +1,185 @@
+<html>
+<head>
+    <title>N-Console Games</title>
+    <link rel="icon" href="/../index.html" type="image/png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+        }
 
+        header {
+            width: 100%;
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 30px;
+            text-align: center;
+            position: absolute;
+            top: -1px;
+        }
+
+        .Inibtn {
+            border: none;
+            background-color: #F5F5F5;
+            color: black;
+            cursor: pointer;
+            top: 0px;
+            left: 0px;
+            font-size: 30px;
+            text-align: center;
+            position: absolute;
+            padding: 17px;
+        }
+        .console {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            place-content: center;
+            margin: 80px;
+            column-gap: 220px;
+            row-gap: 20px;
+        }
+        .modelconsole {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .imgconsole {
+            width: 200px;
+            height: 200px;
+        }
+        footer {
+            background-color: black;
+            position: absolute;
+            bottom: -4400px;
+            width: 100%;
+            height: 40px;
+            color: white;
+            height: 20%;
+            text-align: center;
+        }
+       .pconsole {
+           border-radius: 10px;
+       }
+       .pconsole:hover {
+           transition: 0.2s ease;
+           transform: scale(0.8);
+       }
+        #sms {
+            background-color: red;
+            color: white;
+        }
+        #sgg {
+            background-color: green;
+            color: white;
+        }
+        #smd {
+            color: white;
+            background-color: blue;
+        }
+        #s32x {
+            color: white;
+            background-color: darkorange;
+        }
+        #scd {
+            color: black;
+            background-color: aqua;
+        }
+        #ssa {
+            color: white;
+            background-color: black;
+        }
+        .consolebtn {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
+        .consolebtn1 {
+            color: white;
+            background-color: #FF5454;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+        }
+        .consolebtn {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            place-content: center;
+            gap: 10px;
+            column-gap: 110px;
+        }
+        .consoleselect {
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+        }
+        #smsbtn {
+            color: white;
+            background-color: red;
+        }
+        #sggbtn {
+            color: white;
+            background-color: blue;
+        }
+        #smdbtn {
+            color: white;
+            background-color: green;
+        }
+        #s32xbtn {
+            color: white;
+            background-color: darkorange;
+        }
+        #scdbtn {
+            color: black;
+            background-color: aqua;
+        }
+        #ssabtn {
+            color: white;
+            background-color: black;
+        }
+        .gameselect {
+            display: grid;
+            grid-template-columns: repeat(4, auto);
+            place-content: center;
+            margin: 15px;
+            column-gap: 90px;
+            row-gap: 20px;
+        }
+        .gamemenu1 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 5px solid #FF5454;
+            padding: 10px;
+            border-radius: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .imggame {
+            width: 220px;
+            height: 300px;
+        }
+        .agame {
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        .agame:hover {
+            transition: 0.4s ease;
+            transform: scale(0.8);
+        }
+        .consoleselect:hover {
+            transform: scale(1.1);
+            transition: 0.2 ease;
+    </style>
+    <script src="nconsole.js" defer></script>
+</head>
+<body>
+    <header>SEGA Games</header>
+    <a class="Inibtn" href="/../index.html">🏠</a>
