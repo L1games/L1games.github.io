@@ -21,7 +21,7 @@
 
         createDos(document.getElementById("jsdos"), jsdosOptions).then((runtime) => {
             // Importante: El punto y la barra ./ aseguran que busque en la carpeta actual de GitHub
-            return runtime.run("./fifa.zip");
+            return runtime.run("./fifa94.zip");
         }).catch((err) => {
             console.error("Error:", err);
         });
