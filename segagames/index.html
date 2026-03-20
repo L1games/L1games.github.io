@@ -97,6 +97,13 @@
             display: grid;
             place-content: center;
         }
+        .consolebtnbar {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            place-content: center;
+            gap: 10px;
+            column-gap: 110px;
+        }
         .consolebtn1 {
             color: white;
             background-color: #FF5454;
@@ -210,7 +217,7 @@
     <div class="consolebtn">
         <button class="consolebtn1" onclick="location.reload()">Console Games</button>
     </div>
-    <div class="consolebtn">
+    <div class="consolebtnbar">
         <button class="consoleselect" id="smsbtn">Sega Master System</button>
         <button class="consoleselect" id="sggbtn">Sega Game Gear</button>
         <button class="consoleselect" id="smdbtn">Sega Mega Drive</button>
