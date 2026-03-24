@@ -50,9 +50,12 @@
                     setupDiv.style.display = 'none';
 
                     // 3. Configuramos EmulatorJS
+                    window.EJS_patche = true;
+                    window.EJS_fullscreen = true;
+                    window.EJS_alignStartButton = "center";
                     window.EJS_player = "#game";
                     window.EJS_core = "3do";
-                    window.EJS_biosUrl = "panasonic.bin";
+                    window.EJS_biosUrl = "panafz10.bin";
                     window.EJS_color = "#0064ff";
                     window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/"; 
                     window.EJS_gameUrl = gameBlob; // <--- Aquí se asigna el archivo elegido
