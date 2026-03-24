@@ -57,12 +57,12 @@
                     window.EJS_core = "3do";
                     window.EJS_biosUrl = "panafz10.bin";
                     window.EJS_color = "#0064ff";
-                    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/"; 
+                    window.EJS_pathtodata = "/../../other/data"; 
                     window.EJS_gameUrl = gameBlob; // <--- Aquí se asigna el archivo elegido
 
                     // 4. Cargamos el script del emulador dinámicamente
                     const loader = document.createElement('script');
-                    loader.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+                    loader.src = "./scriptgame.js";
                     document.body.appendChild(loader);
                 }
             });
