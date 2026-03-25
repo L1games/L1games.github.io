@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>3DO Emulator Loader</title>
+        <style>
+            body, html {
+                margin: 0; padding: 0; height: 100%; width: 100%;
+                background-color: #1a1a1a; color: white; font-family: sans-serif;
+            }
+            #game { width: 100%; height: 100%; }
+            
+           
+            .controls {
+                position: absolute; top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center; z-index: 10;
+            }
+            input[type="file"] { display: none; }
+            .upload-btn {
+                background: #0064ff; padding: 15px 30px;
+                border-radius: 5px; cursor: pointer; font-weight: bold;
+            }
+            .boton-flotante {
+            position: fixed;
+            bottom: 20px;       
+            left: 50%;         
+            transform: translateX(-50%); 
+            z-index: 10;     
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-family: sans-serif;
+        }
+
+        .boton-flotante:hover {
+            background-color: #0056b3;
+        }
+        .oculto {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        </style>
+    </head>
+    <body>
+
+        <div id="setup" class="controls">
+            <h2>Cargador de 3DO</h2>
+            <label class="upload-btn">
+                SELECCIONAR ROM (.iso, .bin, .zip)
+                <input type="file" id="rom_file" accept=".iso,.bin,.zip,.chd">
+            </label>
+            <p>El juego se ejecutará localmente en tu navegador.</p>
+            <button class="boton-flotante" id="miBoton" onclick="window.location.href='https://drive.usercontent.google.com/download?id=14yrwNHUi8VB98aYfq4Pn5Xf5UErgW5NZ'">Descargar (Seleccione 3DO)</button>
+        </div>
+
+        <div id="game"></div>
+
+        <script>
+            const fileInput = document.getElementById('rom_file');
+            const setupDiv = document.getElementById('setup');
+
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                   
+                    const gameBlob = URL.createObjectURL(file);
+                    
+          
+                    setupDiv.style.display = 'none';
+
+                  
+                    window.EJS_patche = true;
+                    window.EJS_fullscreen = true;
+                    window.EJS_alignStartButton = "center";
+                    window.EJS_player = "#game";
+                    window.EJS_core = "3do";
+                    window.EJS_biosUrl = "panafz10.bin";
+                    window.EJS_color = "#0064ff";
+                    window.EJS_pathtodata = "/../../other/data"; 
+                    window.EJS_gameUrl = gameBlob; 
+
+                
+                    const loader = document.createElement('script');
+                    loader.src = "./scriptgame.js";
+                    document.body.appendChild(loader);
+                }
+            });
+        </script>
+    </body>
+</html>
