@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>SEGA Games</title>
-    <link rel="icon" href="/../assets/sega.png" type="image/png">
-    <script src="sega.js" defer=""></script>
+    <title>Classic Games</title>
+    <link rel="icon" href="/../assets/classic.png" type="image/png">
+    <script src="classic.js" defer=""></script>
     <style>
         body {
             margin: 0;
@@ -70,29 +70,17 @@
            transition: 0.2s ease;
            transform: scale(0.8);
        }
-        #sms {
+        #ngb {
             background-color: red;
             color: white;
         }
-        #sgg {
+        #arc {
             background-color: green;
             color: white;
         }
-        #smd {
+        #a52 {
             color: white;
             background-color: blue;
-        }
-        #s32x {
-            color: white;
-            background-color: darkorange;
-        }
-        #scd {
-            color: black;
-            background-color: aqua;
-        }
-        #ssa {
-            color: white;
-            background-color: black;
         }
         .consolebtn {
             display: grid;
@@ -118,29 +106,17 @@
             border: none;
             border-radius: 10px;
         }
-        #smsbtn {
+        #ngbbtn {
             color: white;
             background-color: red;
         }
-        #sggbtn {
+        #arcbtn {
             color: white;
             background-color: blue;
         }
-        #smdbtn {
+        #a52btn {
             color: white;
             background-color: green;
-        }
-        #s32xbtn {
-            color: white;
-            background-color: darkorange;
-        }
-        #scdbtn {
-            color: black;
-            background-color: aqua;
-        }
-        #ssabtn {
-            color: white;
-            background-color: black;
         }
         .gameselect {
             display: grid;
@@ -192,66 +168,45 @@
     </style>
 </head>
 <body>
-    <header>SEGA Games</header>
+    <header>Classic Games</header>
     <a class="Inibtn" href="/../index.html">🏠</a>
     <div class="console">
         <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdShBd_UfuAO7aiU2UtHY0OkDu_iutZIOkBQ&s" />
+            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc6SR5mzkbEeD_miPsxpbpu1A2GObhPCF0ng&s" />
 
-            <p class="pconsole" id="sms">Sega Master System</p>
+            <p class="pconsole" id="ngb">Nintendo Gameboy</p>
 
-            <p class="infoconsole">La guerrera original. Fue la respuesta de Sega a Nintendo. Es famosa por su resistencia y sus ROMs minúsculas, ideales para ahorrar espacio.</p>
+            <p class="infoconsole">Lanzada en 1989, revolucionó el entretenimiento, su eficiencia energética y su procesador de 8 bit (basado en el Z80) la hicieron imbatible</p>
         </div>
         <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiS1i_j-3julw7hwDULdjYuA4YQw8rV_ZtQ&s" />
+            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJYjmmb-yHpyBHW6kJ1_nmAF32npZGZ-LlQ&s" />
 
-            <p class="pconsole" id="sgg">Sega Game Gear</p>
+            <p class="pconsole" id="arc">Arcade</p>
 
-            <p class="infoconsole">Básicamente una Master System portátil pero con una paleta de colores mucho más amplia. Eso sí, ¡devoraba 6 pilas AA en apenas 3 horas!</p>
+            <p class="infoconsole">El Arcade representa la era dorada de los videojuegos, entre 70-80, donde las salas de recreativas eran el epicentro de la innovación tecnológica.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrQp52ML9rGrNNZbgbzFzfXoDMqqurcDzsA&s" />
 
-            <p class="pconsole" id="smd">Sega Mega Drive</p>
+            <p class="pconsole" id="a52">Atari 5200</p>
 
-            <p class="infoconsole">El mayor éxito de Sega. Introdujo a Sonic y definió la actitud "cool" de los 90 con juegos rápidos y sonidos metálicos icónicos.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk49dDhJR55NJ8Ol9ccguDa8RD-DFCoWL0Dg&s" />
-
-            <p class="pconsole" id="s32x">Sega 32X</p>
-
-            <p class="infoconsole">Un "puente" que se insertaba en la Mega Drive para darle potencia de 32 bits. Tuvo una vida muy corta pero con versiones geniales de juegos</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeD4O3zcYXQP2fHlCxrm7exePNtp1QUDbFIw&s" />
-
-            <p class="pconsole" id="scd">Sega CD</p>
-
-            <p class="infoconsole">Un accesorio para la Mega Drive que permitía usar CDs. Introdujo música real y escenas de video, aunque los juegos seguían siendo de 16 bits.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHyn2x3zNK2svXf2HYyj-icwDe5hGcHL2pg&s" />
-
-            <p class="pconsole" id="ssa">Sega Saturn</p>
-
-            <p class="infoconsole">La verdadera sucesora de nueva generación. Una bestia para los juegos en 2D, aunque su arquitectura interna era un laberinto para los programadores.</p>
+            <p class="infoconsole">Introducida en 1982, la 5200 fue diseñada para llevar la potencia de las computadoras Atari de 8 bits al mercado de las consolas de salón.</p>
         </div>
     </div>
     <div class="consolebtn">
-        <button class="consolebtn1" onclick="location.reload()">Console Games</button>
+        <button class="consolebtn1" onclick="location.reload()">Classic Games</button>
     </div>
     <div class="consolebtnbar">
-        <button class="consoleselect" id="smsbtn">Sega Master System</button>
-        <button class="consoleselect" id="sggbtn">Sega Game Gear</button>
-        <button class="consoleselect" id="smdbtn">Sega Mega Drive</button>
-        <button class="consoleselect" id="s32xbtn">Sega 32X</button>
-        <button class="consoleselect" id="scdbtn">Sega CD</button>
-        <button class="consoleselect" id="ssabtn">Sega Saturn</button>
+        <button class="consoleselect" id="ngbbtn">Nintengo GameBoy</button>
+        <button class="consoleselect" id="arcbtn">Arcade</button>
+        <button class="consoleselect" id="a52btn">Atari 5200</button>
     </div>
     <div class="gameselect">
-        <div class="gamemenu1" id="smsgame">
+        <div class="gamemenu1" id="ngbgame">
             <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_TprufuSBRphS7yxGfRjxTMmXLqZFm6Q9A&s" />
 
-            <a class="agame" id="smsbtn" href="./sms/castle.html">Castle of Illusion</a>
+            <a class="agame" id="ngbbtn" href="./sms/castle.html">Castle of Illusion</a>
         </div>
+    </div>
+</body>
+</html>
