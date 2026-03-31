@@ -1,84 +1,83 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PS1 Emulator Loader</title>
+        <title>PS1 Folder Loader</title>
         <style>
             body, html {
                 margin: 0; padding: 0; height: 100%; width: 100%;
                 background-color: #1a1a1a; color: white; font-family: sans-serif;
             }
             #game { width: 100%; height: 100%; }
-            
             .controls {
                 position: absolute; top: 50%; left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center; z-index: 10;
             }
-            /* Ocultamos el input original */
             input[type="file"] { display: none; }
-            
             .upload-btn {
                 background: #0064ff; padding: 15px 30px;
                 border-radius: 5px; cursor: pointer; font-weight: bold;
                 display: inline-block;
-            }
-            .boton-flotante {
-                position: fixed; bottom: 20px; left: 50%;
-                transform: translateX(-50%); z-index: 10;
-                padding: 15px 30px; background-color: #007BFF;
-                color: white; border: none; border-radius: 50px;
-                cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             }
         </style>
     </head>
     <body>
 
         <div id="setup" class="controls">
-            <h2>Cargador de PS1 / 3DO</h2>
+            <h2>Cargador de Carpeta PS1</h2>
             <label class="upload-btn">
                 SELECCIONAR CARPETA DEL JUEGO
-                <input type="file" id="rom_file" webkitdirectory directory multiple>
+                <input type="file" id="rom_folder" webkitdirectory directory multiple>
             </label>
-            <p>Descomprima el .zip y seleccione la carpeta que contiene los archivos .bin y .cue</p>
-            <button class="boton-flotante" onclick="window.location.href='https://drive.google.com/uc?export=download&id=1TSdwACPHZiYgRXqym32kPaa2Oe1kIe5N'">Descargar Juego</button>
+            <p>Selecciona la carpeta que contiene el .cue y los .bin</p>
         </div>
 
         <div id="game"></div>
 
         <script>
-            const fileInput = document.getElementById('rom_file');
+            const fileInput = document.getElementById('rom_folder');
             const setupDiv = document.getElementById('setup');
 
             fileInput.addEventListener('change', function(e) {
                 const files = Array.from(e.target.files);
-                
-                // Buscamos el archivo principal para el emulador
-                // Prioridad: .cue -> .chd -> .iso -> .bin
-                const mainFile = files.find(f => f.name.endsWith('.cue')) || 
-                                 files.find(f => f.name.endsWith('.chd')) ||
-                                 files.find(f => f.name.endsWith('.iso')) ||
-                                 files.find(f => f.name.endsWith('.bin'));
+                if (files.length === 0) return;
+
+                // 1. Mapeamos todos los archivos de la carpeta en un objeto
+                // Esto permite que el emulador encuentre los .bin cuando el .cue los pida
+                const fileMap = {};
+                files.forEach(file => {
+                    fileMap[file.name] = URL.createObjectURL(file);
+                });
+
+                // 2. Buscamos el archivo "maestro" (.cue es el mejor para PS1)
+                const mainFile = files.find(f => f.name.toLowerCase().endsWith('.cue')) || 
+                                 files.find(f => f.name.toLowerCase().endsWith('.chd')) ||
+                                 files.find(f => f.name.toLowerCase().endsWith('.iso'));
 
                 if (mainFile) {
-                    const gameBlob = URL.createObjectURL(mainFile);
                     setupDiv.style.display = 'none';
 
-                    // Configuración de EmulatorJS
+                    // Configuración para EmulatorJS
                     window.EJS_patche = true;
-                    window.EJS_fullscreen = true;
                     window.EJS_player = "#game";
-                    window.EJS_core = "psx"; // Asegúrate de que el core sea correcto
-                    window.EJS_biosUrl = "SCPH1001.BIN";
+                    window.EJS_core = "psx"; 
+                    window.EJS_biosUrl = "SCPH1001.BIN"; // Asegúrate de tener la BIOS en tu ruta
                     window.EJS_color = "#0064ff";
                     window.EJS_pathtodata = "/../../other/data"; 
-                    window.EJS_gameUrl = gameBlob; 
 
-                    // Cargar el script del emulador
+                    // 3. Pasamos el archivo principal
+                    window.EJS_gameUrl = fileMap[mainFile.name];
+
+                    // 4. PASO CRUCIAL PARA VARIOS .BIN:
+                    // Le damos al emulador acceso a todos los archivos de la carpeta
+                    window.EJS_gameFiles = fileMap;
+
+                    // Cargar el motor
                     const loader = document.createElement('script');
                     loader.src = "./scriptgame.js";
                     document.body.appendChild(loader);
                 } else {
-                    alert("No se encontró un archivo válido (.cue, .bin, .chd) en la carpeta.");
+                    alert("No se encontró un archivo .cue o .iso dentro de la carpeta.");
                 }
             });
         </script>
