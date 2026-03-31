@@ -36,50 +36,61 @@
 
         <script>
             const fileInput = document.getElementById('rom_folder');
-            const setupDiv = document.getElementById('setup');
+const setupDiv = document.getElementById('setup');
 
-            fileInput.addEventListener('change', function(e) {
-                const files = Array.from(e.target.files);
-                if (files.length === 0) return;
+fileInput.addEventListener('change', function(e) {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
 
-                // 1. Mapeamos todos los archivos de la carpeta en un objeto
-                // Esto permite que el emulador encuentre los .bin cuando el .cue los pida
-                const fileMap = {};
-                files.forEach(file => {
-                    fileMap[file.name] = URL.createObjectURL(file);
-                });
+    // 1. CREAR EL SISTEMA DE ARCHIVOS VIRTUAL (VFS)
+    // Mapeamos cada archivo de la carpeta para que el emulador "vea" todo el contenido
+    const vfs = {};
+    files.forEach(file => {
+        // Usamos solo el nombre del archivo como clave para que el .cue lo encuentre fácil
+        vfs[file.name] = URL.createObjectURL(file);
+    });
 
-                // 2. Buscamos el archivo "maestro" (.cue es el mejor para PS1)
-                const mainFile = files.find(f => f.name.toLowerCase().endsWith('.cue')) || 
-                                 files.find(f => f.name.toLowerCase().endsWith('.chd')) ||
-                                 files.find(f => f.name.toLowerCase().endsWith('.iso'));
+    // 2. BUSCAR EL ARCHIVO PRINCIPAL (Prioridad: .cue > .chd > .pbp > .iso)
+    const mainFile = files.find(f => f.name.toLowerCase().endsWith('.cue')) || 
+                     files.find(f => f.name.toLowerCase().endsWith('.chd')) ||
+                     files.find(f => f.name.toLowerCase().endsWith('.pbp')) ||
+                     files.find(f => f.name.toLowerCase().endsWith('.iso')) ||
+                     files.find(f => f.name.toLowerCase().endsWith('.bin'));
 
-                if (mainFile) {
-                    setupDiv.style.display = 'none';
+    if (mainFile) {
+        setupDiv.style.display = 'none';
 
-                    // Configuración para EmulatorJS
-                    window.EJS_patche = true;
-                    window.EJS_player = "#game";
-                    window.EJS_core = "psx"; 
-                    window.EJS_biosUrl = "SCPH1001.BIN"; // Asegúrate de tener la BIOS en tu ruta
-                    window.EJS_color = "#0064ff";
-                    window.EJS_pathtodata = "/../../other/data"; 
+        // 3. CONFIGURACIÓN DEL EMULADOR (Específica para PSX)
+        window.EJS_player = "#game";
+        window.EJS_core = "psx"; // Core forzado a PlayStation 1
+        
+        // El emulador arranca con el archivo principal (ej: el .cue)
+        window.EJS_gameUrl = vfs[mainFile.name];
 
-                    // 3. Pasamos el archivo principal
-                    window.EJS_gameUrl = fileMap[mainFile.name];
+        // LOGICA TIPO "GAME STUDIO":
+        // Le pasamos el diccionario completo. Si el .cue dice "LEER TRACK2.BIN", 
+        // el emulador lo buscará automáticamente en este objeto vfs.
+        window.EJS_gameFiles = vfs;
 
-                    // 4. PASO CRUCIAL PARA VARIOS .BIN:
-                    // Le damos al emulador acceso a todos los archivos de la carpeta
-                    window.EJS_gameFiles = fileMap;
+        // Ajustes de rendimiento y compatibilidad
+        window.EJS_patche = true;
+        window.EJS_fullscreen = true;
+        window.EJS_async = false; // Ayuda a que la carga de archivos locales sea más estable
+        window.EJS_biosUrl = "SCPH1001.BIN"; // Asegúrate de que la BIOS esté en tu raíz
+        window.EJS_pathtodata = "/../../other/data"; 
+        window.EJS_color = "#0064ff";
 
-                    // Cargar el motor
-                    const loader = document.createElement('script');
-                    loader.src = "./scriptgame.js";
-                    document.body.appendChild(loader);
-                } else {
-                    alert("No se encontró un archivo .cue o .iso dentro de la carpeta.");
-                }
-            });
+        // 4. CARGAR EL MOTOR
+        const loader = document.createElement('script');
+        loader.src = "./scriptgame.js";
+        document.body.appendChild(loader);
+
+        console.log("Cargando juego de PS1:", mainFile.name);
+        console.log("Archivos vinculados en la carpeta:", Object.keys(vfs).length);
+    } else {
+        alert("No se encontró un archivo ejecutable de PS1 (.cue, .chd, .iso, .bin) en la carpeta.");
+    }
+});
         </script>
     </body>
 </html>
