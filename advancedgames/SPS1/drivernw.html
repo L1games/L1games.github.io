@@ -27,7 +27,8 @@
         const DB_NAME = "MiBibliotecaRetro";
         const STORE_NAME = "Juegos";
         const GAME_ID = "juego_drive_1"; // Identificador único en tu DB
-        const DRIVE_URL = "https://drive.google.com/uc?export=download&id=1j8dR2oFyORnkqkUaF7Osb828Akc92KT4";
+        const PROXY = "https://corsproxy.io/?";
+        const DRIVE_URL = PROXY + encodeURIComponent("https://drive.google.com/uc?export=download&id=1j8dR2oFyORnkqkUaF7Osb828Akc92KT4");
 
         // 1. Conectar a IndexedDB
         function conectarDB() {
