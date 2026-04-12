@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>OdyWeb 1.0 - The HTML Magnavox Odyssey Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #fff; /* Fondo de la página blanco */
+            color: #000; /* Color del texto general negro */
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            user-select: none;
+            display: flex;
+            flex-direction: column; /* Changed to column for main layout */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 20px; /* Add some top padding as no title */
+
+/* Asegura que todos los párrafos y el cuerpo usen Montserrat */
+body, p {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Aplica Montserrat a etiquetas y entradas */
+label,
+input[type="text"],
+input[type="range"],
+input[type="file"] {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Ya lo teníamos, pero lo confirmo */
+.controls-container select,
+.controls-container button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Si tienes spans dentro de los controles que quieres que tengan Montserrat */
+#controls-sidebar span {
+    font-family: 'Montserrat', sans-serif;
+}
+        }
+
+        #main-container { /* Nuevo contenedor principal para todo el contenido */
+            display: flex;
+            flex-direction: column; /* Column para que la barra lateral y el área de juego/ajustes estén apilados */
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px; /* Ancho máximo para el contenido */
+            margin-top: 20px;
+        }
+
+        #top-section { /* Contenedor para la barra lateral y el área de juego */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            margin-bottom: 20px; /* Espacio entre la sección superior y los ajustes inferiores */
+        }
+
+        #controls-sidebar {
+            width: 280px;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column; /* Controls stacked vertically */
+            gap: 15px;
+            margin-right: 30px;
+        }
+
+        #game-area {
+            position: relative;
+            width: 800px; /* Ancho inicial */
+            height: 600px; /* Alto inicial para 4:3 */
+            border: 2px solid #000;
+            background:#111;
+            /* Flexbox para centrar contenido en pantalla completa */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Oculta cualquier desbordamiento si la imagen de fondo es más grande */
+        }
+
+        /* Estilos para #game-area en modo fullscreen */
+        #game-area:-webkit-full-screen,
+        #game-area:-moz-full-screen,
+        #game-area:-ms-fullscreen,
+        #game-area:fullscreen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black; /* Fondo negro para rellenar los bordes si no hay imagen */
+            /* Transiciones suaves para un efecto más agradable */
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+
+        canvas {
+            display: block;
+            /* Se ajustará dinámicamente por JS en fullscreen, pero aquí es 100% del contenedor #game-area */
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            /* Asegura que el contenido del canvas se ajuste al aspecto, rellenando si es necesario */
+            object-fit: contain;
+        }
+
+        /* Estilos para la imagen de fondo del juego en pantalla completa */
+        #overlay-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Se ajustará al 100% del #game-area, que ya tiene el aspecto 4:3 */
+            height: 100%; /* Ídem */
+            display: none;
+            pointer-events: none;
+            z-index: 2;
+            /* CAMBIO CLAVE: object-fit para respetar el aspecto del contenedor 4:3 */
+            object-fit: contain; /* La imagen se ajusta al área 4:3 manteniendo su relación de aspecto */
+        }
+
+        /* El resto de tus estilos */
+        p {
+            font-family: 'Questrial', sans-serif;
+            font-weight: 400;
+            font-size: 1.1em;
+            line-height: 1.5;
+            color: #000;
+        }
+        p strong {
+            color: #000;
+        }
+
+        .controls-container {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .controls-container label {
+            margin-bottom: 0;
+            font-size: 1em;
+            color: #000;
+        }
+        .controls-container input[type="file"] {
+            padding: 5px;
+            border: 1px solid #333;
+            background-color: #eee;
+            color: #000;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .controls-container input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: #ccc;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        .controls-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #555;
+            cursor: pointer;
+        }
+        .controls-container input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #555;
+            cursor: pointer;
+        }
+
+        .controls-container select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #333;
+            background-color: #eee;
+            color: #000;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Questrial', sans-serif;
+            font-size: 1em;
+        }
+        .controls-container select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .controls-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Questrial', sans-serif;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .controls-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* NUEVOS ESTILOS PARA EL LAYOUT DE LOS AJUSTES INFERIORES */
+        #bottom-settings-section {
+            display: flex;
+            flex-direction: column; /* Las filas de ajustes se apilarán verticalmente */
+            gap: 20px; /* Espacio entre las filas de ajustes */
+            width: 100%;
+            max-width: 800px; /* Ancho máximo para alinearse con game-area */
+            margin-top: 20px; /* Espacio superior para separarlo del game-area */
+            padding: 20px;
+            border: 1px solid #ccc; /* Borde para visualizar la sección */
+            box-sizing: border-box; /* Incluir padding y borde en el ancho */
+        }
+
+        .settings-row { /* Contenedor para cada fila horizontal de ajustes */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around; /* Distribuye los elementos uniformemente */
+            align-items: flex-start;
+            gap: 20px; /* Espacio entre los grupos de ajustes dentro de la fila */
+            width: 100%;
+            flex-wrap: wrap; /* Permite que los elementos salten a la siguiente línea si no hay espacio */
+        }
+
+        .settings-group {
+            display: flex;
+            flex-direction: column; /* Por defecto apilado */
+            gap: 15px;
+            flex-grow: 1; /* Permite que los grupos crezcan para ocupar el espacio disponible */
+            min-width: 250px; /* Ancho mínimo para evitar que se aprieten demasiado */
+        }
+
+        .settings-subgroup {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-left: 0; /* Ajustado para el nuevo layout */
+            border-left: none; /* No necesitamos este borde aquí */
+            padding-left: 0; /* No necesitamos este padding aquí */
+            flex-grow: 1;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .setting-item label,
+        .setting-item select,
+        .setting-item input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Ajustes específicos para el modo de juego, si contiene un subgrupo, su flex-direction debe ser row */
+        .game-mode-settings-group {
+            flex-direction: row; /* Para "Modo de juego" | (ajustes...) */
+            align-items: flex-start; /* Alinear elementos verticalmente al inicio */
+            width: auto; /* Dejar que el contenido defina el ancho */
+            flex-grow: 0; /* No crece en esta fila */
+            min-width: auto;
+        }
+
+        .game-mode-settings-group > .setting-item:first-child { /* Para el select de "Modo de juego" */
+            flex-basis: 150px; /* Un ancho fijo para este elemento */
+            flex-shrink: 0; /* No se encoge */
+        }
+
+        .game-mode-settings-group .settings-subgroup { /* Para la parte de (ajustes...) */
+            margin-left: 20px; /* Sangrar los ajustes debajo de "Modo de juego" */
+            border-left: 1px solid #ccc; /* Separador visual */
+            padding-left: 15px;
+            flex-grow: 1; /* Permitir que este subgrupo ocupe el espacio disponible */
+        }
+
+
+        .visual-settings-group {
+            flex-direction: column; /* Apilar elementos dentro de este grupo */
+            align-items: flex-start;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        .visual-settings-group .setting-item {
+            width: 100%;
+        }
+
+
+        /* Asegurar que .controls-container dentro de settings-group siga funcionando correctamente */
+        .settings-group .controls-container {
+            margin-top: 0; /* Restablecer el margen superior ya que el 'gap' maneja el espaciado */
+        }
+        .settings-group .controls-container label {
+            width: 100%; /* Asegurar que las etiquetas ocupen todo el ancho para una alineación consistente */
+        }
+        .settings-group .controls-container input[type="range"],
+        .settings-group .controls-container select {
+            width: 100%; /* Asegurar que los controles ocupen todo el ancho */
+        }
+
+        /* New styles for footer */
+        #footer-text {
+            margin-top: 40px; /* Space above the footer */
+            margin-bottom: 20px; /* Space below the footer */
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <img src="Odyweblogo.png" alt="Odyweb Logo" style="max-width: 200px; margin-bottom: 20px;">
+    <div id="main-container">
+        <div id="top-section">
+            <div id="controls-sidebar">
+                <p id="player-1-controls">
+                    <strong>Player 1</strong>: W A S D &middot; English: R&nbsp;&#9650;&nbsp;/&nbsp;F&nbsp;&#9660;
+                </p>
+                <p id="player-2-controls"> <strong>Player 2</strong>: &larr; &uarr; &darr; &rarr; &middot; English: K&nbsp;&#9650;&nbsp;/&nbsp;M&nbsp;&#9660;
+                </p>
+                <p id="ai-controls-info" style="display: none;"><strong>AI Right Player</strong>: &uarr;&nbsp;/&nbsp;&darr; = Adjust Y &middot; &larr;&nbsp;/&nbsp;&rarr; = Adjust X</p>
+                <p>
+                    <span id="ball-controls-info"><strong>Reset button (both players)</strong>: Space = Serve</span>
+                    <span id="player-animation-info" style="display: none;"><strong>Player</strong>: Space = Animate to Click/Touch (Click/Touch to set destination)</span>
+                    <span id="paddle-vanish-info" style="display: none;"><strong>Player 2</strong>: Space = Restore vanished paddle</span>
+                    <span id="killer-ball-info" style="display: none;"><strong>Player 2</strong>: N = Restore vanished paddle</span>
+                </p>
+                <p>
+                    <strong>Settings:</strong><br>
+                    <span id="paddle-size-info">Players size: 5 &#x2b; / 6 &#x2212; (Height) &middot; 7 &#x2b; / 8 &#x2212; (Width)</span>
+                    <span id="ball-size-info">Ball size: U &#x2b; / J &#x2212; (Height) &middot; I &#x2b; / O &#x2212; (Width)</span><br>
+                    <span id="ball-speed-info">Ball speed: 1 &#x2212; / 2 &#x2b;</span><br>
+                    <span id="net-size-info">Net size: 9 &#x2b; / 0 &#x2212; (Width)</span>
+                </p>
+
+                <div class="controls-container">
+                    <label for="image-upload">Select overlay image:</label>
+                    <input type="file" id="image-upload" accept="image/*">
+                    <label for="image-opacity">Overlay Opacity:</label>
+                    <input type="range" id="image-opacity" min="0" max="1" step="0.01" value="1">
+                </div>
+
+                <div class="controls-container">
+                    <button id="fullscreen-button">Fullscreen</button>
+                </div>
+            </div>
+
+            <div id="game-area">
+                <canvas id="pong" width="800" height="600"></canvas>
+                <img id="overlay-image" src="" alt="Overlay" />
+            </div>
+        </div>
+
+        <div id="bottom-settings-section">
+            <div class="settings-row">
+                <div class="settings-group game-mode-settings-group">
+                    <div class="setting-item">
+                        <label for="game-mode-selector">Game Mode:</label>
+                        <select id="game-mode-selector">
+                            <option value="pong_ai_right">Game Card #1 - 1 player</option>
+                            <option value="pong" selected>Game Card #1 - 2 players</option>
+                            <option value="paddles_only">Game Card #2</option>
+                            <option value="pong_no_net">Game Card #3</option>
+                            <option value="paddles_contact_vanish">Game Card #4</option>
+                            <option value="killer_ball">Game Card #5</option>
+                            <option value="right_player_only">Game Card #6</option>
+                        </select>
+                    </div>
+                    <div class="settings-subgroup">
+                        <div class="controls-container">
+                            <label for="paddle-acceleration">Paddle Acceleration (Global):</label>
+                            <input type="range" id="paddle-acceleration" min="0.01" max="1.0" step="0.01" value="0.4">
+                        </div>
+                        <div class="controls-container" id="left-player-acceleration-container" style="display:none;">
+                            <label for="left-player-acceleration">Left Player Acceleration:</label>
+                            <input type="range" id="left-player-acceleration" min="0.01" max="1.0" step="0.01" value="0.4">
+                        </div>
+                        <div class="controls-container" id="right-player-acceleration-container" style="display:none;">
+                            <label for="right-player-acceleration">Right Player Acceleration:</label>
+                            <input type="range" id="right-player-acceleration" min="0.01" max="1.0" step="0.01" value="0.4">
+                        </div>
+                        <div class="controls-container" id="left-player-animation-speed-container" style="display:none;">
+                            <label for="left-player-animation-speed">Left Player Animation Speed (ms):</label>
+                            <input type="range" id="left-player-animation-speed" min="100" max="20000" step="50" value="20000">
+                        </div>
+                        <div class="controls-container" id="right-player-animation-speed-container" style="display:none;">
+                            <label for="right-player-animation-speed">Right Player Animation Speed (ms):</label>
+                            <input type="range" id="right-player-animation-speed" min="100" max="20000" step="50" value="20000">
+                        </div>
+                        <div class="controls-container">
+                            <label for="paddle-inertia">Player Control Inertia:</label>
+                            <input type="range" id="paddle-inertia" min="0" max="0.99" step="0.01" value="0.98">
+                        </div>
+                        <div class="controls-container" id="ai-difficulty-container" style="display:none;">
+                            <label for="ai-difficulty">AI Difficulty:</label>
+                            <input type="range" id="ai-difficulty" min="0.1" max="1.0" step="0.01" value="1.0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-row">
+                <div class="settings-group visual-settings-group">
+                    <div class="setting-item">
+                        <label for="game-background-color">Game Background Color:</label>
+                        <select id="game-background-color">
+                            <option value="#111" selected>Black</option>
+                            <option value="#74BE58">Green (74BE58)</option>
+                            <option value="#0080FE">Blue (0080FE)</option>
+                            <option value="#FF4000">Red (FF4000)</option>
+                            <option value="#E5BE01">Yellow (E5BE01)</option>
+                            <option value="#8C1E7F">Purple (8C1E7F)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="crt-blur-intensity">CRT Blur:</label>
+                        <input type="range" id="crt-blur-intensity" min="0" max="10" step="0.1" value="0">
+                    </div>
+                    <div class="setting-item">
+                        <label for="scanlines-mode">Scanlines Mode:</label>
+                        <select id="scanlines-mode">
+                            <option value="none" selected>None</option>
+                            <option value="ntsc">525 lines (NTSC)</option>
+                            <option value="pal">625 lines (PAL)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-text">
+        <p>OdyWeb v. 1.0.</p>
+        <p>The HTML Magnavox Odyssey Simulator</p>
+        <p>2025 &copy; prehistoricgaming</p>
+        <p>Developed by Martin F. Martorell</p>
+    </div>
+
+<script>
+    const canvas = document.getElementById("pong");
+    const ctx = canvas.getContext("2d");
+    const imageUploadInput = document.getElementById("image-upload");
+    const imageOpacitySlider = document.getElementById("image-opacity");
+    const overlayImageElement = document.getElementById("overlay-image");
+    const gameArea = document.getElementById("game-area");
+    const gameBackgroundColorSelect = document.getElementById("game-background-color");
+    const gameModeSelector = document.getElementById("game-mode-selector");
+    const paddleAccelerationSlider = document.getElementById("paddle-acceleration");
+    const fullscreenButton = document.getElementById("fullscreen-button");
+
+    const player1ControlsInfo = document.getElementById("player-1-controls");
+    const player2ControlsInfo = document.getElementById("player-2-controls");
+    const aiControlsInfo = document.getElementById("ai-controls-info");
+    const ballControlsInfo = document.getElementById("ball-controls-info");
+    const playerAnimationInfo = document.getElementById("player-animation-info");
+    const paddleVanishInfo = document.getElementById("paddle-vanish-info");
+    const killerBallInfo = document.getElementById("killer-ball-info");
+    const paddleSizeInfo = document.getElementById("paddle-size-info");
+    const ballSizeInfo = document.getElementById("ball-size-info");
+    const ballSpeedInfo = document.getElementById("ball-speed-info");
+    const netSizeInfo = document.getElementById("net-size-info");
+
+    const leftPlayerAccelerationSlider = document.getElementById("left-player-acceleration");
+    const leftPlayerAccelerationContainer = document.getElementById("left-player-acceleration-container");
+    let leftPlayerAcceleration = parseFloat(leftPlayerAccelerationSlider.value);
+
+    const rightPlayerAccelerationSlider = document.getElementById("right-player-acceleration");
+    const rightPlayerAccelerationContainer = document.getElementById("right-player-acceleration-container");
+    let rightPlayerAcceleration = parseFloat(rightPlayerAccelerationSlider.value);
+
+    const leftPlayerAnimationSpeedSlider = document.getElementById("left-player-animation-speed");
+    const leftPlayerAnimationSpeedContainer = document.getElementById("left-player-animation-speed-container");
+    let leftPlayerAnimationDuration = parseFloat(leftPlayerAnimationSpeedSlider.value);
+
+    const rightPlayerAnimationSpeedSlider = document.getElementById("right-player-animation-speed");
+    const rightPlayerAnimationSpeedContainer = document.getElementById("right-player-animation-speed-container");
+    let rightPlayerAnimationDuration = parseFloat(rightPlayerAnimationSpeedSlider.value);
+
+    const crtBlurIntensitySlider = document.getElementById("crt-blur-intensity");
+    const paddleInertiaSlider = document.getElementById("paddle-inertia");
+    let crtBlurIntensity = parseFloat(crtBlurIntensitySlider.value);
+
+    const scanlinesModeSelector = document.getElementById("scanlines-mode");
+    let currentScanlinesMode = scanlinesModeSelector.value;
+
+    const aiDifficultySlider = document.getElementById("ai-difficulty");
+    const aiDifficultyContainer = document.getElementById("ai-difficulty-container");
+    let aiDifficulty = parseFloat(aiDifficultySlider.value);
+
+    let loadedImage = null;
+    let imageOpacity = 1;
+    let currentGameMode = 'pong';
+    let paddleAcceleration = parseFloat(paddleAccelerationSlider.value);
+    let paddleFriction = parseFloat(paddleInertiaSlider.value);
+
+    const ORIGINAL_CANVAS_WIDTH = 800;
+    const ORIGINAL_CANVAS_HEIGHT = 600;
+    const ASPECT_RATIO = ORIGINAL_CANVAS_WIDTH / ORIGINAL_CANVAS_HEIGHT;
+
+    const initialPaddleX = canvas.width;
+    const initialPaddleY = canvas.height;
+    const initialNetX = canvas.width;
+    const initialNetY = canvas.height;
+
+    const targetLeftPaddleX = 50;
+    const targetLeftPaddleY = canvas.height / 2;
+    const targetRightPaddleX = canvas.width - 50;
+    const targetRightPaddleY = canvas.height / 2;
+    const targetNetX = canvas.width / 2;
+    const targetNetY = canvas.height / 2;
+
+    const PADDLE_DEFAULT_WIDTH = 50 * 1.20;
+    const PADDLE_DEFAULT_HEIGHT = 50 * 1.20;
+
+    const BALL_DEFAULT_WIDTH = 15 * 1.20;
+    const BALL_DEFAULT_HEIGHT = 15 * 1.20;
+
+    const NET_WIDTH = 50;
+
+    const leftPaddle = {
+        x: initialPaddleX,
+        y: initialPaddleY,
+        w: PADDLE_DEFAULT_WIDTH,
+        h: PADDLE_DEFAULT_HEIGHT,
+        dx: 0,
+        dy: 0,
+        targetX: targetLeftPaddleX,
+        targetY: targetLeftPaddleY,
+        animationTargetX: targetLeftPaddleX,
+        animationTargetY: canvas.height / 2,
+        animationReturnStartX: canvas.width + PADDLE_DEFAULT_WIDTH / 2,
+        animationReturnStartY: canvas.height / 2
+    };
+    const rightPaddle = {
+        x: initialPaddleX, // Start from right
+        y: initialPaddleY, // Start from bottom
+        w: PADDLE_DEFAULT_WIDTH,
+        h: PADDLE_DEFAULT_HEIGHT,
+        dx: 0,
+        dy: 0,
+        targetX: targetRightPaddleX,
+        targetY: targetRightPaddleY,
+        animationTargetX: targetRightPaddleX,
+        animationTargetY: canvas.height / 2,
+        animationReturnStartX: canvas.width + PADDLE_DEFAULT_WIDTH / 2, // Start animation from off-screen right
+        animationReturnStartY: canvas.height / 2 // Align to center height
+    };
+
+    const net = {
+        x: initialNetX,
+        y: initialNetY,
+        w: NET_WIDTH,
+        h: canvas.height,
+        dx: 0,
+        dy: 0,
+        friction: 0.9,
+        speed: 4,
+        targetX: targetNetX,
+        targetY: targetNetY
+    };
+
+    const ball = {
+        x: -BALL_DEFAULT_WIDTH / 2 - 50,
+        y: canvas.height / 2,
+        vx: 0,
+        vy: 0,
+        w: BALL_DEFAULT_WIDTH,
+        h: BALL_DEFAULT_HEIGHT,
+        currentHorizontalSpeed: 3,
+        startPointX: 0,
+        startPointY: canvas.height / 2,
+        targetEndPointY: canvas.height / 2,
+        horizontalTravelDistance: 0,
+        serveFromSide: 'left'
+    };
+
+    const world = {
+        width: canvas.width * 1.25,
+        height: canvas.height * 1.25,
+        left: -(canvas.width * 0.125),
+        right: canvas.width + (canvas.width * 0.125),
+        top: -(canvas.height * 0.125),
+        bottom: canvas.height + (canvas.height * 0.125)
+    };
+
+    let paused = true;
+    let lastTouch = null;
+    let verticalOut = null;
+    let trajectoryLeft = 0;
+    let trajectoryRight = 0;
+    let aiPaddleOffsetY = 0;
+    let aiPaddleOffsetX = 0;
+    let initialAnimationComplete = false;
+    let animationStartTime = null;
+    const animationDuration = 500;
+
+    let isLeftPlayerAnimating = false;
+    let isRightPlayerAnimating = false;
+    let animationCurrentTime = 0;
+    let leftPaddlePreVanishX = targetLeftPaddleX;
+    let leftPaddlePreVanishY = targetLeftPaddleY;
+    let rightPaddlePreVanishX = targetRightPaddleX;
+    let rightPaddlePreVanishY = targetRightPaddleY;
+    let animationDelayTimeout = null;
+
+    let rightPaddleLastPosition = { x: targetRightPaddleX, y: targetRightPaddleY };
+
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+    function rect(cx, cy, w, h, color = "white") {
+        ctx.fillStyle = color;
+        ctx.fillRect(cx - w / 2, cy - h / 2, w, h);
+    }
+
+    function drawScanlines() {
+        if (currentScanlinesMode === 'none') {
+            return;
+        }
+
+        const lineWidth = 1;
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+
+        let lineSpacing;
+        if (currentScanlinesMode === 'ntsc') {
+            lineSpacing = canvas.height / 525 * 2;
+        } else if (currentScanlinesMode === 'pal') {
+            lineSpacing = canvas.height / 625 * 2;
+        }
+
+        ctx.beginPath();
+        for (let i = 0; i < canvas.height; i += lineSpacing) {
+            ctx.moveTo(0, i);
+            ctx.lineTo(canvas.width, i);
+        }
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+    }
+
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (crtBlurIntensity > 0) {
+            ctx.filter = `blur(${crtBlurIntensity}px)`;
+        } else {
+            ctx.filter = 'none';
+        }
+
+        // Draw left paddle (always if not 'right_player_only')
+        if (currentGameMode !== 'right_player_only') {
+            rect(leftPaddle.x, leftPaddle.y, leftPaddle.w, leftPaddle.h);
+        }
+
+        // Draw right paddle
+        if (currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball') {
+            if (rightPaddle.x !== initialPaddleX) {
+                rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
+            }
+        } else {
+            rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
+        }
+
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_ai_right') {
+            rect(net.x, net.y, net.w, net.h);
+        }
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right' || currentGameMode === 'killer_ball') {
+            rect(ball.x, ball.y, ball.w, ball.h);
+        }
+
+        ctx.filter = 'none';
+        drawScanlines();
+
+        if (overlayImageElement.style.display === 'block') {
+            overlayImageElement.style.opacity = imageOpacity;
+        }
+    }
+
+    const keyState = {};
+
+    function applyAnalogKeys() {
+        const maxPaddleSpeed = 6;
+        const speedRate = 0.02;
+        const sizeStepPx = 0.6;
+        const netAcceleration = 0.4;
+        const maxNetSpeed = 6;
+        const aiOffsetStep = 1;
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right' || currentGameMode === 'killer_ball') {
+            if (keyState["1"]) {
+                ball.currentHorizontalSpeed *= 1 - speedRate;
+            }
+            if (keyState["2"]) {
+                ball.currentHorizontalSpeed *= 1 + speedRate;
+            }
+            if (!paused && ball.vx !== 0) {
+                ball.vx = Math.sign(ball.vx) * ball.currentHorizontalSpeed;
+            }
+        }
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_ai_right') {
+            net.dx *= net.friction;
+            if (keyState["3"]) {
+                net.dx -= netAcceleration;
+            }
+            if (keyState["4"]) {
+                net.dx += netAcceleration;
+            }
+            net.dx = clamp(net.dx, -maxNetSpeed, maxNetSpeed);
+            if (keyState["9"]) net.w = clamp(net.w + sizeStepPx, 2, canvas.width - 100);
+            if (keyState["0"]) net.w = clamp(net.w - sizeStepPx, 2, canvas.width - 100);
+        }
+
+        // Paddle size controls (Global or Right Player specific)
+        if (currentGameMode === 'right_player_only') {
+            if (keyState["5"]) rightPaddle.h = clamp(rightPaddle.h + sizeStepPx, 10, canvas.height);
+            if (keyState["6"]) rightPaddle.h = clamp(rightPaddle.h - sizeStepPx, 10, canvas.height);
+            if (keyState["7"]) rightPaddle.w = clamp(rightPaddle.w + sizeStepPx, 5, canvas.width / 2);
+            if (keyState["8"]) rightPaddle.w = clamp(rightPaddle.w - sizeStepPx, 5, canvas.width / 2);
+        } else {
+            if (keyState["5"]) {
+                leftPaddle.h = clamp(leftPaddle.h + sizeStepPx, 10, canvas.height);
+                rightPaddle.h = clamp(rightPaddle.h + sizeStepPx, 10, canvas.height);
+            }
+            if (keyState["6"]) {
+                leftPaddle.h = clamp(leftPaddle.h - sizeStepPx, 10, canvas.height);
+                rightPaddle.h = clamp(rightPaddle.h - sizeStepPx, 10, canvas.height);
+            }
+            if (keyState["7"]) {
+                leftPaddle.w = clamp(leftPaddle.w + sizeStepPx, 5, canvas.width / 2);
+                rightPaddle.w = clamp(rightPaddle.w + sizeStepPx, 5, canvas.width / 2);
+            }
+            if (keyState["8"]) {
+                leftPaddle.w = clamp(leftPaddle.w - sizeStepPx, 5, canvas.width / 2);
+                rightPaddle.w = clamp(rightPaddle.w - sizeStepPx, 5, canvas.width / 2);
+            }
+        }
+
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right' || currentGameMode === 'killer_ball') {
+            if (keyState["u"] || keyState["U"]) ball.h = clamp(ball.h + sizeStepPx, 4, canvas.height / 2);
+            if (keyState["j"] || keyState["J"]) ball.h = clamp(ball.h - sizeStepPx, 4, canvas.height / 2);
+            if (keyState["i"] || keyState["I"]) ball.w = clamp(ball.w + sizeStepPx, 4, canvas.width / 2);
+            if (keyState["o"] || keyState["O"]) ball.w = clamp(ball.w - sizeStepPx, 4, canvas.width / 2);
+        }
+
+        // Paddle movement
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'paddles_only' || currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball') {
+            leftPaddle.dx *= paddleFriction;
+            leftPaddle.dy *= paddleFriction;
+            rightPaddle.dx *= paddleFriction;
+            rightPaddle.dy *= paddleFriction;
+
+            if (keyState["w"] || keyState["W"]) leftPaddle.dy -= paddleAcceleration;
+            if (keyState["s"] || keyState["S"]) leftPaddle.dy += paddleAcceleration;
+            if (keyState["a"] || keyState["A"]) leftPaddle.dx -= paddleAcceleration;
+            if (keyState["d"] || keyState["D"]) leftPaddle.dx += paddleAcceleration;
+
+            if ((currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball') && rightPaddle.x === initialPaddleX) {
+            } else {
+                if (keyState["ArrowUp"])     rightPaddle.dy -= paddleAcceleration;
+                if (keyState["ArrowDown"])   rightPaddle.dy += paddleAcceleration;
+                if (keyState["ArrowLeft"])   rightPaddle.dx -= paddleAcceleration;
+                if (keyState["ArrowRight"]) rightPaddle.dx += paddleAcceleration;
+            }
+
+            leftPaddle.dx = clamp(leftPaddle.dx, -maxPaddleSpeed, maxPaddleSpeed);
+            leftPaddle.dy = clamp(leftPaddle.dy, -maxPaddleSpeed, maxPaddleSpeed);
+            rightPaddle.dx = clamp(rightPaddle.dx, -maxPaddleSpeed, maxPaddleSpeed);
+            rightPaddle.dy = clamp(rightPaddle.dy, -maxPaddleSpeed, maxPaddleSpeed);
+        } else if (currentGameMode === 'right_player_only') {
+            if (!isRightPlayerAnimating && rightPaddle.x !== initialPaddleX) { // Changed condition to check against initialPaddleX
+                rightPaddle.dx *= paddleFriction;
+                rightPaddle.dy *= paddleFriction;
+
+                if (keyState["ArrowUp"]) rightPaddle.dy -= rightPlayerAcceleration;
+                if (keyState["ArrowDown"]) rightPaddle.dy += rightPlayerAcceleration;
+                if (keyState["ArrowLeft"]) rightPaddle.dx -= rightPlayerAcceleration;
+                if (keyState["ArrowRight"]) rightPaddle.dx += rightPlayerAcceleration;
+
+                rightPaddle.dx = clamp(rightPaddle.dx, -maxPaddleSpeed, maxPaddleSpeed);
+                rightPaddle.dy = clamp(rightPaddle.dy, -maxPaddleSpeed, maxPaddleSpeed);
+            } else {
+                rightPaddle.dx = 0;
+                rightPaddle.dy = 0;
+            }
+        } else if (currentGameMode === 'pong_ai_right') {
+            leftPaddle.dx *= paddleFriction;
+            leftPaddle.dy *= paddleFriction;
+
+            if (keyState["w"] || keyState["W"]) leftPaddle.dy -= paddleAcceleration;
+            if (keyState["s"] || keyState["S"]) leftPaddle.dy += paddleAcceleration;
+            if (keyState["a"] || keyState["A"]) leftPaddle.dx -= paddleAcceleration;
+            if (keyState["d"] || keyState["D"]) leftPaddle.dx += paddleAcceleration;
+
+            leftPaddle.dx = clamp(leftPaddle.dx, -maxPaddleSpeed, maxPaddleSpeed);
+            leftPaddle.dy = clamp(leftPaddle.dy, -maxPaddleSpeed, maxPaddleSpeed);
+
+            if (keyState["ArrowUp"]) aiPaddleOffsetY = clamp(aiPaddleOffsetY - aiOffsetStep, -canvas.height / 4, canvas.height / 4);
+            if (keyState["ArrowDown"]) aiPaddleOffsetY = clamp(aiPaddleOffsetY + aiOffsetStep, -canvas.height / 4, canvas.height / 4);
+            if (keyState["ArrowLeft"]) aiPaddleOffsetX = clamp(aiPaddleOffsetX - aiOffsetStep, -canvas.width / 8, canvas.width / 8);
+            if (keyState["ArrowRight"]) aiPaddleOffsetX = clamp(aiPaddleOffsetX + aiOffsetStep, -canvas.width / 8, canvas.width / 8);
+
+            const baseAiSpeedY = 3;
+            const baseAiSpeedX = 1;
+            const aiSpeedY = baseAiSpeedY * aiDifficulty;
+            const aiSpeedX = baseAiSpeedX * aiDifficulty;
+
+            const aiImprecisionY = 0
+            const randomizedTargetY = ball.y + aiPaddleOffsetY + (Math.random() * aiImprecisionY * 2) - aiImprecisionY;
+
+            const aiTargetY = randomizedTargetY;
+            const aiTargetX = targetRightPaddleX + aiPaddleOffsetX;
+
+            if (aiTargetY < rightPaddle.y) {
+                rightPaddle.dy = -aiSpeedY;
+            } else if (aiTargetY > rightPaddle.y) {
+                rightPaddle.dy = aiSpeedY;
+            } else {
+                rightPaddle.dy = 0;
+            }
+
+            if (ball.x > canvas.width / 2) {
+                const aiImprecisionX = 0;
+                const randomizedTargetX = aiTargetX + (Math.random() * aiImprecisionX * 2) - aiImprecisionX;
+
+                if (randomizedTargetX < rightPaddle.x) {
+                    rightPaddle.dx = -aiSpeedX;
+                } else if (randomizedTargetX > rightPaddle.x) {
+                    rightPaddle.dx = aiSpeedX;
+                } else {
+                    rightPaddle.dx = 0;
+                    rightPaddle.x = aiTargetX;
+                }
+            } else {
+                 if (Math.abs(rightPaddle.x - aiTargetX) > aiSpeedX) {
+                    rightPaddle.dx = (aiTargetX < rightPaddle.x) ? -aiSpeedX : aiSpeedX;
+                } else {
+                    rightPaddle.dx = 0;
+                    rightPaddle.x = aiTargetX;
+                }
+            }
+
+            rightPaddle.dx = clamp(rightPaddle.dx, -maxPaddleSpeed, maxPaddleSpeed);
+            rightPaddle.dy = clamp(rightPaddle.dy, -maxPaddleSpeed, maxPaddleSpeed);
+        }
+
+
+        // Trajectory effects
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right' || currentGameMode === 'killer_ball') {
+            if (keyState["r"] || keyState["R"]) trajectoryLeft = clamp(trajectoryLeft + 0.1, -20, 20);
+            if (keyState["f"] || keyState["F"]) trajectoryLeft = clamp(trajectoryLeft - 0.1, -20, 20);
+
+            if (currentGameMode !== 'pong_ai_right' && currentGameMode !== 'killer_ball') {
+                if (keyState["k"] || keyState["K"]) trajectoryRight = clamp(trajectoryRight + 0.1, -20, 20);
+                if (keyState["m"] || keyState["M"]) trajectoryRight = clamp(trajectoryRight - 0.1, -20, 20);
+            }
+        }
+    }
+
+    function movePaddle(p) {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.x = clamp(p.x, world.left - p.w/2, world.right + p.w/2);
+        p.y = clamp(p.y, world.top - p.h/2, world.bottom + p.h/2);
+    }
+
+    function moveNet(n) {
+        n.x += n.dx;
+        n.x = clamp(n.x, n.w / 2, canvas.width - n.w / 2);
+    }
+
+    function setupBallTrajectory(direction, currentTrajectoryValue) {
+        ball.startPointX = ball.x;
+        ball.startPointY = ball.y;
+        ball.vx = direction * ball.currentHorizontalSpeed;
+        ball.vy = ball.vy;
+
+        if (direction === 1) {
+            ball.horizontalTravelDistance = canvas.width - ball.x;
+        } else {
+            ball.horizontalTravelDistance = ball.x;
+        }
+
+        ball.targetEndPointY = canvas.height / 2 - (currentTrajectoryValue / 7) * (canvas.height / 2);
+
+        if (ball.horizontalTravelDistance <= 0) {
+            ball.horizontalTravelDistance = 1;
+        }
+    }
+
+    function collideBallWithPaddle(p, sideName) {
+        if (
+            ball.x - ball.w / 2 < p.x + p.w / 2 &&
+            ball.x + ball.w / 2 > p.x - p.w / 2 &&
+            ball.y - ball.h / 2 < p.y + p.h / 2 &&
+            ball.y + ball.h / 2 > p.y - p.h / 2
+        ) {
+            if (currentGameMode === 'killer_ball' && sideName === 'right') {
+                rightPaddleLastPosition = { x: rightPaddle.x, y: rightPaddle.y };
+                rightPaddle.x = initialPaddleX;
+                rightPaddle.y = initialPaddleY;
+                rightPaddle.dx = 0;
+                rightPaddle.dy = 0;
+                return;
+            }
+
+            const prevBallX = ball.x - ball.vx;
+            const prevBallY = ball.y - ball.vy;
+
+            let collidedFromX = false;
+            let collidedFromY = false;
+
+            const overlapX = sideName === "left"
+                ? (p.x + p.w / 2) - (ball.x - ball.w / 2)
+                : (ball.x + ball.w / 2) - (p.x - ball.w / 2);
+            const overlapY = (ball.y < p.y)
+                ? (ball.y + ball.h / 2) - (p.y - p.h / 2)
+                : (p.y + p.h / 2) - (ball.y - p.h / 2);
+
+            if (sideName === "left" && prevBallX - ball.w / 2 >= p.x + p.w / 2 && ball.vx < 0) collidedFromX = true;
+            if (sideName === "right" && prevBallX + ball.w / 2 <= p.x - p.w / 2 && ball.vx > 0) collidedFromX = true;
+
+            if (collidedFromX && collidedFromY) {
+                if (Math.abs(overlapX) < Math.abs(overlapY)) {
+                    collidedFromY = false;
+                } else {
+                    collidedFromX = false;
+                }
+            }
+
+            if (collidedFromX) {
+                ball.x += sideName === "left" ? overlapX : -overlapX;
+                ball.vx = -ball.vx;
+            } else if (collidedFromY) {
+                ball.y += (ball.y < p.y) ? -overlapY : overlapY;
+                ball.vy = -ball.vy * 0.8;
+            } else {
+                ball.vx = -ball.vx;
+                ball.vy = -ball.vy;
+                const reboundOverlapX = sideName === "left"
+                    ? (p.x + p.w / 2) - (ball.x - ball.w / 2)
+                    : (ball.x + ball.w / 2) - (p.x - ball.w / 2);
+                ball.x += sideName === "left" ? reboundOverlapX : -reboundOverlapX;
+            }
+
+            lastTouch = sideName;
+
+            const direction = sideName === "left" ? 1 : -1;
+            const currentTrajectory = sideName === "left" ? trajectoryLeft : trajectoryRight;
+
+            setupBallTrajectory(direction, currentTrajectory);
+        }
+    }
+
+    function updateBall() {
+        if (!paused) {
+            let currentTrajectoryValue = 0;
+            if (ball.vx < 0) {
+                currentTrajectoryValue = trajectoryRight;
+            } else {
+                currentTrajectoryValue = trajectoryLeft;
+            }
+
+            ball.targetEndPointY = canvas.height / 2 - (currentTrajectoryValue / 7) * (canvas.height / 2);
+
+            let horizontalProgress = Math.abs(ball.x - ball.startPointX) / ball.horizontalTravelDistance;
+            horizontalProgress = clamp(horizontalProgress, 0, 1);
+
+            const idealY = ball.startPointY + (ball.targetEndPointY - ball.startPointY) * horizontalProgress;
+
+            const correctionFactor = 0.2;
+            ball.vy = (idealY - ball.y) * correctionFactor;
+
+            const maxVy = 7;
+            ball.vy = clamp(ball.vy, -maxVy, maxVy);
+
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            if (ball.x - ball.w / 2 < world.left) {
+                paused = true;
+                ball.vx = 0;
+                ball.vy = 0;
+                ball.x = -BALL_DEFAULT_WIDTH / 2 - 50;
+                ball.y = canvas.height / 2;
+                ball.serveFromSide = 'left';
+            } else if (ball.x + ball.w / 2 > world.right) {
+                paused = true;
+                ball.vx = 0;
+                ball.vy = 0;
+                ball.x = canvas.width + BALL_DEFAULT_WIDTH / 2 + 50;
+                ball.y = canvas.height / 2;
+                ball.serveFromSide = 'right';
+            }
+            else if (ball.y - ball.h / 2 < world.top || ball.y + ball.h / 2 > world.bottom) {
+                paused = true;
+                ball.vx = 0;
+                ball.vy = 0;
+            }
+
+            if (!verticalOut && (ball.y < -ball.h || ball.y > canvas.height + ball.h)) {
+                verticalOut = ball.y < 0 ? "top" : "bottom";
+            }
+
+            if (verticalOut) {
+                if (
+                    (verticalOut === "top" && ball.y >= -ball.h) ||
+                    (verticalOut === "bottom" && ball.y <= canvas.height + ball.h)
+                ) {
+                    verticalOut = null;
+                    ball.y = clamp(ball.y, ball.h / 2, canvas.height - ball.h / 2);
+                    ball.vy = 0;
+                }
+                return;
+            }
+
+            if (ball.vx < 0) collideBallWithPaddle(leftPaddle, "left");
+            if (ball.vx > 0) collideBallWithPaddle(rightPaddle, "right");
+        }
+    }
+
+    function animateInitialPositions(timestamp) {
+        if (!animationStartTime) {
+            animationStartTime = timestamp;
+        }
+
+        const elapsed = timestamp - animationStartTime;
+        const progress = clamp(elapsed / animationDuration, 0, 1);
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'paddles_only' || currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball' || currentGameMode === 'pong_ai_right') {
+            leftPaddle.x = initialPaddleX + (leftPaddle.targetX - initialPaddleX) * progress;
+            leftPaddle.y = initialPaddleY + (leftPaddle.targetY - initialPaddleY) * progress;
+            rightPaddle.x = initialPaddleX + (rightPaddle.targetX - initialPaddleX) * progress;
+            rightPaddle.y = initialPaddleY + (rightPaddle.targetY - initialPaddleY) * progress;
+        } else if (currentGameMode === 'right_player_only') {
+            // For 'right_player_only', right paddle moves from off-screen right
+            // leftPaddle.x = initialPaddleX; // Ensure left paddle is off-screen
+            // leftPaddle.y = initialPaddleY;
+
+            rightPaddle.x = (canvas.width + PADDLE_DEFAULT_WIDTH / 2) + (targetRightPaddleX - (canvas.width + PADDLE_DEFAULT_WIDTH / 2)) * progress;
+            rightPaddle.y = targetRightPaddleY; // Keep Y fixed for initial animation
+
+            if (progress === 1) {
+                rightPaddle.animationTargetX = targetRightPaddleX;
+                rightPaddle.animationTargetY = targetRightPaddleY;
+                rightPaddle.animationReturnStartX = canvas.width + PADDLE_DEFAULT_WIDTH / 2; // Start animation from off-screen right
+                rightPaddle.animationReturnStartY = canvas.height / 2; // Align to center height
+            }
+        }
+
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_ai_right') {
+            net.x = initialNetX + (net.targetX - initialNetX) * progress;
+            net.y = initialNetY + (net.targetY - initialNetY) * progress;
+        }
+
+
+        if (progress === 1) {
+            initialAnimationComplete = true;
+        }
+    }
+
+    function checkPaddleCollision(paddle1, paddle2) {
+        return paddle1.x - paddle1.w / 2 < paddle2.x + paddle2.w / 2 &&
+               paddle1.x + paddle1.w / 2 > paddle2.x - paddle2.w / 2 &&
+               paddle1.y - paddle1.h / 2 < paddle2.y + paddle2.h / 2 &&
+               paddle1.y + paddle1.h / 2 > paddle2.y - paddle2.h / 2;
+    }
+
+    function easeOutCubic(t) {
+        return (--t) * t * t + 1;
+    }
+
+    function update(timestamp) {
+        if (!initialAnimationComplete) {
+            animateInitialPositions(timestamp);
+        } else {
+            applyAnalogKeys();
+
+            if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'paddles_only' ) {
+                movePaddle(leftPaddle);
+                movePaddle(rightPaddle);
+            } else if (currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball') {
+                movePaddle(leftPaddle);
+                if (rightPaddle.x !== initialPaddleX) {
+                    movePaddle(rightPaddle);
+                }
+
+                if (currentGameMode === 'paddles_contact_vanish' && checkPaddleCollision(leftPaddle, rightPaddle)) {
+                    rightPaddleLastPosition = { x: rightPaddle.x, y: rightPaddle.y };
+                    rightPaddle.x = initialPaddleX;
+                    rightPaddle.y = initialPaddleY;
+                    rightPaddle.dx = 0;
+                    rightPaddle.dy = 0;
+                }
+            } else if (currentGameMode === 'right_player_only') {
+                if (!isRightPlayerAnimating && rightPaddle.x !== initialPaddleX) { // Check against initialPaddleX
+                    movePaddle(rightPaddle);
+                } else {
+                    rightPaddle.dx = 0;
+                    rightPaddle.dy = 0;
+                }
+
+                if (isRightPlayerAnimating) {
+                    animationCurrentTime += 16;
+                    let progress = clamp(animationCurrentTime / rightPlayerAnimationDuration, 0, 1);
+                    const easedProgress = easeOutCubic(progress);
+
+                    rightPaddle.x = rightPaddle.animationReturnStartX + (rightPaddle.animationTargetX - rightPaddle.animationReturnStartX) * easedProgress;
+                    rightPaddle.y = rightPaddle.animationReturnStartY + (rightPaddle.animationTargetY - rightPaddle.animationReturnStartY) * easedProgress;
+
+                    if (progress === 1) {
+                        isRightPlayerAnimating = false;
+                        rightPaddle.x = rightPaddle.animationTargetX;
+                        rightPaddle.y = rightPaddle.animationTargetY;
+                        animationCurrentTime = 0;
+                    }
+                }
+            } else if (currentGameMode === 'pong_ai_right') {
+                movePaddle(leftPaddle);
+                movePaddle(rightPaddle);
+            }
+
+
+            if (currentGameMode === 'pong' || currentGameMode === 'pong_ai_right') {
+                moveNet(net);
+            }
+            if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right' || currentGameMode === 'killer_ball') {
+                updateBall();
+            }
+        }
+    }
+
+    function loop(timestamp) {
+        update(timestamp);
+        draw();
+        requestAnimationFrame(loop);
+    }
+    loop();
+
+    function resetGame() {
+        paused = true;
+        ball.vx = 0;
+        ball.vy = 0;
+        lastTouch = null;
+        verticalOut = null;
+        trajectoryLeft = 0;
+        trajectoryRight = 0;
+        aiPaddleOffsetY = 0;
+        aiPaddleOffsetX = 0;
+        initialAnimationComplete = false;
+        animationStartTime = null;
+
+        // Reset positions based on game mode
+        if (currentGameMode === 'right_player_only') {
+            leftPaddle.x = initialPaddleX; // Ensure left paddle is off-screen
+            leftPaddle.y = initialPaddleY;
+            rightPaddle.x = canvas.width + PADDLE_DEFAULT_WIDTH / 2; // Start off-screen right for animation
+            rightPaddle.y = targetRightPaddleY; // Start at target Y for animation
+            rightPaddle.dx = 0;
+            rightPaddle.dy = 0;
+            isRightPlayerAnimating = false;
+            animationCurrentTime = 0;
+            rightPaddle.animationTargetX = targetRightPaddleX;
+            rightPaddle.animationTargetY = targetRightPaddleY;
+            rightPaddle.animationReturnStartX = canvas.width + PADDLE_DEFAULT_WIDTH / 2;
+            rightPaddle.animationReturnStartY = canvas.height / 2;
+        } else if (currentGameMode === 'pong_ai_right') {
+            leftPaddle.x = initialPaddleX;
+            leftPaddle.y = initialPaddleY;
+            leftPaddle.dx = 0;
+            leftPaddle.dy = 0;
+            rightPaddle.x = initialPaddleX;
+            rightPaddle.y = initialPaddleY;
+            rightPaddle.dx = 0;
+            rightPaddle.dy = 0;
+        } else if (currentGameMode === 'paddles_contact_vanish' || currentGameMode === 'killer_ball') {
+            leftPaddle.x = targetLeftPaddleX;
+            leftPaddle.y = targetLeftPaddleY;
+            leftPaddle.dx = 0;
+            leftPaddle.dy = 0;
+            rightPaddle.x = targetRightPaddleX;
+            rightPaddle.y = targetRightPaddleY;
+            rightPaddle.dx = 0;
+            rightPaddle.dy = 0;
+            rightPaddleLastPosition = { x: targetRightPaddleX, y: targetRightPaddleY };
+        } else {
+            leftPaddle.x = initialPaddleX;
+            leftPaddle.y = initialPaddleY;
+            leftPaddle.dx = 0;
+            leftPaddle.dy = 0;
+            rightPaddle.x = initialPaddleX;
+            rightPaddle.y = initialPaddleY;
+            rightPaddle.dx = 0;
+            rightPaddle.dy = 0;
+        }
+
+        if (currentGameMode === 'killer_ball' || currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right') {
+            ball.x = -BALL_DEFAULT_WIDTH / 2 - 50;
+            ball.y = canvas.height / 2;
+            ball.serveFromSide = 'left';
+        }
+
+        if (currentGameMode === 'pong' || currentGameMode === 'pong_ai_right') {
+            net.x = initialNetX;
+            net.y = initialNetY;
+        } else {
+            net.x = initialNetX; // Ensure net is off-screen if not in pong mode
+            net.y = initialNetY;
+        }
+
+        ball.w = BALL_DEFAULT_WIDTH;
+        ball.h = BALL_DEFAULT_HEIGHT;
+        ball.currentHorizontalSpeed = 3;
+        net.w = NET_WIDTH;
+        leftPaddle.w = rightPaddle.w = PADDLE_DEFAULT_WIDTH;
+        leftPaddle.h = rightPaddle.h = PADDLE_DEFAULT_HEIGHT;
+    }
+
+
+    document.addEventListener("keydown", (e) => {
+        const preventedKeys = [
+            " ",
+            "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+            "w", "a", "s", "d",
+            "W", "A", "S", "D",
+            "r", "f", "k", "m",
+            "R", "F", "K", "M",
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+            "u", "j", "i", "o",
+            "U", "J", "I", "O",
+            "n", "N"
+        ];
+
+        if (preventedKeys.includes(e.key)) {
+            e.preventDefault();
+        }
+
+        if (!keyState[e.key]) {
+            keyState[e.key] = true;
+        }
+
+        switch (e.key) {
+            case " ":
+                if (currentGameMode === 'pong' || currentGameMode === 'pong_no_net' || currentGameMode === 'pong_ai_right') {
+                    if (paused && initialAnimationComplete) {
+                        const initialDirection = (ball.serveFromSide === 'left') ? 1 : -1;
+                        if (ball.serveFromSide === 'left') {
+                            ball.x = -BALL_DEFAULT_WIDTH / 2 - 50;
+                        } else {
+                            ball.x = canvas.width + BALL_DEFAULT_WIDTH / 2 + 50;
+                        }
+                        ball.y = canvas.height / 2;
+                        const currentTrajectory = (ball.serveFromSide === 'left') ? trajectoryLeft : trajectoryRight;
+                        setupBallTrajectory(initialDirection, currentTrajectory);
+                        paused = false;
+                    } else if (!paused && initialAnimationComplete) {
+                        ball.vx = -ball.vx || (ball.vx === 0 ? 3 : 0);
+                        ball.vy = -ball.vy;
+                        const newDirection = Math.sign(ball.vx);
+                        const currentTrajectory = (newDirection === 1) ? trajectoryLeft : trajectoryRight;
+                        setupBallTrajectory(newDirection, currentTrajectory);
+                    }
+                } else if (currentGameMode === 'right_player_only' && initialAnimationComplete) {
+                    isRightPlayerAnimating = !isRightPlayerAnimating;
+                    if (isRightPlayerAnimating) {
+                        animationCurrentTime = 0;
+                        rightPaddle.animationTargetX = rightPaddle.x;
+                        rightPaddle.animationTargetY = rightPaddle.y;
+
+                        // Start animation from off-screen right
+                        rightPaddle.animationReturnStartX = canvas.width + PADDLE_DEFAULT_WIDTH / 2;
+                        rightPaddle.animationReturnStartY = canvas.height / 2; // Keep at center height
+                    }
+                } else if (currentGameMode === 'paddles_contact_vanish' && initialAnimationComplete) {
+                    if (rightPaddle.x === initialPaddleX) {
+                        rightPaddle.x = rightPaddleLastPosition.x;
+                        rightPaddle.y = rightPaddleLastPosition.y;
+                    }
+                } else if (currentGameMode === 'killer_ball' && initialAnimationComplete) {
+                    if (paused) {
+                        const initialDirection = (ball.serveFromSide === 'left') ? 1 : -1;
+                        if (ball.serveFromSide === 'left') {
+                            ball.x = -BALL_DEFAULT_WIDTH / 2 - 50;
+                        } else {
+                            ball.x = canvas.width + BALL_DEFAULT_WIDTH / 2 + 50;
+                        }
+                        ball.y = canvas.height / 2;
+                        const currentTrajectory = (ball.serveFromSide === 'left') ? trajectoryLeft : trajectoryRight;
+                        setupBallTrajectory(initialDirection, currentTrajectory);
+                        paused = false;
+                    } else if (!paused) {
+                        ball.vx = -ball.vx;
+                        ball.vy = -ball.vy;
+                        const newDirection = Math.sign(ball.vx);
+                        const currentTrajectory = (newDirection === 1) ? trajectoryLeft : trajectoryRight;
+                        setupBallTrajectory(newDirection, currentTrajectory);
+                    }
+                }
+                break;
+
+            case "n":
+            case "N":
+                if (currentGameMode === 'killer_ball' && initialAnimationComplete) {
+                    if (rightPaddle.x === initialPaddleX) {
+                        rightPaddle.x = rightPaddleLastPosition.x;
+                        rightPaddle.y = rightPaddleLastPosition.y;
+                        rightPaddle.dx = 0;
+                        rightPaddle.dy = 0;
+                    }
+                }
+                break;
+        }
+    });
+
+    canvas.addEventListener('mousedown', (e) => {
+        if (currentGameMode === 'right_player_only' && initialAnimationComplete) {
+            rightPaddle.animationReturnStartX = rightPaddle.x;
+            rightPaddle.animationReturnStartY = rightPaddle.y;
+
+            rightPaddle.animationTargetY = e.clientY - canvas.getBoundingClientRect().top;
+            rightPaddle.animationTargetX = e.clientX - canvas.getBoundingClientRect().left;
+        }
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+        if (currentGameMode === 'right_player_only' && initialAnimationComplete && e.touches.length > 0) {
+            rightPaddle.animationReturnStartX = rightPaddle.x;
+            rightPaddle.animationReturnStartY = rightPaddle.y;
+
+            rightPaddle.animationTargetY = e.touches[0].clientY - canvas.getBoundingClientRect().top;
+            rightPaddle.animationTargetX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+            e.preventDefault();
+        }
+    });
+
+
+    document.addEventListener("keyup", (e) => {
+        keyState[e.key] = false;
+    });
+
+    imageUploadInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                overlayImageElement.src = e.target.result;
+                overlayImageElement.onload = () => {
+                    overlayImageElement.style.display = 'block';
+                };
+            };
+            reader.readAsDataURL(file);
+        } else {
+            overlayImageElement.style.display = 'none';
+            overlayImageElement.src = '';
+        }
+    });
+
+    imageOpacitySlider.addEventListener("input", (event) => {
+        imageOpacity = parseFloat(event.target.value);
+    });
+
+    gameBackgroundColorSelect.addEventListener("change", (event) => {
+        gameArea.style.backgroundColor = event.target.value;
+    });
+
+    paddleAccelerationSlider.addEventListener("input", (event) => {
+        paddleAcceleration = parseFloat(event.target.value);
+    });
+
+    leftPlayerAccelerationSlider.addEventListener("input", (event) => {
+        leftPlayerAcceleration = parseFloat(event.target.value);
+    });
+
+    rightPlayerAccelerationSlider.addEventListener("input", (event) => {
+        rightPlayerAcceleration = parseFloat(event.target.value);
+    });
+
+    leftPlayerAnimationSpeedSlider.addEventListener("input", (event) => {
+        leftPlayerAnimationDuration = parseFloat(event.target.value);
+    });
+
+    rightPlayerAnimationSpeedSlider.addEventListener("input", (event) => {
+        rightPlayerAnimationDuration = parseFloat(event.target.value);
+    });
+
+    crtBlurIntensitySlider.addEventListener("input", (event) => {
+        crtBlurIntensity = parseFloat(event.target.value);
+    });
+
+    scanlinesModeSelector.addEventListener("change", (event) => {
+        currentScanlinesMode = event.target.value;
+    });
+
+
+    paddleInertiaSlider.addEventListener("input", (event) => {
+        const value = parseFloat(event.target.value);
+        paddleFriction = value === 0 ? 0 : value;
+    });
+
+    aiDifficultySlider.addEventListener("input", (event) => {
+        aiDifficulty = parseFloat(event.target.value);
+    });
+
+
+    gameModeSelector.addEventListener("change", (event) => {
+        currentGameMode = event.target.value;
+        resetGame();
+
+        // Show/hide specific player sliders
+        leftPlayerAccelerationContainer.style.display = 'none';
+        leftPlayerAnimationSpeedContainer.style.display = 'none';
+        rightPlayerAccelerationContainer.style.display = 'none';
+        rightPlayerAnimationSpeedContainer.style.display = 'none';
+
+        if (currentGameMode === 'left_player_only') {
+            leftPlayerAccelerationContainer.style.display = 'flex';
+            leftPlayerAnimationSpeedContainer.style.display = 'flex';
+        } else if (currentGameMode === 'right_player_only') {
+            rightPlayerAccelerationContainer.style.display = 'flex';
+            rightPlayerAnimationSpeedContainer.style.display = 'flex';
+        }
+
+        if (currentGameMode === 'pong_ai_right') {
+            aiDifficultyContainer.style.display = 'flex';
+        } else {
+            aiDifficultyContainer.style.display = 'none';
+        }
+
+
+        // Update control info visibility
+        player1ControlsInfo.style.display = 'none';
+        player2ControlsInfo.style.display = 'none';
+        aiControlsInfo.style.display = 'none';
+        ballControlsInfo.style.display = 'none';
+        playerAnimationInfo.style.display = 'none';
+        paddleVanishInfo.style.display = 'none';
+        killerBallInfo.style.display = 'none';
+        paddleSizeInfo.style.display = 'block'; // Always visible for general paddle size
+        ballSizeInfo.style.display = 'none';
+        ballSpeedInfo.style.display = 'none';
+        netSizeInfo.style.display = 'none';
+
+        if (currentGameMode === 'pong') {
+            player1ControlsInfo.style.display = 'block';
+            player2ControlsInfo.style.display = 'block';
+            ballControlsInfo.style.display = 'inline';
+            ballSizeInfo.style.display = 'inline';
+            ballSpeedInfo.style.display = 'inline';
+            netSizeInfo.style.display = 'inline';
+        } else if (currentGameMode === 'pong_no_net') {
+            player1ControlsInfo.style.display = 'block';
+            player2ControlsInfo.style.display = 'block';
+            ballControlsInfo.style.display = 'inline';
+            ballSizeInfo.style.display = 'inline';
+            ballSpeedInfo.style.display = 'inline';
+        } else if (currentGameMode === 'paddles_only') {
+            player1ControlsInfo.style.display = 'block';
+            player2ControlsInfo.style.display = 'block';
+        } else if (currentGameMode === 'paddles_contact_vanish') {
+            player1ControlsInfo.style.display = 'block';
+            player2ControlsInfo.style.display = 'block';
+            paddleVanishInfo.style.display = 'inline';
+        } else if (currentGameMode === 'killer_ball') {
+            player1ControlsInfo.style.display = 'block'; // Left player still moves
+            player2ControlsInfo.style.display = 'block'; // Player 2 controls are needed for movement
+            ballControlsInfo.style.display = 'inline';
+            killerBallInfo.style.display = 'inline';
+            ballSizeInfo.style.display = 'inline';
+            ballSpeedInfo.style.display = 'inline';
+        } else if (currentGameMode === 'right_player_only') {
+            player1ControlsInfo.style.display = 'none'; // Hide player 1 controls
+            player2ControlsInfo.innerHTML = "<strong>Player</strong>: &larr; &uarr; &darr; &rarr; &middot; English: K&nbsp;&#9650;&nbsp;/&nbsp;M&nbsp;&#9660;";
+            player2ControlsInfo.style.display = 'block';
+            playerAnimationInfo.innerHTML = "<strong>Reset</strong>: Space = Serve";
+            playerAnimationInfo.style.display = 'inline';
+            // Set initial position for right paddle to be off-screen right
+            rightPaddle.x = canvas.width + PADDLE_DEFAULT_WIDTH / 2;
+            rightPaddle.y = targetRightPaddleY;
+            leftPaddle.x = initialPaddleX; // Ensure left paddle is off-screen
+            leftPaddle.y = initialPaddleY;
+        } else if (currentGameMode === 'pong_ai_right') {
+            player1ControlsInfo.style.display = 'block';
+            aiControlsInfo.style.display = 'block';
+            ballControlsInfo.style.display = 'inline';
+            ballSizeInfo.style.display = 'inline';
+            ballSpeedInfo.style.display = 'inline';
+            netSizeInfo.style.display = 'inline';
+        }
+    });
+
+    function adjustGameAreaForFullscreen() {
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+
+        let newWidth;
+        let newHeight;
+
+        if (screenWidth / screenHeight > ASPECT_RATIO) {
+            newHeight = screenHeight;
+            newWidth = newHeight * ASPECT_RATIO;
+        } else {
+            newWidth = screenWidth;
+            newHeight = newWidth / ASPECT_RATIO;
+        }
+
+        gameArea.style.width = `${newWidth}px`;
+        gameArea.style.height = `${newHeight}px`;
+    }
+
+    function restoreGameAreaStyles() {
+        gameArea.style.width = ORIGINAL_CANVAS_WIDTH + 'px';
+        gameArea.style.height = ORIGINAL_CANVAS_HEIGHT + 'px';
+    }
+
+    fullscreenButton.addEventListener("click", () => {
+        if (gameArea.requestFullscreen) {
+            gameArea.requestFullscreen();
+        } else if (gameArea.mozRequestFullScreen) {
+            gameArea.mozRequestFullScreen();
+        } else if (gameArea.webkitRequestFullscreen) {
+            gameArea.webkitRequestFullscreen();
+        } else if (gameArea.msRequestFullscreen) {
+            gameArea.msRequestFullscreen();
+        }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+        if (document.fullscreenElement) {
+            adjustGameAreaForFullscreen();
+        } else {
+            restoreGameAreaStyles();
+        }
+    });
+
+    document.addEventListener("mozfullscreenchange", () => {
+        if (document.mozFullScreen) {
+            adjustGameAreaForFullscreen();
+        } else {
+            restoreGameAreaStyles();
+        }
+    });
+
+    document.addEventListener("webkitfullscreenchange", () => {
+        if (document.webkitIsFullScreen) {
+            adjustGameAreaForFullscreen();
+        } else {
+            restoreGameAreaStyles();
+        }
+    });
+
+    document.addEventListener("msfullscreenchange", () => {
+        if (document.msFullscreenElement) {
+            adjustGameAreaForFullscreen();
+        } else {
+            restoreGameAreaStyles();
+        }
+    });
+
+    gameModeSelector.dispatchEvent(new Event('change'));
+    crtBlurIntensitySlider.dispatchEvent(new Event('input'));
+    paddleInertiaSlider.dispatchEvent(new Event('change'));
+    scanlinesModeSelector.dispatchEvent(new Event('change'));
+    aiDifficultySlider.dispatchEvent(new Event('input'));
+</script>
+
+</body>
+</html>
