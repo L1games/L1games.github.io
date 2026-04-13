@@ -31,6 +31,11 @@
 	
         Dos(document.getElementById("dos"), {
             url: "fifa94.jsdos",
+			dosboxConf: `
+            [cpu]
+            core=normal
+            cycles=fixed 25000
+        `,
 			pathPrefix: "/../../../dosboxconfig/latest/emulators/"
         });
     </script>
