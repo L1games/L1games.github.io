@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js-dos digger 8.xx</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #dos {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <!-- js-dos style sheet -->
+    <link rel="stylesheet" href="./../js-dos.css">
+
+    <!-- js-dos -->
+    <script src="./../js-dos.js"></script>
+
+    <script src="./../emulators.js"></script>
+</head>
+<body>
+
+    <div id="dos" style="width: 100%; height: 100%"></div>
+
+    <script>
+	
+        Dos(document.getElementById("dos"), {
+            url: "wolf3d.jsdos",
+			pathPrefix: "/../../../dosboxconfig/latest/emulators/"
+        });
+    </script>
+</body>
+</html>
