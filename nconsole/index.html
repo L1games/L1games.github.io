@@ -174,13 +174,6 @@
             transition: 0.4s ease;
             transform: scale(0.8);
         }
-        .vboy {
-            color: yellow;
-            background-color: darkblue;
-            border: none;
-            padding: 5px;
-            border-radius: 5px;
-        }
         #boybtn1 {
             color: yellow;
             background-color: darkblue;
@@ -199,6 +192,18 @@
         .infoconsole:hover {
             transition: 0.2s ease;
             transform: scale(1.1);
+        }
+        #virtualboy {
+            color: yellow;
+            background-color: blue;
+        }
+        #famicom {
+            color: white;
+            background-color: #efb810;
+        }
+        #superfamicom {
+            color: white;
+            background-color: #88e788;
         }
     </style>
     <script src="nconsole.js" defer></script>
@@ -249,9 +254,29 @@
 
             <p class="infoconsole">Considerada por muchos como la cima del 2D, perfeccionó la fórmula con gráficos vibrantes y bandas sonoras inolvidables.</p>
         </div>
+        <div class="modelconsole">
+            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Nintendo-Famicom-Console-Set-FL.png/250px-Nintendo-Famicom-Console-Set-FL.png" />
+
+            <p class="pconsole" id="famicom">Nintendo Famicom</p>
+
+            <p class="infoconsole">Es la consola que lo cambió todo. Lanzada en Japón en 1983, es la versión original de lo que en Occidente conocimos como NES.</p>
+        </div>
+        <div class="modelconsole">
+            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlAekrsD1iNlnZJ2aUfeRvxhtYFBe8z_f1Bw&s" />
+
+            <p class="pconsole" id="superfamicom">Nintendo Super Famicom</p>
+
+            <p class="infoconsole">La joya de la corona de los 16 bits, lanzada en 1990. En el resto del mundo se llamó Super Nintendo (SNES).</p>
+        </div>
+        <div class="modelconsole">
+            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMF-nMUsGHZHiqdVA2tBhOIwsmdJoN5C9Pg&s" />
+
+            <p class="pconsole" id="virtualboy">Nintendo VirtualBoy</p>
+
+            <p class="infoconsole">La Virtual Boy fue el intento más arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995.</p>
+        </div>
     </div>
     <div class="nconsolebtn">
-        <button class="vboy" id="boybtnselect" title="La Virtual Boy fue el intento más arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995">And Virtual Boy!</button>
         <button class="nconsolebtn1" onclick="location.reload()">N-Console Games</button>
     </div>
     <div class="consolebtn">
@@ -261,6 +286,9 @@
         <button class="consoleselect" id="n64btn">Nintendo 64</button>
         <button class="consoleselect" id="ndsbtn">Nintendo DS</button>
         <button class="consoleselect" id="snesbtn">Nintendo SNES</button>
+        <button class="consoleselect" id="famibtn">Nintendo Famicom</button>
+        <button class="consoleselect" id="sfamibtn">Nintendo Super Famicom</button>
+        <button class="consoleselect" id="boybtnselect">Virtual Boy!</button>
     </div>
     <div class="gameselect">
         <div class="gamemenu1" id="gbagame">
