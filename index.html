@@ -183,6 +183,16 @@
 			flex-direction: column;
 			justify-content: center;
 		}
+		.gamewin {
+			display: grid;
+			grid-template-columns: repeat(1, auto);
+			place-content: center;
+		}
+		.video {
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			place-content: center;
+		}
     </style>
 </head>
 <body>
@@ -206,9 +216,16 @@
         <img align="right" srcset="user.png" class="userimg">
     </div>
     <p class="userp">User</p>
-	<div class="image22">
-		<img srcset="./assets/hola.jpg" />
-	</div>
+	<div class="gamewin">
+		<div class="video">
+		<video width="640" height="360" controls>
+        <source src="./assets/video.mp4" type="video/mp4">
+       Tu navegador no soporta la reproducción de videos.
+      </video>
+			<div class="image22" width="640" height="360">
+				<img src="./assets/images.png">
+		</div>
+		</div>
     <div class="gamebar">
         <div class="gamebtn">
 
@@ -295,6 +312,7 @@
 
         </div>
     </div>
+	</div>
     <footer>
         <p class="pfooter">About:</p>
 
