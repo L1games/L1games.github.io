@@ -1,8 +1,18 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Nintendo Games</title>
     <link rel="icon" href="/../assets/nconsole.png" type="image/png">
     <style>
+	@media (max-width: 1024px) {
+  .console {
+    grid-template-columns: repeat(2, auto) !important; 
+  }
+  .gameselect {
+  grid-template-columns: repeat(2, auto)!important;
+  }
+}
         body {
             margin: 0;
             padding: 0;
@@ -10,37 +20,27 @@
         }
 
         header {
-            width: 100%;
-            border: none;
-            background-color: #FF5454;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            top: -1px;
+			background-color: #FF5454;
         }
-
-        .Inibtn {
-            border: none;
-            background-color: #F5F5F5;
-            color: black;
-            cursor: pointer;
-            top: 0px;
-            left: 0px;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            padding: 17px;
+        .oculto {
+            visibility: hidden;
         }
+		.Inibtn {
+		    background-color: white;
+			padding: 5vh;
+			font-size: 5vh;
+		}
         .console {
             display: grid;
             grid-template-columns: repeat(3, auto);
             place-content: center;
-            margin: 80px;
-            column-gap: 220px;
-            row-gap: 20px;
+            margin: 20vh;
+            column-gap: 30vh;
+            row-gap: 20vh;
         }
         .modelconsole {
             display: flex;
@@ -55,13 +55,14 @@
         footer {
             background-color: black;
             position: absolute;
-            bottom: -6500px;
             width: 100%;
-            height: 40px;
+            height: 20vh;
             color: white;
             height: 20%;
             text-align: center;
+			flex-shrink: 0;
         }
+		
        .pconsole {
            border-radius: 10px;
        }
@@ -149,6 +150,7 @@
             margin: 15px;
             column-gap: 90px;
             row-gap: 20px;
+			
         }
         .gamemenu1 {
             display: flex;
@@ -225,71 +227,75 @@
     <script src="nconsole.js" defer></script>
 </head>
 <body>
-    <header>Nintendo Games</header>
-    <a class="Inibtn" href="/../index.html">🏠</a>
+    <header>
+	<a class="Inibtn" href="/../index.html">馃彔</a>
+	<h1 class="title">Nintendo Games</h1>
+	<a class="oculto">a</a>
+	</header>
+    
     <div class="console">
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTKEJIuBQ_t-zeTlJeAL37Mi1yzcASX3YXA&s" />
 
             <p class="pconsole" id="gba">GameBoy Advance</p>
 
-            <p class="infoconsole">Fue básicamente una "Super Nintendo de bolsillo", ofreciendo una potencia increíble y un catálogo de joyas pixel-art inigualable.</p>
+            <p class="infoconsole">Fue b谩sicamente una "Super Nintendo de bolsillo", ofreciendo una potencia incre铆ble y un cat谩logo de joyas pixel-art inigualable.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://m.media-amazon.com/images/I/61UZpFPT2iS._SL1500_.jpg" />
 
             <p class="pconsole" id="gbc">GameBoy Color</p>
 
-            <p class="infoconsole">Trajo un arcoíris de posibilidades a nuestras manos, permitiendo que clásicos portátiles finalmente brillaran con una paleta de colores viva.</p>
+            <p class="infoconsole">Trajo un arco铆ris de posibilidades a nuestras manos, permitiendo que cl谩sicos port谩tiles finalmente brillaran con una paleta de colores viva.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://www.nintendo.com/es-es/games/oms/nes-classic-mini/images/nes-classic-edition.png" />
 
             <p class="pconsole" id="nes">Nintendo NES</p>
 
-            <p class="infoconsole">Fue la consola que salvó a la industria y nos presentó a íconos como Mario y Link, estableciendo las bases del gaming moderno.</p>
+            <p class="infoconsole">Fue la consola que salv贸 a la industria y nos present贸 a 铆conos como Mario y Link, estableciendo las bases del gaming moderno.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpQctg6uC0Kg4s44KH763_kpjbnt5ACP8jUQ&s" />
 
             <p class="pconsole" id="n64">Nintendo 64</p>
 
-            <p class="infoconsole">Dio el salto revolucionario al 3D, rompiendo esquemas con su stick analógico y mundos abiertos que cambiaron las reglas del juego.</p>
+            <p class="infoconsole">Dio el salto revolucionario al 3D, rompiendo esquemas con su stick anal贸gico y mundos abiertos que cambiaron las reglas del juego.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ5dajXPUeH5G7u8s5YRkvUiKSZQhLmHKyIQ&s" />
 
             <p class="pconsole" id="nds">Nintendo DS</p>
 
-            <p class="infoconsole">Innovó con su doble pantalla y controles táctiles, convirtiéndose en un fenómeno global que democratizó el juego para todo tipo de personas.</p>
+            <p class="infoconsole">Innov贸 con su doble pantalla y controles t谩ctiles, convirti茅ndose en un fen贸meno global que democratiz贸 el juego para todo tipo de personas.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Wikipedia_SNES_PAL.jpg/250px-Wikipedia_SNES_PAL.jpg" />
 
             <p class="pconsole" id="snes">Nintendo SNES</p>
 
-            <p class="infoconsole">Considerada por muchos como la cima del 2D, perfeccionó la fórmula con gráficos vibrantes y bandas sonoras inolvidables.</p>
+            <p class="infoconsole">Considerada por muchos como la cima del 2D, perfeccion贸 la f贸rmula con gr谩ficos vibrantes y bandas sonoras inolvidables.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Nintendo-Famicom-Console-Set-FL.png/250px-Nintendo-Famicom-Console-Set-FL.png" />
 
             <p class="pconsole" id="famicom">Nintendo Famicom</p>
 
-            <p class="infoconsole">Es la consola que lo cambió todo. Lanzada en Japón en 1983, es la versión original de lo que en Occidente conocimos como NES.</p>
+            <p class="infoconsole">Es la consola que lo cambi贸 todo. Lanzada en Jap贸n en 1983, es la versi贸n original de lo que en Occidente conocimos como NES.</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlAekrsD1iNlnZJ2aUfeRvxhtYFBe8z_f1Bw&s" />
 
             <p class="pconsole" id="superfamicom">Nintendo Super Famicom</p>
 
-            <p class="infoconsole">La joya de la corona de los 16 bits, lanzada en 1990. En el resto del mundo se llamó Super Nintendo (SNES).</p>
+            <p class="infoconsole">La joya de la corona de los 16 bits, lanzada en 1990. En el resto del mundo se llam贸 Super Nintendo (SNES).</p>
         </div>
         <div class="modelconsole">
             <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMF-nMUsGHZHiqdVA2tBhOIwsmdJoN5C9Pg&s" />
 
             <p class="pconsole" id="virtualboy">Nintendo VirtualBoy</p>
 
-            <p class="infoconsole">La Virtual Boy fue el intento más arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995.</p>
+            <p class="infoconsole">La Virtual Boy fue el intento m谩s arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995.</p>
         </div>
     </div>
     <div class="nconsolebtn">
