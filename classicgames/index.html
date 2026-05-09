@@ -1,353 +1,340 @@
-<html>
-<head>
+<html lang="es">
+  <head>
     <title>Classic Games</title>
-    <link rel="icon" href="/../assets/classic.jpg" type="image/png">
-    <script src="classic.js" defer=""></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos clasicos de diferentes consolas, incluyendo arcade.">
+	<meta charset="UTF-8">
+	<link rel="icon" href="../assets/classic.jpg" type="image/png">
+	<script src="classic.js" defer=""></script>
     <style>
-        body {
+	@media (max-width: 1214px) {
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
             margin: 0;
             padding: 0;
             font-family: Arial;
+			height: 100%;
         }
-
         header {
-            width: 100%;
             border: none;
             background-color: #FF5454;
             color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 30px;
             text-align: center;
-            position: absolute;
-            top: -1px;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
         }
-
-        .Inibtn {
-            border: none;
-            background-color: #F5F5F5;
-            color: black;
-            cursor: pointer;
-            top: 0px;
-            left: 0px;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            padding: 17px;
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
         }
-        .console {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            margin: 80px;
-            column-gap: 220px;
-            row-gap: 20px;
-        }
-        .modelconsole {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-        .imgconsole {
-            width: 200px;
-            height: 200px;
-        }
-        footer {
-            background-color: black;
-            position: absolute;
-            bottom: -3200px;
-            width: 100%;
-            height: 40px;
-            color: white;
-            height: 20%;
-            text-align: center;
-        }
-       .pconsole {
-           border-radius: 10px;
-       }
-       .pconsole:hover {
-           transition: 0.2s ease;
-           transform: scale(0.8);
-       }
-        #ngb {
-            background-color: red;
-            color: white;
-        }
-        #arc {
-            background-color: green;
-            color: white;
-        }
-        #a52 {
-            color: white;
-            background-color: blue;
-        }
-        .consolebtn {
-            display: grid;
-            place-content: center;
-        }
-        .consolebtnbar {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .consolebtn1 {
-            color: white;
-            background-color: #FF5454;
-            border: none;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
-        }
-        .consoleselect {
-            padding: 20px;
-            border: none;
-            border-radius: 10px;
-        }
-        #ngbbtn {
-            color: white;
-            background-color: red;
-        }
-        #arcbtn {
-            color: white;
-            background-color: blue;
-        }
-        #a52btn {
-            color: white;
-            background-color: green;
-        }
-        .gameselect {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 15px;
-            column-gap: 90px;
-            row-gap: 20px;
-        }
-        .gamemenu1 {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 5px solid #FF5454;
-            padding: 10px;
-            border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-        .imggame {
-            width: 220px;
-            height: 300px;
-        }
-        .agame {
-            text-decoration: none;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-        }
-        .agame:hover {
-            transition: 0.4s ease;
-            transform: scale(0.8);
-        }
-        .consoleselect:hover {
-            transform: scale(1.1);
-            transition: 0.2 ease;
-        }
-        .infoconsole {
-            width: 250px;
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 7vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 200px;
+		}
+		.infoconsole {
+		    width: 250px;
             height: 100px;
             padding: 10px;
             border-radius: 20px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .infoconsole:hover {
+		}
+		.infoconsole:hover {
             transition: 0.2s ease;
             transform: scale(1.1);
         }
-    </style>
-</head>
-<body>
-    <header>Classic Games</header>
-    <a class="Inibtn" href="/../index.html">🏠</a>
-    <div class="console">
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc6SR5mzkbEeD_miPsxpbpu1A2GObhPCF0ng&s" />
-
-            <p class="pconsole" id="ngb">Nintendo Gameboy</p>
-
-            <p class="infoconsole">Lanzada en 1989, revolucionó el entretenimiento, su eficiencia energética y su procesador de 8 bit (basado en el Z80) la hicieron imbatible</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJYjmmb-yHpyBHW6kJ1_nmAF32npZGZ-LlQ&s" />
-
-            <p class="pconsole" id="arc">Arcade</p>
-
-            <p class="infoconsole">El Arcade representa la era dorada de los videojuegos, entre 70-80, donde las salas de recreativas eran el epicentro de la innovación tecnológica.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrQp52ML9rGrNNZbgbzFzfXoDMqqurcDzsA&s" />
-
-            <p class="pconsole" id="a52">Atari 5200</p>
-
-            <p class="infoconsole">Introducida en 1982, la 5200 fue diseñada para llevar la potencia de las computadoras Atari de 8 bits al mercado de las consolas de salón.</p>
-        </div>
-    </div>
-    <div class="consolebtn">
-        <button class="consolebtn1" onclick="location.reload()">Classic Games</button>
-    </div>
-    <div class="consolebtnbar">
-        <button class="consoleselect" id="ngbbtn">Nintengo GameBoy</button>
-        <button class="consoleselect" id="arcbtn">Arcade</button>
-        <button class="consoleselect" id="a52btn">Atari 5200</button>
-    </div>
-    <div class="gameselect">
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3QzzSGJzb2SuVMLMj5_MSYxorbUeyh7o7w&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/castlevania.html">Castlevania Of Adventure</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://romsfun.com/wp-content/uploads/2019/12/donkey-kong-game-boy.jpg" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/donkeykong.html">Donkey Kong</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDsB9fOmJBhMU9i7HFFoP26qllKirj_z_q-Q&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/kirby.html">Kirby´s Pinball Land</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQWMmwjd7kg8QYpH3-AUAi3_Md8Wl_AgpoWw&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/legendofzelda.html">Legend Of Zelda</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbspP1sW_xCKeohRCLDuyAIrOD5nePBh4Tgw&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/marioland.html">Mario Land 2</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/26/9644/420-420/Metroid-II---Return-of-Samus-(World).jpg" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/metroid.html">Metroid 2</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://m.media-amazon.com/images/I/71tFts8ENbL.jpg" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/pokemon.html">Pokemon Blue</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbzIme8PRvQEHiKvdM1QnEfVoncl_W6xoyWA&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/tetris.html">Tetris</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtEEaU49vHSAIX1e-GjxKAlIKuarFVZKZ2w&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/warioland.html">Wario Land 3</a>
-        </div>
-        <div class="gamemenu1" id="ngbgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3O9H7Kb-9ekuHZ4qVyUqAJihdLr_hCqsq6A&s" />
-
-            <a class="agame" id="ngbbtn" href="./ngb/megaman.html">Megaman V</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://m.media-amazon.com/images/I/71XjdkO+sbL._AC_SL1500_.jpg" />
-
-            <a class="agame" id="arcbtn" href="./arcade/pacman.html">Pac-Man</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://m.media-amazon.com/images/I/71M6rAuKrBL._AC_SL1500_.jpg" />
-
-            <a class="agame" id="arcbtn" href="./arcade/mk.html">Mortal Kombat</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtXgHRN16zudWi6VdhcMb7YCYyQ3fwYVAIkg&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/mspacman.html">MS Pac-Man</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlBlGdn90ekLHokleUE87EMSgAFRhnXusCPg&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/sf2.html">Street Fighter II</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRElqpqlHfHcB5VXBqGxLvrXUD-8xEI1yelVQ&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/asteroids.html">Asteroids</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2aCVduKUMoFKoV-ROpWuNXeT_Gt3x6DStSw&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/donkeykong.html">Donkey Kong</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://myarcade.com/cdn/shop/files/SpaceInvadersMicroPlayerRender1.png?v=1695326038&width=1080" />
-
-            <a class="agame" id="arcbtn" href="./arcade/spaceinvaders.html">Space Invaders</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://www.arcade-museum.com/images-game/22/r-type-22087.jpg" />
-
-            <a class="agame" id="arcbtn" href="./arcade/rtype.html">R-Type</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCEXLd1YsTloRsPRmp5mLPU3XKZb7X0cnQzg&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/mslug.html">Metal Slug</a>
-        </div>
-        <div class="gamemenu1" id="arcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh59n9J9R2sLhHAKwDoaS4BYzIRVtCnrYZag&s" />
-
-            <a class="agame" id="arcbtn" href="./arcade/galaga.html">Galaga</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://i0.wp.com/www.freezenet.ca/wp-content/uploads/2014/03/ballblazer_5200_crop.png?fit=250%2C342&ssl=1" />
-
-            <a class="agame" id="a52btn" href="./atari5200/ballblazer.html">Ballblazer</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPHA09Nu2wEdvv9yvYt8ZK4Lh_Wj-O2RFBjQ&s" />
-
-            <a class="agame" id="a52btn" href="./atari5200/countermeasure.html">Countermeasure</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuieLL9TIbR0kVoIfCKaZsXEjZi8Mcst9I_g&s" />
-
-            <a class="agame" id="a52btn" href="./atari5200/dread.html">Dreadnaught Factor</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://storage.googleapis.com/images.pricecharting.com/AMIfv97ZOBrKRBTXfKXWWMz84DwKALhMDu9_HMXkbAvrqaTpsIP4mPzpm0K-cGWNEQQqUnyuCnZzEIEMQ6QyEHQGI7YM5mMCuAznjapx8ke_lQ-0bPu6PuVp94NAtaQh3SwOSTQU7r3XQJgCta9Pgue-LsnxGJWeEg/240.jpg" />
-
-            <a class="agame" id="a52btn" href="./atari5200/gremlins.html">Gremlins</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuieLL9TIbR0kVoIfCKaZsXEjZi8Mcst9I_g&s" />
-
-            <a class="agame" id="a52btn" href="./atari5200/montezuma.html">Montezuma</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYqPBxaN3OjLzl38XhzMJ-gr4hmID9Mvy3_w&s" />
-
-            <a class="agame" id="a52btn" href="./atari5200/rescue.html">Rescue on Fractalus!</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKbJHB2yj9E0_Mrv5Nl7JGkYIcWhoSyyxB3Q&s" />
-
-            <a class="agame" id="a52btn" href="./atari5200/spcaedungeon.html">Space Dungeon</a>
-        </div>
-        <div class="gamemenu1" id="a52game">
-            <img class="imggame" srcset="https://i.ebayimg.com/images/g/Om0AAOSwk5FUylSV/s-l400.jpg" />
-
-            <a class="agame" id="a52btn" href="./atari5200/starraiders.html">Star Raiders</a>
-        </div>
-    </div>
-
-    <footer>
-        <p>About:</p>
-
-        <p>L1 Games 2026</p>
-    </footer>
-</body>
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: blue;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			color: white;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: red;
+		}
+		.btnconsole2 {
+		    background-color: green;
+		}
+		.btnconsole3 {
+		    background-color: blue;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Classic Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc6SR5mzkbEeD_miPsxpbpu1A2GObhPCF0ng&s">
+			  <p id="console1" class="consolename">Nintendo Gameboy</p>
+			  <p class="infoconsole">Lanzada en 1989, revolucionó el entretenimiento, su eficiencia energética y su procesador de 8 bit (basado en el Z80) la hicieron imbatible</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgJYjmmb-yHpyBHW6kJ1_nmAF32npZGZ-LlQ&s">
+			  <p id="console2" class="consolename">Arcade</p>
+			  <p class="infoconsole">El Arcade representa la era dorada de los videojuegos, entre 70-80, donde las salas de recreativas eran el epicentro de la innovación tecnológica.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwdKgz6Tx9T-3_8dZJmZ45dIz_lhEgNlYbyg&s">
+			  <p id="console3" class="consolename">Atari 5200</p>
+			  <p class="infoconsole">Introducida en 1982, la 5200 fue diseñada para llevar la potencia de las computadoras Atari de 8 bits al mercado de las consolas de salón.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Classic Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn26" class="btnconsole1">Nintendo Gameboy</button>
+		   <button id="btn78" class="btnconsole2">Arcade</button>
+		   <button id="btnlynx" class="btnconsole3">Atari 5200</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3QzzSGJzb2SuVMLMj5_MSYxorbUeyh7o7w&s">
+			 <a href="./ngb/castlevania.html" id="console1">Castlevania Of Adventure</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://romsfun.com/wp-content/uploads/2019/12/donkey-kong-game-boy.jpg">
+			 <a href="./ngb/donkeykong.html" id="console1">Donkey Kong</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDsB9fOmJBhMU9i7HFFoP26qllKirj_z_q-Q&s">
+			 <a href="./ngb/kirby.html" id="console1">Kirby´s Pinball Land</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQWMmwjd7kg8QYpH3-AUAi3_Md8Wl_AgpoWw&s">
+			 <a href="./ngb/legendofzelda.html" id="console1">Legend Of Zelda</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbspP1sW_xCKeohRCLDuyAIrOD5nePBh4Tgw&s">
+			 <a href="./ngb/marioland.html" id="console1">Mario Land 2</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/26/9644/420-420/Metroid-II---Return-of-Samus-(World).jpg">
+			 <a href="./ngb/metroid.html" id="console1">Metroid 2</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://m.media-amazon.com/images/I/71tFts8ENbL.jpg">
+			 <a href="./ngb/pokemon.html" id="console1">Pokemon Blue</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbzIme8PRvQEHiKvdM1QnEfVoncl_W6xoyWA&s">
+			 <a href="./ngb/tetris.html" id="console1">Tetris</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtEEaU49vHSAIX1e-GjxKAlIKuarFVZKZ2w&s">
+			 <a href="./ngb/warioland.html" id="console1">Wario Land 3</a>
+		   </div>
+		   <div class="game" id="ngbgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3O9H7Kb-9ekuHZ4qVyUqAJihdLr_hCqsq6A&s">
+			 <a href="./ngb/megaman.html" id="console1">Megaman V</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://m.media-amazon.com/images/I/71XjdkO+sbL._AC_SL1500_.jpg">
+			 <a href="./arcade/pacman.html" id="console2">Pac-Man</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://m.media-amazon.com/images/I/71M6rAuKrBL._AC_SL1500_.jpg">
+			 <a href="./arcade/mk.html" id="console2">Mortal Kombat</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtXgHRN16zudWi6VdhcMb7YCYyQ3fwYVAIkg&s">
+			 <a href="./arcade/mspacman.html" id="console2">MS Pac-Man</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlBlGdn90ekLHokleUE87EMSgAFRhnXusCPg&s">
+			 <a href="./arcade/sf2.html" id="console2">Street Fighter II</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRElqpqlHfHcB5VXBqGxLvrXUD-8xEI1yelVQ&s">
+			 <a href="./arcade/asteroids.html" id="console2">Asteroids</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2aCVduKUMoFKoV-ROpWuNXeT_Gt3x6DStSw&s">
+			 <a href="./arcade/donkeykong.html" id="console2">Donkey Kong</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://myarcade.com/cdn/shop/files/SpaceInvadersMicroPlayerRender1.png?v=1695326038&width=1080">
+			 <a href="./arcade/spaceinvaders.html" id="console2">Space Invaders</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://www.arcade-museum.com/images-game/22/r-type-22087.jpg">
+			 <a href="./arcade/rtype.html" id="console2">R-Type</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCEXLd1YsTloRsPRmp5mLPU3XKZb7X0cnQzg&s">
+			 <a href="./arcade/mslug.html" id="console2">Metal Slug</a>
+		   </div>
+		   <div class="game" id="arcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh59n9J9R2sLhHAKwDoaS4BYzIRVtCnrYZag&s">
+			 <a href="./arcade/galaga.html" id="console2">Galaga</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://i0.wp.com/www.freezenet.ca/wp-content/uploads/2014/03/ballblazer_5200_crop.png?fit=250%2C342&ssl=1">
+			 <a href="./atari5200/ballblazer.html" id="console3">Ballblazer</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPHA09Nu2wEdvv9yvYt8ZK4Lh_Wj-O2RFBjQ&s">
+			 <a href="./atari5200/countermeasure.html" id="console3">Countermeasure</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuieLL9TIbR0kVoIfCKaZsXEjZi8Mcst9I_g&s">
+			 <a href="./atari5200/countermeasure.html" id="console3">Dreadnaught Factor</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://storage.googleapis.com/images.pricecharting.com/AMIfv97ZOBrKRBTXfKXWWMz84DwKALhMDu9_HMXkbAvrqaTpsIP4mPzpm0K-cGWNEQQqUnyuCnZzEIEMQ6QyEHQGI7YM5mMCuAznjapx8ke_lQ-0bPu6PuVp94NAtaQh3SwOSTQU7r3XQJgCta9Pgue-LsnxGJWeEg/240.jpg">
+			 <a href="./atari5200/gremlins.html" id="console3">Gremlins</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuieLL9TIbR0kVoIfCKaZsXEjZi8Mcst9I_g&s">
+			 <a href="./atari5200/montezuma.html" id="console3">Montezuma</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYqPBxaN3OjLzl38XhzMJ-gr4hmID9Mvy3_w&s">
+			 <a href="./atari5200/rescue.html" id="console3">Rescue on Fractalus!</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKbJHB2yj9E0_Mrv5Nl7JGkYIcWhoSyyxB3Q&s">
+			 <a href="./atari5200/spcaedungeon.html" id="console3">Space Dungeon</a>
+		   </div>
+		   <div class="game" id="atari52">
+		     <img src="https://i.ebayimg.com/images/g/Om0AAOSwk5FUylSV/s-l400.jpg">
+			 <a href="./atari5200/starraiders.html" id="console3">Star Raiders</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
 </html>
