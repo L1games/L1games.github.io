@@ -1,43 +1,22 @@
-document.getElementById('ngbbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#arcgame');
+function ocultarTodo() {
+    const todos = document.querySelectorAll('#ngbgame, #arcgame, #a52game');
+    todos.forEach(el => el.style.display = 'none');
+}
 
-    const elementos1 = document.querySelectorAll('#a52game');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none'; 
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn1').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#ngbgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('arcbtn').addEventListener('click', function () {
-    const elementos2 = document.querySelectorAll('#ngbgame');
-
-    const elementos3 = document.querySelectorAll('#a52game');
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn2').addEventListener('click', function () {
+    ocultarTodo();
+    const actuales = document.querySelectorAll('#arcgame');
+    actuales.forEach(el => el.style.display = 'flex');
 });
 
-document.getElementById('a52btn').addEventListener('click', function () {
-    const elementos4 = document.querySelectorAll('#ngbgame');
-
-    const elementos5 = document.querySelectorAll('#arcgame');
-
-    elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn3').addEventListener('click', function () {
+    ocultarTodo();
+    const actuales = document.querySelectorAll('#a52game');
+    actuales.forEach(el => el.style.display = 'flex');
 });
-
-
