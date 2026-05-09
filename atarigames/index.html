@@ -1,452 +1,399 @@
-<html>
-<head>
+<html lang="es">
+  <head>
     <title>Atari Games</title>
-    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM4A28kZXkgv_gfwQRL7XTuyeXw2HngP5-ug&s" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de consolas creadas por Atari.">
+	<link rel="icon" href="../assets/atari.png" type="image/png">
+	<script src="atari.js" defer=""></script>
     <style>
-        body {
+	@media (max-width: 1214px) {
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
             margin: 0;
             padding: 0;
             font-family: Arial;
+			height: 100%;
         }
-
         header {
-            width: 100%;
             border: none;
             background-color: #FF5454;
             color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 30px;
             text-align: center;
-            position: absolute;
-            top: -1px;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
         }
-
-        .Inibtn {
-            border: none;
-            background-color: #F5F5F5;
-            color: black;
-            cursor: pointer;
-            top: 0px;
-            left: 0px;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            padding: 17px;
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
         }
-
-        .gamebar {
-            display: flex;
-            flex-direction: row;
-            gap: 130px;
-            width: 20%;
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 1.5vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 200px;
+		}
+		.infoconsole {
+		    width: 250px;
+            height: 100px;
             padding: 10px;
-        }
-
-        .gamebtn {
-            position: relative;
-            z-index: 9999;
-            top: 50px;
-            left: 130px;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            text-align: center;
-            margin: 20px;
-            padding: 10px;
-        }
-
-        .patari {
-            border-radius: 10px;
-            padding: 5px;
-        }
-
-        .patari:hover {
-            transition: 0.6s ease;
-            transform: scale(0.87);
-        }
-
-        #p26 {
-            background-color: red;
-            color: white;
-        }
-
-        #p78 {
-            background-color: green;
-            color: white;
-        }
-
-        #pja {
-            background-color: blue;
-            color: white;
-        }
-
-        #plynx {
-            background-color: darkorange;
-            color: white;
-        }
-
-        #g1 {
-            top: 90px;
-        }
-
-        .gmbar {
-            gap: 10px;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            grid-template-rows: auto;
-            gap: 25px;
-            place-items: center;
-            top: 70px;
-            position: relative;
-            width: 100%;
-        }
-
-        .game-container {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            border-radius: 10px;
-            border: 4px #FF5454 solid;
-            padding: 10px;
-            width: 55%;
-            gap: 5px;
-            justify-content: center;
-        }
-
-        .game-container a {
-            background-color: red;
             border-radius: 20px;
-            padding: 20px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .game-container a:hover {
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
             transition: 0.2s ease;
-            transform: scale(0.8);
+            transform: scale(1.1);
         }
-
-        .game-container img {
-            width: 194px;
-            height: 255px;
-        }
-
-        .pfooter {
-            bottom: 9000px;
-        }
-
-        footer {
-            background-color: black;
-            position: absolute;
-            bottom: -3800px;
-            width: 100%;
-            height: 40px;
-            color: white;
-            height: 20%;
-            text-align: center;
-        }
-        .ataribtn {
-            display: grid;
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: orange;
+		}
+		#console4 {
+		    background-color: blue;
+		}
+		.btnreset {
+		    display: grid;
             place-content: center;
             padding: 20px;
             margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
         }
-        .atariselect {
-            display: grid;
-            place-content: center;
-            padding: 10px;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .butonsl {
-            border-radius: 20px;
-            color: white;
-            border: none;
-        }
-        #btn26 {
-            background-color: red;
-        }
-        #btn78 {
-            background-color: green;
-        }
-        #btnja {
-            background-color: blue;
-        }
-        #btnlynx {
-            background-color: darkorange;
-        }
-        .ataribtn1 {
+		.btnreset button {
             background-color: #FF5454;
             color: white;
             padding: 10px;
             border-radius: 5px;
             border: none;
         }
-        .ataribtn1:hover {
-                transition: 0.6s ease;
-                transform: scale(0.87);
-        }
-        .butonsl:hover {
-            transition: 0.6s ease;
-            transform: scale(1.07);
-        }
-        .atari4 {
-            background-color: darkorange;
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			color: white;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: red;
+		}
+		.btnconsole2 {
+		    background-color: green;
+		}
+		.btnconsole3 {
+		    background-color: orange;
+		}
+		.btnconsole4 {
+		    background-color: blue;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
             color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
         }
-        .infoconsole {
-            width: 250px;
-            height: 100px;
-            padding: 10px;
-            border-radius: 20px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .infoconsole:hover {
-            transition: 0.2s ease;
-            transform: scale(1.1);
-        }
-    </style>
-    <script src="atari.js" defer></script>
-</head>
-<body>
-    <header>Atari Games</header>
-    <a class="Inibtn" href="./index.html">🏠</a>
-    <div class="gamebar">
-        <div class="gamebtn">
-            <img srcset="https://upload.wikimedia.org/wikipedia/commons/b/b9/Atari-2600-Wood-4Sw-Set.jpg" />
-
-            <p class="patari" id="p26">Atari 2600</p>
-
-            <p class="infoconsole">La madre de las consolas modernas; popularizó los cartuchos intercambiables y trajo los grandes éxitos de las recreativas al salón de casa.</p>
-
-            <p class="atari4">Atari Lynx</p>
-
-            <p class="infoconsole">La pionera de las portátiles a color; una bestia técnica con pantalla retroiluminada y un diseño reversible único para jugadores zurdos.</p>
-        </div>
-        <div class="gamebtn" id="g1">
-            <p class="patari" id="p78">Atari 7800</p>
-
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx2rH49fxdf409t2rKcqFW2BJZuj1OXqO01w&s" />
-
-            <p class="infoconsole">Una máquina diseñada para superar a sus rivales en gráficos de salón, destacando por ser totalmente compatible con el catálogo de la 2600.</p>
-
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlrAXpXqR6-Okwe7OeW3b_ReaSKVnrED372A&s" />
-        </div>
-        <div class="gamebtn">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFif8e6aeyF1RCqB5-3VAb_Z2g7xYkwaZhzA&s" />
-
-            <p class="patari" id="pja">Atari Jaguar</p>
-
-            <p class="infoconsole">La última gran apuesta de hardware de Atari, promocionada como la primera consola de 64 bits y hogar de versiones técnicas impresionantes.</p>
-
-            <p class="atari4">Atari Lynx</p>
-
-            <p class="infoconsole">Primera consola portátil con pantalla LCD, destacando por su procesador de 16-bits "Mikey" y su motor "Suzy" diseñada para jugadores zurdos.</p>
-        </div>
-    </div>
-    <div class="ataribtn">
-        <button class="ataribtn1" onclick="location.reload()">Atari Games</button>
-    </div>
-    <div class="atariselect">
-        <button class="butonsl" id="btn26">Atari 2600</button>
-        <button class="butonsl" id="btn78">Atari 7800</button>
-        <button class="butonsl" id="btnlynx">Atari Lynx</button>
-        <button class="butonsl" id="btnja">Atari Jaguar</button>
-    </div>
-    <div class="grid-container">
-        <div class="game-container" id="atari26">
-            <img srcset="https://upload.wikimedia.org/wikipedia/en/6/60/Adventure_Box_Front.jpg" />
-
-            <a id="p26" href="./atari2600/adventure.html">Adventure</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb2wBql3frEcSIVdJEdsGfn8Zjm4uXwgf7Sg&s" />
-
-            <a id="p26" href="./atari2600/grandprix.html">Grand Prix</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://m.media-amazon.com/images/I/61joTWYQcbL.jpg" />
-
-            <a id="p26" href="./atari2600/battlezone.html">Battlezone</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8heAxy3VqMoDU4zuZ0-gJ2WqW6MPXdSa-oA&s" />
-
-            <a id="p26" href="./atari2600/bowling.html">Bowling</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKvS-I4BukmUBAeC0Mq57iahBRUB3sYMYUAQ&s" />
-
-            <a id="p26" href="./atari2600/combat.html">Combat</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRytg-fSSsaythA399eg6FkNc48QtXdPTKuwA&s" />
-
-            <a id="p26" href="./atari2600/donkeykong.html">Donkey Kong</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://upload.wikimedia.org/wikipedia/en/8/84/Enduro_Coverart.png" />
-
-            <a id="p26" href="./atari2600/enduro.html">Enduro</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://www.atarimania.com/2600/boxes/hi_res/fatal_run_red_pal_cart_4.jpg" />
-
-            <a id="p26" href="./atari2600/fatalrun.html">Fatal Run</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOCKrggJOf_mras61tlxUiQrzx4bI-DQpL_w&s" />
-
-            <a id="p26" href="./atari2600/icehockey.html">Ice Hockey</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://acgamesonline.com/cdn/shop/products/7a761a5999b7a7e6f25d4fa391fe18c75ea0d42b_1024x1024@2x.jpg?v=1734226025" />
-
-            <a id="p26" href="./atari2600/intersoccer.html">International Soccer</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDBlyclMiv2JrGk0atMiujHLh_xK60LadlLw&s" />
-
-            <a id="p26" href="./atari2600/pacman.html">Pac-Man</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsxLeutfhFp-5gy9KhH-_ENXAIpkZxF5ywnA&s" />
-
-            <a id="p26" href="./atari2600/pit1.html">Pitfall!</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKIkI3FPgUlSTFB3NdPN4Pe11ckFjBBYi20w&s" />
-
-            <a id="p26" href="./atari2600/pit2.html">Pitfall! II</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUJRqmbKfUJAevi2cJ1hErM6jdMdNAiOGqUQ&s" />
-
-            <a id="p26" href="./atari2600/qbert.html">Q*Bert</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkoRTT0ZcCamoipJEBlDudTdDzx-HVaUN2yg&s" />
-
-            <a id="p26" href="./atari2600/solaris.html">Solaris</a>
-        </div>
-        <div class="game-container" id="atari26">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHDoLiGQ_i3L5ZFkPCZAjuZlx8X3FgguF7vA&s" />
-
-            <a id="p26" href="./atari2600/tennis.html">Tennis</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://store.atariage.com/cdn/shop/files/7800_CentipedeTrakBall_CartOnly_Primary.jpg?v=1731315669&width=416" />
-
-            <a id="p78" href="./atari7800/centipede.html">Centipede</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaKjsTxOpL0H7aC5pQwgHr9pQwGwpRtiBRtw&s" />
-
-            <a id="p78" href="./atari7800/commando.html">Commando</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaCjIdCsP3pyb2UVMl-5uzhSnsN-ZdwgV5bg&s" />
-
-            <a id="p78" href="./atari7800/darkchambers.html">Dark Chambers</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://m.media-amazon.com/images/I/61Zj6Qjv2SL._AC_UF1000,1000_QL80_.jpg" />
-
-            <a id="p78" href="./atari7800/foodfight.html">Food Fight</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqwUv3DXydsO0qE9xtlhTSPGDEu6uQjrAXnA&s" />
-
-            <a id="p78" href="./atari7800/galaga.html">Galaga</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToAGbG6sH9Hore-we-4oMGzWImLq4rxmroww&s" />
-
-            <a id="p78" href="./atari7800/mariobros.html">Mario Bros</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvZSnZc4oVWXjoZhmI-DFgZkmFS-NK-LJIZQ&s" />
-
-            <a id="p78" href="./atari7800/midnightmutants.html">Midnight Mutants</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKuM4Ur7WGqrtSGid6Ll0CCBERLh8ppzyOpA&s" />
-
-            <a id="p78" href="./atari7800/mspacman.html">Ms. Pacman</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://store.atariage.com/cdn/shop/files/7800_CentipedeTrakBall_CartOnly_Primary.jpg?v=1731315669&width=416" />
-
-            <a id="p78" href="./atari7800/ninjagolf.html">Ninja Golf</a>
-        </div>
-        <div class="game-container" id="atari78">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf-e8PF-Dum7KxmGB9rrbCWwhX1MirNEAotg&s" />
-
-            <a id="p78" href="./atari7800/robotron.html">Robotron 2084</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZOD8OZSv3Ia2rdxs-_KFf63hQwTWGH5oP7Q&s" />
-
-            <a id="pja" href="./atarijaguar/doom.html">Doom</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStosnkSOc4wzROv077DZcQBcaI6evYwUCL6Q&s" />
-
-            <a id="pja" href="./atarijaguar/ironsoldier2.html">Iron Soldier II</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1QNwrPLjv3DmHiGmlvlW68dWeXfRcIOVGvQ&s" />
-
-            <a id="pja" href="./atarijaguar/nbajam.html">NBA-Jam</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAiqosMz5639GXU9EJTZyBZvRw9A9MIiN5Sw&s" />
-
-            <a id="pja" href="./atarijaguar/powerdrive.html">Power Drive Rally</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfdkwrd2sSaiciOxkWRQvRJNXtTxpwDPZUfg&s" />
-
-            <a id="pja" href="./atarijaguar/wolfenstein3d.html">Wolfenstein 3D</a>
-        </div>
-        <div class="game-container" id="atarija">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsUX7x5Cu0mHPljVHgogNoMz_gP05-nH24dQ&s" />
-
-            <a id="pja" href="./atarijaguar/worms.html">Worms</a>
-        </div>
-        <div class="game-container" id="atarilynx">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhHcQRJqyIL-fklUr6GqnnoMxdUqx5ItQ76A&s" />
-
-            <a id="plynx" href="./atarilynx/bluelight.html">Blue Lightning</a>
-        </div>
-        <div class="game-container" id="atarilynx">
-            <img srcset="https://m.media-amazon.com/images/I/61b4jO3MVgL._AC_UF894,1000_QL80_.jpg" />
-
-            <a id="plynx" href="./atarilynx/californiagames.html">California Games</a>
-        </div>
-        <div class="game-container" id="atarilynx">
-            <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF8rTwKIZ2Zry9WwZINYSf_XhQlkQMcyWQtQ&s" />
-
-            <a id="plynx" href="./atarilynx/chipschallenge.html">Chips Challenge</a>
-        </div>
-        <div class="game-container" id="atarilynx">
-            <img srcset="https://m.media-amazon.com/images/I/61-T0bvR77L._AC_UF1000,1000_QL80_.jpg" />
-
-            <a id="plynx" href="./atarilynx/stun.html">S.T.U.N.</a>
-        </div>
-    </div>
-    
-    <footer>
-        <p class="pfooter">About:</p>
-
-        <p class="pfooter">L1 Games 2026</p>
-    </footer>
-</body>
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Atari Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/b/b9/Atari-2600-Wood-4Sw-Set.jpg">
+			  <p id="console1" class="consolename">Atari 2600</p>
+			  <p class="infoconsole">La madre de las consolas modernas; popularizó los cartuchos intercambiables y trajo los grandes éxitos de las recreativas al salón de casa.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx2rH49fxdf409t2rKcqFW2BJZuj1OXqO01w&s">
+			  <p id="console2" class="consolename">Atari 7800</p>
+			  <p class="infoconsole">Una máquina diseñada para superar a sus rivales en gráficos de salón, destacando por ser totalmente compatible con el catálogo de la 2600.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlrAXpXqR6-Okwe7OeW3b_ReaSKVnrED372A&s">
+			  <p id="console3" class="consolename">Atari Lynx</p>
+			  <p class="infoconsole">La pionera de las portátiles a color; una bestia técnica con pantalla retroiluminada y un diseño reversible único para jugadores zurdos.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFif8e6aeyF1RCqB5-3VAb_Z2g7xYkwaZhzA&s">
+			  <p id="console4" class="consolename">Atari Jaguar</p>
+			  <p class="infoconsole">La última gran apuesta de hardware de Atari, promocionada como la primera consola de 64 bits y hogar de versiones técnicas impresionantes.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Atari Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn26" class="btnconsole1">Atari 2600</button>
+		   <button id="btn78" class="btnconsole2">Atari 7800</button>
+		   <button id="btnlynx" class="btnconsole3">Atari Lynx</button>
+		   <button id="btnja" class="btnconsole4">Atari Jaguar</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="atari26">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/6/60/Adventure_Box_Front.jpg">
+			 <a href="./atari2600/adventure.html" id="console1">Adventure</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb2wBql3frEcSIVdJEdsGfn8Zjm4uXwgf7Sg&s">
+			 <a href="./atari2600/grandprix.html" id="console1">Grand Prix</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://m.media-amazon.com/images/I/61joTWYQcbL.jpg">
+			 <a href="./atari2600/battlezone.html" id="console1">Battlezone</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8heAxy3VqMoDU4zuZ0-gJ2WqW6MPXdSa-oA&s">
+			 <a href="./atari2600/bowling.html" id="console1">Bowling</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKvS-I4BukmUBAeC0Mq57iahBRUB3sYMYUAQ&s">
+			 <a href="./atari2600/combat.html" id="console1">Combat</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRytg-fSSsaythA399eg6FkNc48QtXdPTKuwA&s">
+			 <a href="./atari2600/donkeykong.html" id="console1">Donkey Kong</a>
+		   </div>
+		    <div class="game" id="atari26">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/8/84/Enduro_Coverart.png">
+			 <a href="./atari2600/enduro.html" id="console1">Enduro</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://www.atarimania.com/2600/boxes/hi_res/fatal_run_red_pal_cart_4.jpg">
+			 <a href="./atari2600/fatalrun.html" id="console1">Fatal Run</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOCKrggJOf_mras61tlxUiQrzx4bI-DQpL_w&s">
+			 <a href="./atari2600/icehockey.html" id="console1">Ice Hockey</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://acgamesonline.com/cdn/shop/products/7a761a5999b7a7e6f25d4fa391fe18c75ea0d42b_1024x1024@2x.jpg?v=1734226025">
+			 <a href="./atari2600/intersoccer.html" id="console1">International Soccer</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDBlyclMiv2JrGk0atMiujHLh_xK60LadlLw&s">
+			 <a href="./atari2600/pacman.html" id="console1">Pac-Man</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsxLeutfhFp-5gy9KhH-_ENXAIpkZxF5ywnA&s">
+			 <a href="./atari2600/pit1.html" id="console1">Pitfall!</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKIkI3FPgUlSTFB3NdPN4Pe11ckFjBBYi20w&s">
+			 <a href="./atari2600/pit2.html" id="console1">Pitfall! II</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUJRqmbKfUJAevi2cJ1hErM6jdMdNAiOGqUQ&s">
+			 <a href="./atari2600/qbert.html" id="console1">Q*Bert</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkoRTT0ZcCamoipJEBlDudTdDzx-HVaUN2yg&s">
+			 <a href="./atari2600/solaris.html" id="console1">Solaris</a>
+		   </div>
+		   <div class="game" id="atari26">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHDoLiGQ_i3L5ZFkPCZAjuZlx8X3FgguF7vA&s">
+			 <a href="./atari2600/tennis.html" id="console1">Tennis</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://store.atariage.com/cdn/shop/files/7800_CentipedeTrakBall_CartOnly_Primary.jpg?v=1731315669&width=416">
+			 <a href="./atari7800/centipede.html" id="console2">Centipede</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaKjsTxOpL0H7aC5pQwgHr9pQwGwpRtiBRtw&s">
+			 <a href="./atari7800/commando.html" id="console2">Commando</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://m.media-amazon.com/images/I/51E03eCYmQL._AC_UF1000,1000_QL80_.jpg">
+			 <a href="./atari7800/joust.html" id="console2">Joust</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Se63VlodmwZUoziMwpr2huIjnSH8ZOZFVA&s">
+			 <a href="./atari7800/digdug.html" id="console2">Dig Dug</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaCjIdCsP3pyb2UVMl-5uzhSnsN-ZdwgV5bg&s">
+			 <a href="./atari7800/darkchambers.html" id="console2">Dark Chambers</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://m.media-amazon.com/images/I/61Zj6Qjv2SL._AC_UF1000,1000_QL80_.jpg">
+			 <a href="./atari7800/foodfight.html" id="console2">Food Fight</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqwUv3DXydsO0qE9xtlhTSPGDEu6uQjrAXnA&s">
+			 <a href="./atari7800/galaga.html" id="console2">Galaga</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToAGbG6sH9Hore-we-4oMGzWImLq4rxmroww&s">
+			 <a href="./atari7800/mariobros.html" id="console2">Mario Bros</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvZSnZc4oVWXjoZhmI-DFgZkmFS-NK-LJIZQ&s">
+			 <a href="./atari7800/midnightmutants.html" id="console2">Midnight Mutants</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKuM4Ur7WGqrtSGid6Ll0CCBERLh8ppzyOpA&s">
+			 <a href="./atari7800/mspacman.html" id="console2">Ms. Pac-Man</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://store.atariage.com/cdn/shop/files/7800_CentipedeTrakBall_CartOnly_Primary.jpg?v=1731315669&width=416">
+			 <a href="./atari7800/ninjagolf.html" id="console2">Ninja Golf</a>
+		   </div>
+		   <div class="game" id="atari78">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf-e8PF-Dum7KxmGB9rrbCWwhX1MirNEAotg&s">
+			 <a href="./atari7800/robotron.html" id="console2">Robotron 2084</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZOD8OZSv3Ia2rdxs-_KFf63hQwTWGH5oP7Q&s">
+			 <a href="./atarijaguar/doom.html" id="console3">Doom</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStosnkSOc4wzROv077DZcQBcaI6evYwUCL6Q&s">
+			 <a href="./atarijaguar/ironsoldier2.html" id="console3">Iron Soldier II</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1QNwrPLjv3DmHiGmlvlW68dWeXfRcIOVGvQ&s">
+			 <a href="./atarijaguar/nbajam.html" id="console3">NBA-Jam</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAiqosMz5639GXU9EJTZyBZvRw9A9MIiN5Sw&s">
+			 <a href="./atarijaguar/powerdrive.html" id="console3">Power Drive Rally</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfdkwrd2sSaiciOxkWRQvRJNXtTxpwDPZUfg&s">
+			 <a href="./atarijaguar/wolfenstein3d.html" id="console3">Wolfenstein 3D</a>
+		   </div>
+		   <div class="game" id="atarija">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsUX7x5Cu0mHPljVHgogNoMz_gP05-nH24dQ&s">
+			 <a href="./atarijaguar/worms.html" id="console3">Worms</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhHcQRJqyIL-fklUr6GqnnoMxdUqx5ItQ76A&s">
+			 <a href="./atarilynx/bluelight.html" id="console4">Blue Lightning</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://m.media-amazon.com/images/I/61b4jO3MVgL._AC_UF894,1000_QL80_.jpg">
+			 <a href="./atarilynx/californiagames.html" id="console4">California Games</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF8rTwKIZ2Zry9WwZINYSf_XhQlkQMcyWQtQ&s">
+			 <a href="./atarilynx/chipschallenge.html" id="console4">Chips Challenge</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://m.media-amazon.com/images/I/61-T0bvR77L._AC_UF1000,1000_QL80_.jpg">
+			 <a href="./atarilynx/stun.html" id="console4">S.T.U.N.</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3ivGahM6UoU6fuuCi922jyboRVFC803c8rw&s">
+			 <a href="./atarilynx/warbirds.html" id="console4">War Birds</a>
+		   </div>
+		   <div class="game" id="atarilynx">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7hws6PoQKKxCbxtgFGyP1HFuz79zjZF41ag&s">
+			 <a href="./atarilynx/battlezone2000.html" id="console4">Battlezone 2000</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
 </html>
