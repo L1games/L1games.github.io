@@ -1,1 +1,230 @@
-
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Minecraft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Seleccione la versión de Minecraft que utilizará.">
+	<link rel="icon" href="../assets/minecraft.jpg" type="image/png">
+    <style>
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+			height: 100%;
+        }
+        header {
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
+        }
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
+        }
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 1.5vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 200px;
+		}
+		.infoconsole {
+		    width: 250px;
+            height: 100px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 225px;
+            height: 225px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: blue;
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+		.versions {
+		    display: flex;
+			justify-content: center;
+			text-align: center;
+			align-items: center;
+		}
+		.versions h2 {
+		    color: white;
+			background-color: #FF5454;
+			padding: 2vh;
+			border-radius: 5px;
+		}
+		.versions h2:hover {
+		    transition: 0.2s ease;
+			transform: scale(1.2);
+		}
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Minecraft</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="versions">
+		   <h2>Versiones:</h2>
+		</div>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyqRQE0hceqpbvOHPcp9kvzoxv0NypCqQ0tQ&s">
+			  <p id="console1" class="consolename">Minecraft 1.5.2</p>
+			  <p class="infoconsole">Considerada una de las versiones más estables y queridas de la era clásica, la 1.5.2 perfecciona la Actualización de Redstone.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://static.wikia.nocookie.net/minecraft_es_gamepedia/images/9/9b/The_Bountiful_Update.png/revision/latest?cb=20140829095616">
+			  <p id="console2" class="consolename">Minecraft 1.8</p>
+			  <p class="infoconsole">La versión 1.8 marca un antes y un después en la personalización, incluyendo los soportes para armaduras y el PvP definitivo.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://www.minecraft.net/content/dam/minecraftnet/archive/be692329014b85620ad11631650c1f91-Header.png">
+			  <p id="console3" class="consolename">Minecraft 1.12</p>
+			  <p class="infoconsole">Minecraft 1.12 transforma el mundo con una explosión de vitalidad al renovar por completo la paleta cromática del juego y el uso de mods.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Minecraft</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game">
+		     <img src="../assets/minecraft.jpg">
+			 <a href="./minecraft152.html" id="console1">Minecraft 1.5.2</a>
+		   </div>
+		   <div class="game">
+		     <img src="../assets/minecraft.jpg">
+			 <a href="./mc18.html" id="console2">Minecraft 1.8</a>
+		   </div>
+		   <div class="game">
+		     <img src="../assets/minecraft.jpg">
+			 <a href="./minecraft112.html" id="console2">Minecraft 1.12</a>
+		   </div>
+		   
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
+</html>
