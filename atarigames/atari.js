@@ -4,9 +4,9 @@ function ocultarTodo() {
 }
 
 document.getElementById('btn26').addEventListener('click', function () {
-    ocultarTodo(); // Primero borramos todo
+    ocultarTodo(); 
     const actuales = document.querySelectorAll('#atari26');
-    actuales.forEach(el => el.style.display = 'flex'); // Luego mostramos estos
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
 document.getElementById('btn78').addEventListener('click', function () {
