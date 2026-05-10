@@ -1,385 +1,339 @@
-<html>
-<head>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
     <title>SEGA Games</title>
-    <link rel="icon" href="/../assets/sega.png" type="image/png">
-    <script src="sega.js" defer=""></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de consolas creadas por SEGA.">
+	<link rel="icon" href="../assets/sega.png" type="image/png">
+	<script src="sega.js" defer=""></script>
     <style>
-        body {
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
             margin: 0;
             padding: 0;
             font-family: Arial;
+			height: 100%;
         }
-
         header {
-            width: 100%;
             border: none;
             background-color: #FF5454;
             color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 30px;
             text-align: center;
-            position: absolute;
-            top: -1px;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
         }
-
-        .Inibtn {
-            border: none;
-            background-color: #F5F5F5;
-            color: black;
-            cursor: pointer;
-            top: 0px;
-            left: 0px;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            padding: 17px;
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
         }
-        .console {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            margin: 80px;
-            column-gap: 220px;
-            row-gap: 20px;
-        }
-        .modelconsole {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-        .imgconsole {
-            width: 200px;
-            height: 200px;
-        }
-        footer {
-            background-color: black;
-            position: absolute;
-            bottom: -4400px;
-            width: 100%;
-            height: 40px;
-            color: white;
-            height: 20%;
-            text-align: center;
-        }
-       .pconsole {
-           border-radius: 10px;
-       }
-       .pconsole:hover {
-           transition: 0.2s ease;
-           transform: scale(0.8);
-       }
-        #sms {
-            background-color: red;
-            color: white;
-        }
-        #sgg {
-            background-color: green;
-            color: white;
-        }
-        #smd {
-            color: white;
-            background-color: blue;
-        }
-        #s32x {
-            color: white;
-            background-color: darkorange;
-        }
-        #scd {
-            color: black;
-            background-color: aqua;
-        }
-        #ssa {
-            color: white;
-            background-color: black;
-        }
-        .consolebtn {
-            display: grid;
-            place-content: center;
-        }
-        .consolebtnbar {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .consolebtn1 {
-            color: white;
-            background-color: #FF5454;
-            border: none;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
-        }
-        .consoleselect {
-            padding: 20px;
-            border: none;
-            border-radius: 10px;
-        }
-        #smsbtn {
-            color: white;
-            background-color: red;
-        }
-        #sggbtn {
-            color: white;
-            background-color: blue;
-        }
-        #smdbtn {
-            color: white;
-            background-color: green;
-        }
-        #s32xbtn {
-            color: white;
-            background-color: darkorange;
-        }
-        #scdbtn {
-            color: black;
-            background-color: aqua;
-        }
-        #ssabtn {
-            color: white;
-            background-color: black;
-        }
-        .gameselect {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 15px;
-            column-gap: 90px;
-            row-gap: 20px;
-        }
-        .gamemenu1 {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 5px solid #FF5454;
-            padding: 10px;
-            border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-        .imggame {
-            width: 220px;
-            height: 300px;
-        }
-        .agame {
-            text-decoration: none;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-        }
-        .agame:hover {
-            transition: 0.4s ease;
-            transform: scale(0.8);
-        }
-        .consoleselect:hover {
-            transform: scale(1.1);
-            transition: 0.2 ease;
-        }
-        .infoconsole {
-            width: 250px;
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 1.5vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 200px;
+		}
+		.infoconsole {
+		    width: 250px;
             height: 100px;
             padding: 10px;
             border-radius: 20px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .infoconsole:hover {
+		}
+		.infoconsole:hover {
             transition: 0.2s ease;
             transform: scale(1.1);
         }
-    </style>
-</head>
-<body>
-    <header>SEGA Games</header>
-    <a class="Inibtn" href="/../index.html">🏠</a>
-    <div class="console">
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdShBd_UfuAO7aiU2UtHY0OkDu_iutZIOkBQ&s" />
-
-            <p class="pconsole" id="sms">Sega Master System</p>
-
-            <p class="infoconsole">La guerrera original. Fue la respuesta de Sega a Nintendo. Es famosa por su resistencia y sus ROMs minúsculas, ideales para ahorrar espacio.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiS1i_j-3julw7hwDULdjYuA4YQw8rV_ZtQ&s" />
-
-            <p class="pconsole" id="sgg">Sega Game Gear</p>
-
-            <p class="infoconsole">Básicamente una Master System portátil pero con una paleta de colores mucho más amplia. Eso sí, ¡devoraba 6 pilas AA en apenas 3 horas!</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrQp52ML9rGrNNZbgbzFzfXoDMqqurcDzsA&s" />
-
-            <p class="pconsole" id="smd">Sega Mega Drive</p>
-
-            <p class="infoconsole">El mayor éxito de Sega. Introdujo a Sonic y definió la actitud "cool" de los 90 con juegos rápidos y sonidos metálicos icónicos.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk49dDhJR55NJ8Ol9ccguDa8RD-DFCoWL0Dg&s" />
-
-            <p class="pconsole" id="s32x">Sega 32X</p>
-
-            <p class="infoconsole">Un "puente" que se insertaba en la Mega Drive para darle potencia de 32 bits. Tuvo una vida muy corta pero con versiones geniales de juegos</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeD4O3zcYXQP2fHlCxrm7exePNtp1QUDbFIw&s" />
-
-            <p class="pconsole" id="scd">Sega CD</p>
-
-            <p class="infoconsole">Un accesorio para la Mega Drive que permitía usar CDs. Introdujo música real y escenas de video, aunque los juegos seguían siendo de 16 bits.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHyn2x3zNK2svXf2HYyj-icwDe5hGcHL2pg&s" />
-
-            <p class="pconsole" id="ssa">Sega Saturn</p>
-
-            <p class="infoconsole">La verdadera sucesora de nueva generación. Una bestia para los juegos en 2D, aunque su arquitectura interna era un laberinto para los programadores.</p>
-        </div>
-    </div>
-    <div class="consolebtn">
-        <button class="consolebtn1" onclick="location.reload()">Console Games</button>
-    </div>
-    <div class="consolebtnbar">
-        <button class="consoleselect" id="smsbtn">Sega Master System</button>
-        <button class="consoleselect" id="sggbtn">Sega Game Gear</button>
-        <button class="consoleselect" id="smdbtn">Sega Mega Drive</button>
-        <button class="consoleselect" id="s32xbtn">Sega 32X</button>
-        <button class="consoleselect" id="scdbtn">Sega CD</button>
-        <button class="consoleselect" id="ssabtn">Sega Saturn</button>
-    </div>
-    <div class="gameselect">
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_TprufuSBRphS7yxGfRjxTMmXLqZFm6Q9A&s" />
-
-            <a class="agame" id="smsbtn" href="./sms/castle.html">Castle of Illusion</a>
-        </div>
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9BJzMPewUyg1zAbWDKevPCo7pNllk9ab3-g&s" />
-
-            <a class="agame" id="smsbtn" href="./sms/goldenaxe.html">Golden Axe Warrior</a>
-        </div>
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://upload.wikimedia.org/wikipedia/en/3/34/Phantasy_Star_MS_cover.png" />
-
-            <a class="agame" id="smsbtn" href="./sms/phantasystar.html">Phantasy Star</a>
-        </div>
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9zhSJ7IHSXzWhria2RosJEpsIKAuS1bAPIA&s" />
-
-            <a class="agame" id="smsbtn" href="./sms/shinobi.html">Shinobi</a>
-        </div>
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqWTkcF0Ap9y72Zd1N2nr43v9zryOgxXi5DQ&s" />
-
-            <a class="agame" id="smsbtn" href="./sms/sonic.html">Sonic The Hedgehog</a>
-        </div>
-        <div class="gamemenu1" id="smsgame">
-            <img class="imggame" srcset="https://www.smspower.org/uploads/Scans/WonderBoy-SMS-EU-NoR-medium.jpg" />
-
-            <a class="agame" id="smsbtn" href="./sms/wonderboy.html">Wonder Boy III</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgPtxPmxwzQ9TS2dU1RpoIGptmQC-KilpxEQ&s" />
-
-            <a class="agame" id="sggbtn" href="./sgg/defenders.html">Defenders of Oasis</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2udbQZTUAvR-gXC5TcFtcan2zGF1zP6FPtA&s" />
-
-            <a class="agame" id="sggbtn" href="./sgg/landofillusion.html">Land of Illusion Starring</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/55/117481/420-420/Mighty+Morphin+Power+Rangers+(USA,+Europe)-image.jpg" />
-
-            <a class="agame" id="sggbtn" href="./sgg/mighty.html">Power Rangers</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/55/117489/420-420/Mortal+Kombat+II+(World)-image.jpg" />
-
-            <a class="agame" id="sggbtn" href="./sgg/mighty.html">Mortal Kombat II</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7bAI7ywNSH1rkScHy5YE_IUyZomK9Jc1HZw&s" />
-
-            <a class="agame" id="sggbtn" href="./sgg/mighty.html">Shinobi II</a>
-        </div>
-        <div class="gamemenu1" id="sgggame">
-            <img class="imggame" srcset="https://www.speedrun.com/static/theme/or31d381/XXX_cover.png?v=681776b" />
-
-            <a class="agame" id="sggbtn" href="./sgg/sonicchaos.html">Sonic Chaos</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://romsfun.com/wp-content/uploads/2023/10/FIFA-Soccer-95.jpg" />
-
-            <a class="agame" id="smdbtn" href="./sgg/fifa95.html">FIFA 95</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdiytsSIcOx-f2VmpGfYse5he_xQryva0MSg&s" />
-
-            <a class="agame" id="smdbtn" href="./smd/gunstar.html">Gunstar Heroes</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRskKMBm01THy0spAsrI6t7jvYkZ89eNtftfA&s" />
-
-            <a class="agame" id="smdbtn" href="./smd/kombat2.html">Mortal Kombat II</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn2daI0Lutnw0f5JDxe3VEwTDHnL6ptHRJYw&s" />
-
-            <a class="agame" id="smdbtn" href="./smd/phantasy.html">Phantasy Star V</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzCC4hkpNj_-uCDZyWkS6aeZJMDB4zW6i_zQ&s" />
-
-            <a class="agame" id="smdbtn" href="./smd/sonic.html">Sonic The Hedgehog 2</a>
-        </div>
-        <div class="gamemenu1" id="smdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZoRM0QX_JJgT9Z-WG7eeOFiWHIoHDbABbg&s" />
-
-            <a class="agame" id="smdbtn" href="./smd/streets.html">Streets of Rage 2</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXC7wwR2VB69820bG0AChsQHOgqtqadv5LxA&s" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/chaotix.html">Chaotix</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqysu-8FpFE8u1y1OonX8hLr9wFZuZRlnIXg&s" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/kolibri.html">Kolibri</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcoNuBGEzZtqBGaJa3itGXRte3gvXo2Zzu6g&s" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/mortalkombat32.html">Mortal Kombat II 32X</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/XTMpPgtE5zs/oardefault.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLBHyyY1ecIwcuYBLdFJOp6nAXh7vg&usqp=CCk" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/shadow.html">Shadow Squadron</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi_g0UfXGCTvOgZXzzaE6TuR7QIPhUrtMMwQ&s" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/starwars.html">Star Wars Arcade</a>
-        </div>
-        <div class="gamemenu1" id="s32xgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5tEOrfdHNbnYT_49T_IZ7rpeZ8pY_5gdRYQ&s" />
-
-            <a class="agame" id="s32xbtn" href="./s32x/virtuafighter.html">Virtual Flighter</a>
-        </div>
-        <div class="gamemenu1" id="scdgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5tEOrfdHNbnYT_49T_IZ7rpeZ8pY_5gdRYQ&s" />
-
-            <a class="agame" id="scdxbtn" href="./scd/virtuafighter.html">Virtual Flighter</a>
-        </div>
-    </div>
-    <footer>
-        <p>About:</p>
-
-        <p>L1 Games 2026</p>
-    </footer>
-</body>
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: orange;
+		}
+		#console4 {
+		    background-color: blue;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			color: white;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: red;
+		}
+		.btnconsole2 {
+		    background-color: green;
+		}
+		.btnconsole3 {
+		    background-color: orange;
+		}
+		.btnconsole4 {
+		    background-color: blue;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">SEGA Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdShBd_UfuAO7aiU2UtHY0OkDu_iutZIOkBQ&s">
+			  <p id="console1" class="consolename">Sega Master System</p>
+			  <p class="infoconsole">La guerrera original. Fue la respuesta de Sega a Nintendo. Es famosa por su resistencia y sus ROMs minúsculas, ideales para ahorrar espacio.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiS1i_j-3julw7hwDULdjYuA4YQw8rV_ZtQ&s">
+			  <p id="console2" class="consolename">Sega Game Gear</p>
+			  <p class="infoconsole">Básicamente una Master System portátil pero con una paleta de colores mucho más amplia. Eso sí, ¡devoraba 6 pilas AA en apenas 3 horas!</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrQp52ML9rGrNNZbgbzFzfXoDMqqurcDzsA&s">
+			  <p id="console3" class="consolename">Sega Mega Drive</p>
+			  <p class="infoconsole">El mayor éxito de Sega. Introdujo a Sonic y definió la actitud "cool" de los 90 con juegos rápidos y sonidos metálicos icónicos.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk49dDhJR55NJ8Ol9ccguDa8RD-DFCoWL0Dg&s	">
+			  <p id="console4" class="consolename">Sega 32X</p>
+			  <p class="infoconsole">Un "puente" que se insertaba en la Mega Drive para darle potencia de 32 bits. Tuvo una vida muy corta pero con versiones geniales de juegos</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">SEGA Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn1" class="btnconsole1">Sega Master System</button>
+		   <button id="btn2" class="btnconsole2">Sega Game Gear</button>
+		   <button id="btn3" class="btnconsole3">Sega Mega Drive</button>
+		   <button id="btn4" class="btnconsole4">Sega 32X</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="smsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_TprufuSBRphS7yxGfRjxTMmXLqZFm6Q9A&s">
+			 <a href="./sms/castle.html" id="console1">Castle of Illusion</a>
+		   </div>
+		   <div class="game" id="smsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9BJzMPewUyg1zAbWDKevPCo7pNllk9ab3-g&s">
+			 <a href="./sms/goldenaxe.html" id="console1">Golden Axe Warrior</a>
+		   </div>
+		   <div class="game" id="smsgame">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/3/34/Phantasy_Star_MS_cover.png">
+			 <a href="./sms/phantasystar.html" id="console1">Phantasy Star</a>
+		   </div>
+		   <div class="game" id="smsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9zhSJ7IHSXzWhria2RosJEpsIKAuS1bAPIA&s">
+			 <a href="./sms/shinobi.html" id="console1">Shinobi</a>
+		   </div>
+		   <div class="game" id="smsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqWTkcF0Ap9y72Zd1N2nr43v9zryOgxXi5DQ&s">
+			 <a href="./sms/sonic.html" id="console1">Sonic The Hedgehog</a>
+		   </div>
+		   <div class="game" id="smsgame">
+		     <img src="https://www.smspower.org/uploads/Scans/WonderBoy-SMS-EU-NoR-medium.jpg">
+			 <a href="./sms/wonderboy.html" id="console1">Wonder Boy III</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgPtxPmxwzQ9TS2dU1RpoIGptmQC-KilpxEQ&s">
+			 <a href="./sgg/defenders.html" id="console2">Defenders of Oasis</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2udbQZTUAvR-gXC5TcFtcan2zGF1zP6FPtA&s">
+			 <a href="./sgg/landofillusion.html" id="console2">Land of Illusion Starring</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/55/117481/420-420/Mighty+Morphin+Power+Rangers+(USA,+Europe)-image.jpg">
+			 <a href="./sgg/mighty.html" id="console2">Mighty Power Rangers</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/55/117489/420-420/Mortal+Kombat+II+(World)-image.jpg">
+			 <a href="./sgg/mortalkombatgg.html" id="console2">Mortal Kombat II</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7bAI7ywNSH1rkScHy5YE_IUyZomK9Jc1HZw&s">
+			 <a href="./sgg/silent.html" id="console2">Shinobi II</a>
+		   </div>
+		   <div class="game" id="sgggame">
+		     <img src="https://www.speedrun.com/static/theme/or31d381/XXX_cover.png?v=681776b">
+			 <a href="./sgg/sonicchaos.html" id="console2">Sonic Chaos</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://romsfun.com/wp-content/uploads/2023/10/FIFA-Soccer-95.jpg">
+			 <a href="./smd/fifa95.html" id="console3">FIFA 95</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdiytsSIcOx-f2VmpGfYse5he_xQryva0MSg&s">
+			 <a href="./smd/gunstar.html" id="console3">Gunstar Heroes</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRskKMBm01THy0spAsrI6t7jvYkZ89eNtftfA&s">
+			 <a href="./smd/kombat2.html" id="console3">Mortal Kombat II</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn2daI0Lutnw0f5JDxe3VEwTDHnL6ptHRJYw&s">
+			 <a href="./smd/phantasy.html" id="console3">Phantasy Star V</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzCC4hkpNj_-uCDZyWkS6aeZJMDB4zW6i_zQ&s">
+			 <a href="./smd/sonic.html" id="console3">Sonic The Hedgehog 2</a>
+		   </div>
+		   <div class="game" id="smdgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZoRM0QX_JJgT9Z-WG7eeOFiWHIoHDbABbg&s">
+			 <a href="./smd/streets.html" id="console3">Streets of Rage 2</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXC7wwR2VB69820bG0AChsQHOgqtqadv5LxA&s">
+			 <a href="./s32x/chaotix.html" id="console4">Chaotix</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqysu-8FpFE8u1y1OonX8hLr9wFZuZRlnIXg&s">
+			 <a href="./s32x/kolibri.html" id="console4">Kolibri</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcoNuBGEzZtqBGaJa3itGXRte3gvXo2Zzu6g&s">
+			 <a href="./s32x/mortalkombat32.html" id="console4">Mortal Kombat II 32X</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://i.ytimg.com/vi/XTMpPgtE5zs/oardefault.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLBHyyY1ecIwcuYBLdFJOp6nAXh7vg&usqp=CCk">
+			 <a href="./s32x/shadow.html" id="console4">Shadow Squadron</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi_g0UfXGCTvOgZXzzaE6TuR7QIPhUrtMMwQ&s">
+			 <a href="./s32x/starwars.html" id="console4">Star Wars Arcade</a>
+		   </div>
+		   <div class="game" id="s32xgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5tEOrfdHNbnYT_49T_IZ7rpeZ8pY_5gdRYQ&s">
+			 <a href="./s32x/virtuafighter.html" id="console4">Virtual Fighter</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
 </html>
