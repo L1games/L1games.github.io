@@ -1,5 +1,5 @@
 function ocultarTodo() {
-    const todos = document.querySelectorAll('#atari26, #atari78, #atarija, #atarilynx');
+    const todos = document.querySelectorAll('#smsgame, #sgggame, #smdgame, #s32xgame');
     todos.forEach(el => el.style.display = 'none');
 }
 
