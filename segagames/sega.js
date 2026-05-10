@@ -1,188 +1,28 @@
-document.getElementById('smsbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#sgggame');
+function ocultarTodo() {
+    const todos = document.querySelectorAll('#atari26, #atari78, #atarija, #atarilynx');
+    todos.forEach(el => el.style.display = 'none');
+}
 
-    const elementos1 = document.querySelectorAll('#smdgame');
-
-    const elementos2 = document.querySelectorAll('#s32xgame');
-
-    const elementos3 = document.querySelectorAll('#scdgame');
-
-    const elementos4 = document.querySelectorAll('#ssagame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn1').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#smsgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('sggbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#smsgame');
-
-    const elementos1 = document.querySelectorAll('#smdgame');
-
-    const elementos2 = document.querySelectorAll('#s32xgame');
-
-    const elementos3 = document.querySelectorAll('#scdgame');
-
-    const elementos4 = document.querySelectorAll('#ssagame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-});
-document.getElementById('smdbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#smsgame');
-
-    const elementos1 = document.querySelectorAll('#sgggame');
-
-    const elementos2 = document.querySelectorAll('#s32xgame');
-
-    const elementos3 = document.querySelectorAll('#scdgame');
-
-    const elementos4 = document.querySelectorAll('#ssagame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-});
-document.getElementById('s32xbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#smsgame');
-
-    const elementos1 = document.querySelectorAll('#sgggame');
-
-    const elementos2 = document.querySelectorAll('#smdgame');
-
-    const elementos3 = document.querySelectorAll('#scdgame');
-
-    const elementos4 = document.querySelectorAll('#ssagame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-});
-document.getElementById('scdbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#smsgame');
-
-    const elementos1 = document.querySelectorAll('#sgggame');
-
-    const elementos2 = document.querySelectorAll('#smdgame');
-
-    const elementos3 = document.querySelectorAll('#s32xgame');
-
-    const elementos4 = document.querySelectorAll('#ssagame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-});
-document.getElementById('ssabtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#smsgame');
-
-    const elementos1 = document.querySelectorAll('#sgggame');
-
-    const elementos2 = document.querySelectorAll('#smdgame');
-
-    const elementos3 = document.querySelectorAll('#s32xgame');
-
-    const elementos4 = document.querySelectorAll('#scdgame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn2').addEventListener('click', function () {
+    ocultarTodo();
+    const actuales = document.querySelectorAll('#sgggame');
+    actuales.forEach(el => el.style.display = 'flex');
 });
 
+document.getElementById('btn3').addEventListener('click', function () {
+    ocultarTodo();
+    const actuales = document.querySelectorAll('#smdgame');
+    actuales.forEach(el => el.style.display = 'flex');
+});
+
+document.getElementById('btn4').addEventListener('click', function () {
+    ocultarTodo();
+    const actuales = document.querySelectorAll('#s32xgame');
+    actuales.forEach(el => el.style.display = 'flex');
+});
