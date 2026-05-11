@@ -144,6 +144,24 @@
 			flex-shrink: 0;
 			margin-top: 5vh;
         }
+		.notification {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.notification p {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+			padding: 15px;
+        }
+		.notification p:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
 	</style>
   </head>
   <body>
@@ -193,6 +211,9 @@
               Tu navegador no soporta la reproducción de videos.
              </video>
 		    </div>
+		</div>
+		<div class="notification">
+		    <p>Para regresar a la página principal en un juego, presiona le tecla "P".</P>
 		</div>
         <div class="gamebar">
 		    <div class="option">
