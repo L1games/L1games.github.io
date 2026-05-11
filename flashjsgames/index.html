@@ -1,2 +1,291 @@
-ddd
-xx
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Flash & JS Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de las plataformas Adobe Flash (Ruffle) y juegos creados en encripsten (Javascript y .wasm).">
+	<link rel="icon" href="../assets/flashjsgames.jpg" type="image/png">
+	<script src="flashjs.js" defer=""></script>
+    <style>
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+			gap: 1.5vw !important;
+		}
+       }
+	    body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+			height: 100%;
+        }
+        header {
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
+        }
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
+        }
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(2, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 20vw;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 250px;
+            height: 100px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: #CF302A;
+			color: white;
+		}
+		#console2 {
+		    background-color: #F7DF1E;
+			color: black;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(2, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: #CF302A;
+			color: white;
+		}
+		.btnconsole2 {
+		    color: black;
+		    background-color: #F7DF1E;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Flash & JS Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6hOtSB9WxVfFX7E0QxPJXoVbDl1eLY_I3eA&s">
+			  <p id="console1" class="consolename">Flash Games</p>
+			  <p class="infoconsole">Los juegos Flash marcaron la era dorada en la web gracias a su capacidad para ofrecer animaciones vectoriales e interactividad compleja.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuHnJDLOcdm_0b6N6kNj-1OvO9KhKYgqIy0w&s">
+			  <p id="console2" class="consolename">JavaScript Games</p>
+			  <p class="infoconsole">Los juegos modernos en JavaScript y WebAssembly (.wasm) representan la evolución actual, permitiendo ejecutar código de alto rendimiento.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Flash & JS Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn1" class="btnconsole1">Flash Games</button>
+		   <button id="btn2" class="btnconsole2">Javascript Games</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKawf-T7KuPNvkQ3gsFH8RImeAXXPFlPIsQQ&s">
+			 <a href="./flashgames/whg.html" id="console1">The World's Hardest Game</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcbcB15PnqZZD_IJl9zOBAtQbBwI6zNrH-4A&s">
+			 <a href="./flashgames/ts.html" id="console1">Toilet Success</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://i.ytimg.com/vi/8BJ7k5D6jPw/sddefault.jpg">
+			 <a href="./flashgames/ts.html" id="console1">The Right Mix</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://imgs.crazygames.com/auto-covers/strike-force-heroes_1x1.png?format=auto&quality=100&metadata=none&width=1200">
+			 <a href="./flashgames/sfh.html" id="console1">Strike Force Heroes</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://static.wikia.nocookie.net/redball/images/b/b9/Red_ball_250x194.jpg/revision/latest?cb=20121218162748">
+			 <a href="./flashgames/rb1.html" id="console1">Red Ball</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgPnEOzjrKOL5PSn1LKf-EVFLLoSRY-OHcsA&s">
+			 <a href="./flashgames/px.html" id="console1">Pac-Xon</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://play-lh.googleusercontent.com/ToymOKSRQ3uBqYPXU2cMW2qWtDa8OJyOVPLDwkU6Eehq8TrKVlBbB6cb4taS9ZqxDIE=w526-h296-rw">
+			 <a href="./flashgames/mt.html" id="console1">Mini Train</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYyIBnuFtKjpf-geru6y7XojxziVCXL-ID1w&s">
+			 <a href="./flashgames/smf.html" id="console1">Super Marce Flash</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlkdYYFyS4G-NMOEp6kNs7lVSTIzkMS4lp_w&s">
+			 <a href="./flashgames/impossiblequiz.html" id="console1">The Impossible Quiz</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf4vyb-_xainf0C1i9E3WTOcwz-HNZ5YneyQ&s">
+			 <a href="./flashgames/ib.html" id="console1">Inspector Blindson</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmh3mCuZ6TGLTAXyQHJJuBT7REJcZJ4nWsbg&s">
+			 <a href="./flashgames/hw.html" id="console1">Happy Wheels</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm1TvGfgQh01it0L-d7fJt4Ftk9z2IbaCzxA&s">
+			 <a href="./flashgames/fwtft.html" id="console1">Fireboy and WaterGirl</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj9sv5DPk9Vz7g7cMvbggUqqLs43S0swcNeg&s">
+			 <a href="./flashgames/fernan.html" id="console1">Fernanfloo Saw Game</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://www2.minijuegosgratis.com/v3/games/thumbnails/24691_1.jpg">
+			 <a href="./flashgames/cm.html" id="console1">Cat Mario</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://i.blogs.es/5a610c/130419-age-of-empires/840_560.jpeg">
+			 <a href="./flashgames/aow.html" id="console1">Age Of Empires</a>
+		   </div>
+		   <div class="game" id="flashgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlRhvQ3OelWbytoPDUi7H0BLSAd0-FH_4GJQ&s">
+			 <a href="./flashgames/pvz.html" id="console1">Plants VS Zombies</a>
+		   </div>
+		   <!--   
+		   <div class="game" id="jsgame">
+		     <img src="URL">
+			 <a href="./jsgames/juego.html" id="console2">JUEGO</a>
+		   </div>
+		   -->
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
+</html>
