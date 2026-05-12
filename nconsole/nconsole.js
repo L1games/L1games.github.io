@@ -1,450 +1,58 @@
-document.getElementById('gbabtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
+function ocultarTodo() {
+    const todos = document.querySelectorAll('#gbagame, #gbcgame, #nesgame, #n64game, #ndsgame, #snesgame, #famigame, #sfamigame, #vboygame');
+    todos.forEach(el => el.style.display = 'none');
+}
 
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn1').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#gbagame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('gbcbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbagame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn2').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#gbcgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('nesbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#gbagame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn3').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#nesgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('n64btn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#gbagame');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn4').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#n64game');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('ndsbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#gbagame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn5').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#ndsgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('snesbtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#gbagame');
-
-    const elementos5 = document.querySelectorAll('#vboygame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn6').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#snesgame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('boybtnselect').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#gbagame');
-
-    const elementos6 = document.querySelectorAll('#famigame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn7').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#famigame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('famibtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#gbagame');
-
-    const elementos6 = document.querySelectorAll('#vboygame');
-
-    const elementos7 = document.querySelectorAll('#sfamigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn8').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#sfamigame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
 
-document.getElementById('sfamibtn').addEventListener('click', function () {
-    const elementos0 = document.querySelectorAll('#gbcgame');
-
-    const elementos1 = document.querySelectorAll('#nesgame');
-
-    const elementos2 = document.querySelectorAll('#n64game');
-
-    const elementos3 = document.querySelectorAll('#ndsgame');
-
-    const elementos4 = document.querySelectorAll('#snesgame');
-
-    const elementos5 = document.querySelectorAll('#gbagame');
-
-    const elementos6 = document.querySelectorAll('#vboygame');
-
-    const elementos7 = document.querySelectorAll('#famigame');
-
-    elementos0.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos1.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos2.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos3.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos4.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos5.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-     elementos6.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
-
-    elementos7.forEach(function (elemento) {
-        elemento.style.display = 'none';
-    });
+document.getElementById('btn9').addEventListener('click', function () {
+    ocultarTodo(); 
+    const actuales = document.querySelectorAll('#vboygame');
+    actuales.forEach(el => el.style.display = 'flex'); 
 });
-
