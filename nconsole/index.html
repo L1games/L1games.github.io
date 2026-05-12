@@ -1,58 +1,231 @@
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <html lang="es">
+<!DOCTYPE html>
+<html lang="es">
+  <head>
     <title>Nintendo Games</title>
-    <link rel="icon" href="/../assets/nconsole.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de consolas creadas por Nintendo.">
+	<link rel="icon" href="../assets/nconsole.png" type="image/png">
+	<script src="nconsole.js" defer=""></script>
     <style>
-	@media (max-width: 1024px) {
-  .console {
-    grid-template-columns: repeat(2, auto) !important; 
-  }
-  .gameselect {
-  grid-template-columns: repeat(2, auto)!important;
-  }
-}
-        body {
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
             margin: 0;
             padding: 0;
             font-family: Arial;
+			height: 100%;
         }
-
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border: none;
+            background-color: #FF5454;
             color: white;
-			background-color: #FF5454;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
         }
-        .oculto {
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
             visibility: hidden;
         }
-		.Inibtn {
-		    background-color: white;
-			padding: 5vh;
-			font-size: 5vh;
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
 		}
-        .console {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 10vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 250px;
+            height: 100px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+			color: white;
+		}
+		#console2 {
+		    background-color: green;
+			color: white;
+		}
+		#console3 {
+		    background-color: blue;
+			color: white;
+		}
+		#console4 {
+		    background-color: darkorange;
+			color: black;
+		}
+		#console5 {
+		    background-color: aqua;
+			color: black;
+		}
+		#console6 {
+		    background-color: black;
+			color: white;
+		}
+		#console7 {
+		    color: white;
+            background-color: #efb810;
+		}
+		#console8 {
+		    color: black;
+            background-color: #88e788;
+		}
+		#console9 {
+		    color: yellow;
+            background-color: blue;
+		}
+		.btnreset {
+		    display: grid;
             place-content: center;
-            margin: 20vh;
-            column-gap: 30vh;
-            row-gap: 20vh;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
         }
-        .modelconsole {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
         }
-        .imgconsole {
-            width: 200px;
-            height: 200px;
-        }
-        footer {
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: red;
+			color: white;
+		}
+		.btnconsole2 {
+		    background-color: green;
+			color: white;
+		}
+		.btnconsole3 {
+		    background-color: blue;
+			color: white;
+		}
+		.btnconsole4 {
+		    background-color: darkorange;
+			color: black;
+		}
+		.btnconsole5 {
+		    background-color: aqua;
+			color: black;
+		}
+		.btnconsole6 {
+		    background-color: black;
+			color: white;
+		}
+		.btnconsole7 {
+		    color: white;
+            background-color: #efb810;
+		}
+		.btnconsole8 {
+		    color: black;
+            background-color: #88e788;
+		}
+		.btnconsole9 {
+		    color: yellow;
+            background-color: blue;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
             background-color: black;
             position: absolute;
             width: 100%;
@@ -61,525 +234,294 @@
             height: 20%;
             text-align: center;
 			flex-shrink: 0;
+			margin-top: 5vh;
         }
-		
-       .pconsole {
-           border-radius: 10px;
-       }
-       .pconsole:hover {
-           transition: 0.2s ease;
-           transform: scale(0.8);
-       }
-        #gba {
-            background-color: red;
-            color: white;
-        }
-        #gbc {
-            background-color: green;
-            color: white;
-        }
-        #nes {
-            color: white;
-            background-color: blue;
-        }
-        #n64 {
-            color: white;
-            background-color: darkorange;
-        }
-        #nds {
-            color: black;
-            background-color: aqua;
-        }
-        #snes {
-            color: white;
-            background-color: black;
-        }
-        .nconsolebtn {
-            display: flex;
-            justify-content: center; 
-            align-items: center; 
-        }
-        .nconsolebtn1 {
-            color: white;
-            background-color: #FF5454;
-            border: none;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
-        }
-        .consolebtn {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .consoleselect {
-            padding: 20px;
-            border: none;
-            border-radius: 10px;
-        }
-        #gbabtn {
-            color: white;
-            background-color: red;
-        }
-        #nesbtn {
-            color: white;
-            background-color: blue;
-        }
-        #gbcbtn {
-            color: white;
-            background-color: green;
-        }
-        #n64btn {
-            color: white;
-            background-color: darkorange;
-        }
-        #ndsbtn {
-            color: black;
-            background-color: aqua;
-        }
-        #snesbtn {
-            color: white;
-            background-color: black;
-        }
-        .gameselect {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 15px;
-            column-gap: 90px;
-            row-gap: 20px;
-			
-        }
-        .gamemenu1 {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 5px solid #FF5454;
-            padding: 10px;
-            border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-        .imggame {
-            width: 220px;
-            height: 300px;
-        }
-        .agame {
-            text-decoration: none;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-        }
-        .agame:hover {
-            transition: 0.4s ease;
-            transform: scale(0.8);
-        }
-        #boybtn1 {
-            color: yellow;
-            background-color: darkblue;
-        }
-        .consoleselect:hover {
-            transform: scale(1.1);
-            transition: 0.2 ease;
-        }
-        .infoconsole {
-            width: 250px;
-            height: 100px;
-            padding: 10px;
-            border-radius: 20px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .infoconsole:hover {
-            transition: 0.2s ease;
-            transform: scale(1.1);
-        }
-        #virtualboy {
-            color: yellow;
-            background-color: blue;
-        }
-        #famicom {
-            color: white;
-            background-color: #efb810;
-        }
-        #superfamicom {
-            color: white;
-            background-color: #88e788;
-        }
-        #boybtnselect {
-            color: yellow;
-            background-color: blue;
-        }
-        #famibtn {
-            color: white;
-            background-color: #efb810;
-        }
-        #sfamibtn {
-            color: white;
-            background-color: #88e788;
-        }
-        #famibtn {
-            color: white;
-            background-color: #efb810;
-        }
-    </style>
-    <script src="nconsole.js" defer></script>
-</head>
-<body>
-    <header>
-	<a class="Inibtn" href="/../index.html">🏠</a>
-	<h1 class="title">Nintendo Games</h1>
-	<a class="oculto">a</a>
-	</header>
-    
-    <div class="console">
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTKEJIuBQ_t-zeTlJeAL37Mi1yzcASX3YXA&s" />
-
-            <p class="pconsole" id="gba">GameBoy Advance</p>
-
-            <p class="infoconsole">Fue básicamente una "Super Nintendo de bolsillo", ofreciendo una potencia increíble y un catálogo de joyas pixel-art inigualable.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://m.media-amazon.com/images/I/61UZpFPT2iS._SL1500_.jpg" />
-
-            <p class="pconsole" id="gbc">GameBoy Color</p>
-
-            <p class="infoconsole">Trajo un arcoíris de posibilidades a nuestras manos, permitiendo que clásicos portátiles finalmente brillaran con una paleta de colores viva.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://www.nintendo.com/es-es/games/oms/nes-classic-mini/images/nes-classic-edition.png" />
-
-            <p class="pconsole" id="nes">Nintendo NES</p>
-
-            <p class="infoconsole">Fue la consola que salvó a la industria y nos presentó a íconos como Mario y Link, estableciendo las bases del gaming moderno.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpQctg6uC0Kg4s44KH763_kpjbnt5ACP8jUQ&s" />
-
-            <p class="pconsole" id="n64">Nintendo 64</p>
-
-            <p class="infoconsole">Dio el salto revolucionario al 3D, rompiendo esquemas con su stick analógico y mundos abiertos que cambiaron las reglas del juego.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ5dajXPUeH5G7u8s5YRkvUiKSZQhLmHKyIQ&s" />
-
-            <p class="pconsole" id="nds">Nintendo DS</p>
-
-            <p class="infoconsole">Innovó con su doble pantalla y controles táctiles, convirtiéndose en un fenómeno global que democratizó el juego para todo tipo de personas.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Wikipedia_SNES_PAL.jpg/250px-Wikipedia_SNES_PAL.jpg" />
-
-            <p class="pconsole" id="snes">Nintendo SNES</p>
-
-            <p class="infoconsole">Considerada por muchos como la cima del 2D, perfeccionó la fórmula con gráficos vibrantes y bandas sonoras inolvidables.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Nintendo-Famicom-Console-Set-FL.png/250px-Nintendo-Famicom-Console-Set-FL.png" />
-
-            <p class="pconsole" id="famicom">Nintendo Famicom</p>
-
-            <p class="infoconsole">Es la consola que lo cambió todo. Lanzada en Japón en 1983, es la versión original de lo que en Occidente conocimos como NES.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlAekrsD1iNlnZJ2aUfeRvxhtYFBe8z_f1Bw&s" />
-
-            <p class="pconsole" id="superfamicom">Nintendo Super Famicom</p>
-
-            <p class="infoconsole">La joya de la corona de los 16 bits, lanzada en 1990. En el resto del mundo se llamó Super Nintendo (SNES).</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMF-nMUsGHZHiqdVA2tBhOIwsmdJoN5C9Pg&s" />
-
-            <p class="pconsole" id="virtualboy">Nintendo VirtualBoy</p>
-
-            <p class="infoconsole">La Virtual Boy fue el intento más arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995.</p>
-        </div>
-    </div>
-    <div class="nconsolebtn">
-        <button class="nconsolebtn1" onclick="location.reload()">N-Console Games</button>
-    </div>
-    <div class="consolebtn">
-        <button class="consoleselect" id="gbabtn">Gameboy Advance</button>
-        <button class="consoleselect" id="gbcbtn">Gameboy Color</button>
-        <button class="consoleselect" id="nesbtn">Nintendo NES</button>
-        <button class="consoleselect" id="n64btn">Nintendo 64</button>
-        <button class="consoleselect" id="ndsbtn">Nintendo DS</button>
-        <button class="consoleselect" id="snesbtn">Nintendo SNES</button>
-        <button class="consoleselect" id="famibtn">Nintendo Famicom</button>
-        <button class="consoleselect" id="sfamibtn">Nintendo Super Famicom</button>
-        <button class="consoleselect" id="boybtnselect">Virtual Boy</button>
-    </div>
-    <div class="gameselect">
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/27/13422/420-420/Mario+Kart+-+Super+Circuit+(Europe)-image.jpg" />
-
-            <a class="agame" id="gbabtn" href="./gba/mariokart.html">Mario Kart: Super Circuit</a>
-        </div>
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScjDGbx69qePbp9zRbCBjWfVTzN6TOBmk8qg&s" />
-
-            <a class="agame" id="gbabtn" href="./gba/warioland4.html">Wario Land 4</a>
-        </div>
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7v-VhB6CLGS2QNFfcAB-evCvvPXq1jaVRAA&s" />
-
-            <a class="agame" id="gbabtn" href="./gba/f12002.html">Formula 1 2002</a>
-        </div>
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmtHb6uS0Sp84SPlLi_i8c2JOy0OdrM4Z7dA&s" />
-
-            <a class="agame" id="gbabtn" href="./gba/fifa2006.html">FIFA 2006</a>
-        </div>
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTILtGYiu7H82Z4uPpZ4noJnSZRLBhIwjYq0w&s" />
-
-            <a class="agame" id="gbabtn" href="./gba/leyenofzelda.html">Legend of Zelda</a>
-        </div>
-        <div class="gamemenu1" id="gbagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0XPglGQ88hE_OXzShJ08O03h3g5jc5JwZmA&s" />
-
-            <a class="agame" id="gbabtn" href="./gba/marioluigi.html">Mario & Luigi</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/28/11073/420-420/Legend+of+Zelda,+The+-+Link's+Awakening+DX+(USA,+Europe)+(Rev+A)+(SGB+Enhanced)-image.jpg" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/legendofzelda1.html">Legend of Zelda (TLAD)</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxqLUB8IB0TAiwX_X1rMgyW1fwk1mVOwUDrQ&s" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/legendofzelda2.html">Legend of Zelda (TOOA)</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGYraR4pRoZT5xlwpXKJpegNYtiXJzSFayvw&s" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/pokemoncristal.html">Pokemon Cristal</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAv7QzAQVtOGx5O7TVhU-qwT4O29tI42Wfg&s" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/pokemongold.html">Pokemon Gold</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcMBngb0ULLcXvTz3y9uHXc-u5hzjCaBvzHg&s" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/pokemonsilver.html">Pokemon Silver</a>
-        </div>
-        <div class="gamemenu1" id="gbcgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDiWji6KbX4W-5yFXMfW4cZlXzLYf1JLv05A&s" />
-
-            <a class="agame" id="gbcbtn" href="./gbc/warioland3.html">Wario Land 3</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvOVToWwR-bAai7qoKgPNBIC-HE3onL10t-g&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/contra.html">Contra</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTj0U5srS5N3kaA7Q0NC4BQ_24b_2_zs37w&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/megaman2.html">Mega Man 2</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy_kx1SYT9Ah9smFdJIYx_gmEBFXjqYmG3yQ&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/supermario1.html">Super Mario Bros 1</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmxp851_QQ37zH5nvA0UEuPlxKeCjUHZQRXA&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/supermario2.html">Super Mario Bros 2</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBhCcAUFslFa1eFTGFbSlvEgSwQ86BMDI26A&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/supermario3.html">Super Mario Bros 3</a>
-        </div>
-        <div class="gamemenu1" id="nesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM0UZOVQrvXtNyKqByUY2ObNJoGWaDD_2f-w&s" />
-
-            <a class="agame" id="nesbtn" href="./nes/tetris.html">Tetris</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGaV51HIxoeGEVkgBGFRCsFYU2JpP1vJ3-Rw&s" />
-
-            <a class="agame" id="n64btn" href="./n64/residentevil.html">Resident Evil 2</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://i.etsystatic.com/18537270/r/il/4d85a0/3775612297/il_570xN.3775612297_log1.jpg" />
-
-            <a class="agame" id="n64btn" href="./n64/goldeneye.html">007-Golden Eye</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://m.media-amazon.com/images/M/MV5BNTc5NzdkOTQtMTcyZC00YzRiLWI2N2QtMWFjYzgwNWNhNWVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" />
-
-            <a class="agame" id="n64btn" href="./n64/banjokazooie.html">Banjo Kazooie</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://i.scdn.co/image/ab67616d0000b273168bebd9c9656438b3c0e9a6" />
-
-            <a class="agame" id="n64btn" href="./n64/mariokart64.html">Mario Kart 64</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Super_Mario_64.png/250px-Super_Mario_64.png" />
-
-            <a class="agame" id="n64btn" href="./n64/supermario64.html">Super Mario 64</a>
-        </div>
-        <div class="gamemenu1" id="n64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjM17qpOz5zfYM_7CDR8Ig5utbsRMtGKzhJA&s" />
-
-            <a class="agame" id="n64btn" href="./n64/supersmashbros.html">Super Smash Bros</a>
-        </div>
-        <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyEvYGMCSE1SyrUlzXp7JIma6KDMz8QkU-RA&s" />
-
-            <a class="agame" id="ndsbtn" href="./nds/newsupermariobros.html">New Super Mario Bros</a>
-        </div>
-        <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx9y1kcP6qZz0LE08y852_BSeaPEw9EfaJlA&s" />
-
-            <a class="agame" id="ndsbtn" href="./nds/gta.html">Grand Theft Auto</a>
-        </div>
-         <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJy_2r7VTyJhtWNZZ8V3FGDq4FyUkVsrBdgw&s" />
-
-            <a class="agame" id="ndsbtn" href="./nds/proflayton.html">Profesor Layton</a>
-        </div>
-        <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://image.cdn1.buscalibre.com/3629273.__RS360x360__.jpg" />
-
-            <a class="agame" id="ndsbtn" href="./nds/pokemon.html">Pokemon: Edicion Negra</a>
-        </div>
-        <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYSSil_gP-jAo6lvo-3YYo7SAPbJL9SHDrGw&s" />
-
-            <a class="agame" id="ndsbtn" href="./nds/legendofzelda.html">Legend Of Zelda</a>
-        </div>
-        <div class="gamemenu1" id="ndsgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8TXNqAMerNUE2mKAf2NLmTfsgMSaoUSZAdw&s" />
-
-            <a class="agame" id="ndsbtn" href="./nds/mariokart.html">Mario Kart DS</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Cu1xiJdM1cVSMGUEPYNErtQKYFEkVfT0cA&s" />
-
-            <a class="agame" id="snesbtn" href="./snes/donkeykongcountry.html">Donkey Kong Country</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/PsHXUhpyo0g/maxresdefault.jpg" />
-
-            <a class="agame" id="snesbtn" href="./snes/futbolperuano97.html">Futbol Peruano 97</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://assets-prd.ignimgs.com/2022/05/13/street-fighter-2-button-snescrop-1652485158101.jpg" />
-
-            <a class="agame" id="snesbtn" href="./snes/streetfighter2.html">Street Fighter 2</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/znU_udwZfWQ/oardefault.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLB8MZsHlYogJcLU6DMaJBj6koWekQ&usqp=CCk" />
-
-            <a class="agame" id="snesbtn" href="./snes/supermariokart.html">Super Mario Kart</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfbLcsy70ERcUXnVPmMvgoQANOXru0HenN0A&s" />
-
-            <a class="agame" id="snesbtn" href="./snes/supermarioworld.html">Super Mario World</a>
-        </div>
-        <div class="gamemenu1" id="snesgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGRS1wWP0caDX1V7iX6-3etOG6hiPrt37-IQ&s" />
-
-            <a class="agame" id="snesbtn" href="./snes/toystory.html">Toy Story</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://s.pacn.ws/1/p/PA.35509.001.jpg?v=ij932q" />
-
-            <a class="agame" id="famibtn" href="./famicom/akumajou.html">Akumajou Densetsu</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6s-ruBIVCy9IhpZYnUW6KDorW9w6jIdviFw&s" />
-
-            <a class="agame" id="famibtn" href="./famicom/hoshinokirby.html">Hoshi no Kirby</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://j2games.com/cdn/shop/products/14813_front.jpg?v=1625155705" />
-
-            <a class="agame" id="famibtn" href="./famicom/supermariobros.html">Super Mario Bros Japan</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwBMPE_uq7YQ9ZwLWH-n1bpSBUI2Nqp1VLYA&s" />
-
-            <a class="agame" id="famibtn" href="./famicom/supermariobros.html">Super Mario Bros 2 Japan</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ1uqXftDLzQ73lyov5bpOYFXdFMtTPA2RDg&s" />
-
-            <a class="agame" id="famibtn" href="./famicom/supermariobros3.html">Super Mario Bros 3 Japan</a>
-        </div>
-        <div class="gamemenu1" id="famigame">
-            <img class="imggame" srcset="https://s.pacn.ws/1/p/PA.54166.001.jpg?v=irqfe5" />
-
-            <a class="agame" id="famibtn" href="./famicom/zelda.html">Zelda no Densetsu</a>
-        </div>
-        <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNk35p8kZy8iODRa9JBGXN-E-IbXwXS5dvpQ&s" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/chrono.html">Chrono Trigger</a>
-        </div>
-        <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwDK8EtljIB_13C3OCwTiY_YNOCgMbU07frg&s" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/finalfantasyvi.html">Final Fantasy VI</a>
-        </div>
-         <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwDK8EtljIB_13C3OCwTiY_YNOCgMbU07frg&s" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/streetfighter2.html">Street Fighter 2 Japan</a>
-        </div>
-        <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/48/29449/420-420/Super+Donkey+Kong+(Japan)-image.jpg" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/superdonkeykong.html">Super Donkey Kong</a>
-        </div>
-        <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/48/30246/420-420/Zelda+no+Densetsu+-+Kamigami+no+Triforce+(Japan)-image.jpg" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/zelda.html">Super Zelda no Densetsu</a>
-        </div>
-        <div class="gamemenu1" id="sfamigame">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/48/29593/420-420/Super+Mario+World+-+Super+Mario+Bros.+4+(Japan)-image.jpg" />
-
-            <a class="agame" id="sfamibtn" href="./superfamicom/zelda.html">Super Mario 4 World</a>
-        </div>
-        <div class="gamemenu1" id="vboygame">
-            <img class="imggame" srcsethttps://upload.wikimedia.org/wikipedia/en/b/ba/Jack_Bros_Virtual_Boy_North_American_release.pngg" />
-
-            <a class="agame" id="boybtn1" href="./vboy/jackbros.html">Jack Bros</a>
-        </div>
-        <div class="gamemenu1" id="vboygame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIOzOgx22PDJsTX7UfJhErBuxjoPmH1ELBA&s" />
-
-            <a class="agame" id="boybtn1" href="./vboy/redalarm.html">Red Alarm</a>
-        </div>
-        <div class="gamemenu1" id="vboygame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgpyvFysE3BV3D3Z46jF3Z261G58ddRuBiyw&s" />
-
-            <a class="agame" id="boybtn1" href="./vboy/spacepinball.html">Space Pinball</a>
-        </div>
-        <div class="gamemenu1" id="vboygame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqo12xBuHnhyBdi2aMbrEVrXjl7HBD_FI0Q&s" />
-
-            <a class="agame" id="boybtn1" href="./vboy/wariolandvb.html">VB Wario Land</a>
-        </div>
-    </div>
-    <footer>
-        <p class="pfooter">About:</p>
-
-        <p class="pfooter">L1 Games 2026</p>
-    </footer>
-</body>
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Nintendo Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTKEJIuBQ_t-zeTlJeAL37Mi1yzcASX3YXA&s">
+			  <p id="console1" class="consolename">GameBoy Advance</p>
+			  <p class="infoconsole">Fue básicamente una "Super Nintendo de bolsillo", ofreciendo una potencia increíble y un catálogo de joyas pixel-art inigualable.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://m.media-amazon.com/images/I/61UZpFPT2iS._SL1500_.jpg">
+			  <p id="console2" class="consolename">GameBoy Color</p>
+			  <p class="infoconsole">Trajo un arcoíris de posibilidades a nuestras manos, permitiendo que clásicos portátiles finalmente brillaran con una paleta de colores viva.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://www.nintendo.com/es-es/games/oms/nes-classic-mini/images/nes-classic-edition.png">
+			  <p id="console3" class="consolename">Nintendo Entertainment System</p>
+			  <p class="infoconsole">Fue la consola que salvó a la industria y nos presentó a íconos como Mario, estableciendo las bases del gaming moderno.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpQctg6uC0Kg4s44KH763_kpjbnt5ACP8jUQ&s">
+			  <p id="console4" class="consolename">Nintendo 64</p>
+			  <p class="infoconsole">Dio el salto revolucionario al 3D, rompiendo esquemas con su stick analógico y mundos abiertos que cambiaron las reglas del juego.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ5dajXPUeH5G7u8s5YRkvUiKSZQhLmHKyIQ&s">
+			  <p id="console5" class="consolename">Nintendo DS</p>
+			  <p class="infoconsole">Innovó con su doble pantalla y controles táctiles, convirtiéndose en un fenómeno global que democratizó el juego para todo tipo de personas.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Wikipedia_SNES_PAL.jpg/250px-Wikipedia_SNES_PAL.jpg">
+			  <p id="console6" class="consolename">SNES</p>
+			  <p class="infoconsole">Considerada por muchos como la cima del 2D, perfeccionó la fórmula con gráficos vibrantes y bandas sonoras inolvidables.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Nintendo-Famicom-Console-Set-FL.png/250px-Nintendo-Famicom-Console-Set-FL.png">
+			  <p id="console7" class="consolename">Nintendo Famicom</p>
+			  <p class="infoconsole">Es la consola que lo cambió todo. Lanzada en Japón en 1983, es la versión original de lo que en Occidente conocimos como NES.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlAekrsD1iNlnZJ2aUfeRvxhtYFBe8z_f1Bw&s">
+			  <p id="console8" class="consolename">Nintendo Super Famicom</p>
+			  <p class="infoconsole">La joya de la corona de los 16 bits, lanzada en 1990. En el resto del mundo se llamó Super Nintendo (SNES).</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMF-nMUsGHZHiqdVA2tBhOIwsmdJoN5C9Pg&s">
+			  <p id="console9" class="consolename">Nintendo VirtualBoy</p>
+			  <p class="infoconsole">La Virtual Boy fue el intento más arriesgado y peculiar de Nintendo por conquistar la realidad virtual en 1995.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Nintendo Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn1" class="btnconsole1">Gameboy Advance</button>
+		   <button id="btn2" class="btnconsole2">Gameboy Color</button>
+		   <button id="btn3" class="btnconsole3">Nintendo Entertainment System</button>
+		   <button id="btn4" class="btnconsole4">Nintendo 64</button>
+		   <button id="btn5" class="btnconsole5">Nintendo DS</button>
+		   <button id="btn5" class="btnconsole6">SNES</button>
+		   <button id="btn6" class="btnconsole7">Nintendo Famicom</button>
+		   <button id="btn6" class="btnconsole8">Nintendo Super Famicom</button>
+		   <button id="btn6" class="btnconsole9">Nintendo VirtualBoy</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="gbagame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/27/13422/420-420/Mario+Kart+-+Super+Circuit+(Europe)-image.jpg">
+			 <a href="./gba/mariokart.html" id="console1">Mario Kart: Super Circuit</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScjDGbx69qePbp9zRbCBjWfVTzN6TOBmk8qg&s">
+			 <a href="./gba/warioland4.html" id="console1">Wario Land 4</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7v-VhB6CLGS2QNFfcAB-evCvvPXq1jaVRAA&s">
+			 <a href="./gba/mariokart.html" id="console1">Formula 1 2002</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmtHb6uS0Sp84SPlLi_i8c2JOy0OdrM4Z7dA&s">
+			 <a href="./gba/fifa2006.html" id="console1">FIFA 2006</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0XPglGQ88hE_OXzShJ08O03h3g5jc5JwZmA&s">
+			 <a href="./gba/marioluigi.html" id="console1">Mario & Luigi</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTILtGYiu7H82Z4uPpZ4noJnSZRLBhIwjYq0w&s">
+			 <a href="./gba/leyenofzelda.html" id="console1">Legend of Zelda</a>
+		   </div>
+		   <div class="game" id="gbagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX0FdSkh3rAa-4Zl22Zh9eKwSdUX-fBvvN-g&s">
+			 <a href="./gba/pokemonesmerald.html" id="console1">Pokemon: Esmeralda</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/28/11073/420-420/Legend+of+Zelda,+The+-+Link's+Awakening+DX+(USA,+Europe)+(Rev+A)+(SGB+Enhanced)-image.jpg">
+			 <a href="./gbc/legendofzelda1.html" id="console2">Legend of Zelda (TLAD)</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxqLUB8IB0TAiwX_X1rMgyW1fwk1mVOwUDrQ&s">
+			 <a href="./gbc/legendofzelda2.html" id="console2">Legend of Zelda (TOOA)</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGYraR4pRoZT5xlwpXKJpegNYtiXJzSFayvw&s">
+			 <a href="./gbc/legendofzelda2.html" id="console2">Pokemon Cristal</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAv7QzAQVtOGx5O7TVhU-qwT4O29tI42Wfg&s">
+			 <a href="./gbc/pokemongold.html" id="console2">Pokemon Gold</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcMBngb0ULLcXvTz3y9uHXc-u5hzjCaBvzHg&s">
+			 <a href="./gbc/pokemonsilver.html" id="console2">Pokemon Silver</a>
+		   </div>
+		   <div class="game" id="gbcgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDiWji6KbX4W-5yFXMfW4cZlXzLYf1JLv05A&s">
+			 <a href="./gbc/warioland3.html" id="console2">Wario Land 3</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvOVToWwR-bAai7qoKgPNBIC-HE3onL10t-g&s">
+			 <a href="./nes/contra.html" id="console3">Contra</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTj0U5srS5N3kaA7Q0NC4BQ_24b_2_zs37w&s">
+			 <a href="./nes/megaman2.html" id="console3">Mega Man 2</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy_kx1SYT9Ah9smFdJIYx_gmEBFXjqYmG3yQ&s">
+			 <a href="./nes/supermario1.html" id="console3">Super Mario Bros 1</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmxp851_QQ37zH5nvA0UEuPlxKeCjUHZQRXA&s">
+			 <a href="./nes/supermario2.html" id="console3">Super Mario Bros 2</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBhCcAUFslFa1eFTGFbSlvEgSwQ86BMDI26A&s">
+			 <a href="./nes/supermario3.html" id="console3">Super Mario Bros 3</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM0UZOVQrvXtNyKqByUY2ObNJoGWaDD_2f-w&s">
+			 <a href="./nes/tetris.html" id="console3">Tetris</a>
+		   </div>
+		   <div class="game" id="nesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnCTZw6bljMecZNzxDoK18xR7UsjTSwPaijA&s">
+			 <a href="./nes/metroid.html" id="console3">Metroid</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://i.etsystatic.com/18537270/r/il/4d85a0/3775612297/il_570xN.3775612297_log1.jpg">
+			 <a href="./n64/goldeneye.html" id="console4">007-Golden Eye</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrdMjA0cRj8nrurJAl_Ifknf06qEeZjWIAzQ&s">
+			 <a href="./n64/residentevil.html" id="console4">Resident Evil 2</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://m.media-amazon.com/images/M/MV5BNTc5NzdkOTQtMTcyZC00YzRiLWI2N2QtMWFjYzgwNWNhNWVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg">
+			 <a href="./n64/banjokazooie.html" id="console4">Banjo Kazooie</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://i.scdn.co/image/ab67616d0000b273168bebd9c9656438b3c0e9a6">
+			 <a href="./n64/mariokart64.html" id="console4">Mario Kart 64</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/Super_Mario_64.png/250px-Super_Mario_64.png">
+			 <a href="./n64/supermario64.html" id="console4">Super Mario 64</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjM17qpOz5zfYM_7CDR8Ig5utbsRMtGKzhJA&s">
+			 <a href="./n64/supersmashbros.html" id="console4">Super Smash Bros</a>
+		   </div>
+		   <div class="game" id="n64game">
+		     <img src="https://pbs.twimg.com/profile_images/1790699642394484736/vc7prV-j_400x400.jpg">
+			 <a href="./n64/ronalsoccer64.html" id="console4">Ronaldinho Soccer 64</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyEvYGMCSE1SyrUlzXp7JIma6KDMz8QkU-RA&s">
+			 <a href="./nds/newsupermariobros.html" id="console5">New Super Mario Bros</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx9y1kcP6qZz0LE08y852_BSeaPEw9EfaJlA&s">
+			 <a href="./nds/gta.html" id="console5">Grand Theft Auto</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJy_2r7VTyJhtWNZZ8V3FGDq4FyUkVsrBdgw&s">
+			 <a href="./nds/proflayton.html" id="console5">Profesor Layton</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://image.cdn1.buscalibre.com/3629273.__RS360x360__.jpg">
+			 <a href="./nds/pokemon.html" id="console5">Pokemon: Edicion Negra</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYSSil_gP-jAo6lvo-3YYo7SAPbJL9SHDrGw&s">
+			 <a href="./nds/legendofzelda.html" id="console5">Legend Of Zelda</a>
+		   </div>
+		   <div class="game" id="ndsgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8TXNqAMerNUE2mKAf2NLmTfsgMSaoUSZAdw&s">
+			 <a href="./nds/mariokart.html" id="console5">Mario Kart DS</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Cu1xiJdM1cVSMGUEPYNErtQKYFEkVfT0cA&s">
+			 <a href="./snes/donkeykongcountry.html" id="console6">Donkey Kong Country</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://i.ytimg.com/vi/0m1tJ4lJFik/maxresdefault.jpg">
+			 <a href="./snes/descentralizado1995.html" id="console6">Super Descentralizado 95</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1TsDfkw_7A02Bpqp6zKJRfuvL0eTZCu0kGw&s">
+			 <a href="./snes/futbolperuano97.html" id="console6">Futbol Peruano 97</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://assets-prd.ignimgs.com/2022/05/13/street-fighter-2-button-snescrop-1652485158101.jpg">
+			 <a href="./snes/streetfighter2.html" id="console6">Street Fighter 2</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCd4_eoV70wMCe0A8UMioEjT96W6KStGnzuA&s">
+			 <a href="./snes/supermariokart.html" id="console6">Super Mario Kart</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfbLcsy70ERcUXnVPmMvgoQANOXru0HenN0A&s">
+			 <a href="./snes/supermarioworld.html" id="console6">Super Mario World</a>
+		   </div>
+		   <div class="game" id="snesgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGRS1wWP0caDX1V7iX6-3etOG6hiPrt37-IQ&s">
+			 <a href="./snes/toystory.html" id="console6">Toy Story</a>
+		   </div>
+		   <div class="game" id="famigame">
+		     <img src="https://s.pacn.ws/1/p/PA.35509.001.jpg?v=ij932q">
+			 <a href="./famicom/akumajou.html" id="console7">Akumajou Densetsu</a>
+		   </div>
+		   <div class="game" id="famigame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6s-ruBIVCy9IhpZYnUW6KDorW9w6jIdviFw&s">
+			 <a href="./famicom/hoshinokirby.html" id="console7">Hoshi no Kirby</a>
+		   </div>
+		   <div class="game" id="famigame">
+		     <img src="https://s.pacn.ws/1/p/PA.54166.001.jpg?v=irqfe5">
+			 <a href="./famicom/zelda.html" id="console7">Zelda no Densetsu</a>
+		   </div>
+		   <div class="game" id="sfamigame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNk35p8kZy8iODRa9JBGXN-E-IbXwXS5dvpQ&s">
+			 <a href="./superfamicom/chrono.html" id="console8">Chrono Trigger</a>
+		   </div>
+		   <div class="game" id="sfamigame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwDK8EtljIB_13C3OCwTiY_YNOCgMbU07frg&s">
+			 <a href="./superfamicom/finalfantasyvi.html" id="console8">Final Fantasy VI</a>
+		   </div>
+		   <div class="game" id="sfamigame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpyC9U-q9D9Z1iEPeNnzcfTAfdd7QRKMWtEA&s">
+			 <a href="./superfamicom/streetfighter2.html" id="console8">Street Fighter 2 Turbo</a>
+		   </div>
+		   <div class="game" id="sfamigame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/48/29449/420-420/Super+Donkey+Kong+(Japan)-image.jpg">
+			 <a href="./superfamicom/superdonkeykong.html" id="console8">Super Donkey Kong</a>
+		   </div>
+		   <div class="game" id="sfamigame">
+		     <img src="https://wowroms-photos.com/emulators-roms-logo/48/30246/420-420/Zelda+no+Densetsu+-+Kamigami+no+Triforce+(Japan)-image.jpg">
+			 <a href="./superfamicom/zelda.html" id="console8">Super Zelda no Densetsu</a>
+		   </div>
+		   <div class="game" id="vboygame">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Jack_Bros_Virtual_Boy_North_American_release.png">
+			 <a href="./vboy/jackbros.html" id="console9">Jack Bros</a>
+		   </div>
+		   <div class="game" id="vboygame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpIOzOgx22PDJsTX7UfJhErBuxjoPmH1ELBA&s">
+			 <a href="./vboy/redalarm.html" id="console9">Red Alarm</a>
+		   </div>
+		   <div class="game" id="vboygame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgpyvFysE3BV3D3Z46jF3Z261G58ddRuBiyw&s">
+			 <a href="./vboy/spacepinball.html" id="console9">Space Pinball</a>
+		   </div>
+		   <div class="game" id="vboygame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqo12xBuHnhyBdi2aMbrEVrXjl7HBD_FI0Q&s">
+			 <a href="./vboy/wariolandvb.html" id="console9">VB Wario Land</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
 </html>
-
-
