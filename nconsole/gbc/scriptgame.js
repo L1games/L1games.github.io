@@ -168,3 +168,11 @@
         window.EJS_emulator.on("saveSave", window.EJS_onSaveSave);
     }
 })();
+
+document.addEventListener('keydown', function(event) {
+        
+        if (event.key.toLowerCase() === 'p') {
+            
+            window.location.href = '../../index.html'; 
+        }
+    });
