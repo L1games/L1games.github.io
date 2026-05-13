@@ -4,7 +4,7 @@
  */
 
  var vAmigaWeb_player={
-    vAmigaWeb_url: ' ./index.html',
+    vAmigaWeb_url: ' ./vamigaemu/',
     listens: false,
     loadScript: async function (url, callback){
         var script = document.createElement("script")
