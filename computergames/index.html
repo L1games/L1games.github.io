@@ -1,535 +1,421 @@
-<html>
-<head>
-    <title>Computer Games</title>
-    <link rel="icon" href="/../assets/computer.jpg" type="image/png">
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Commodore Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de computadoras creadas por Commodore.">
+	<link rel="icon" href="../assets/commodore.svg" type="image/svg+xml">
+	<script src="commodore.js" defer=""></script>  
     <style>
-        body {
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
             margin: 0;
             padding: 0;
             font-family: Arial;
+			height: 100%;
         }
-
         header {
-            width: 100%;
             border: none;
             background-color: #FF5454;
             color: white;
-            padding: 20px;
-            box-sizing: border-box;
-            font-size: 30px;
             text-align: center;
-            position: absolute;
-            top: -1px;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
         }
-
-        .Inibtn {
-            border: none;
-            background-color: #F5F5F5;
-            color: black;
-            cursor: pointer;
-            top: 0px;
-            left: 0px;
-            font-size: 30px;
-            text-align: center;
-            position: absolute;
-            padding: 17px;
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
         }
-        .console {
-            display: grid;
-            grid-template-columns: repeat(1, auto);
-            place-content: center;
-            margin: 80px;
-            column-gap: 10px;
-            row-gap: 3px;
-        }
-        .container1 {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 80px;
-            column-gap: 130px;
-            row-gap: 20px;
-        }
-        .container2 {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 80px;
-            column-gap: 130px;
-            row-gap: 20px;
-        }
-        .modelconsole {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-        .imgconsole {
-            width: 200px;
-            height: 200px;
-        }
-        footer {
-            background-color: black;
-            position: absolute;
-            bottom: -5600px;
-            width: 100%;
-            height: 40px;
-            color: white;
-            height: 20%;
-            text-align: center;
-        }
-       .pconsole {
-           border-radius: 10px;
-       }
-       .pconsole:hover {
-           transition: 0.2s ease;
-           transform: scale(0.8);
-       }
-        #pet {
-            background-color: red;
-            color: white;
-        }
-        #vic20 {
-            background-color: green;
-            color: white;
-        }
-        #c64 {
-            color: white;
-            background-color: blue;
-        }
-        #plus4 {
-            color: white;
-            background-color: darkorange;
-        }
-        #amiga {
-            color: black;
-            background-color: aqua;
-        }
-        #c128 {
-            color: white;
-            background-color: black;
-        }
-        #msdos {
-            color: black;
-            background-color: yellow;
-        }
-        .consolebtn {
-            display: flex;
-            justify-content: center; 
-            align-items: center; 
-        }
-        .consolebtn1 {
-            color: white;
-            background-color: #FF5454;
-            border: none;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
-        }
-        .consolebtn {
-            display: grid;
-            grid-template-columns: repeat(1, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .btncontainer1 {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .btncontainer2 {
-            display: grid;
-            grid-template-columns: repeat(1, auto);
-            place-content: center;
-            gap: 10px;
-            column-gap: 110px;
-        }
-        .consoleselect {
-            padding: 20px;
-            border: none;
-            border-radius: 10px;
-        }
-        #petbtn {
-            color: white;
-            background-color: red;
-        }
-        #vic20btn {
-            color: white;
-            background-color: blue;
-        }
-        #c64btn {
-            color: white;
-            background-color: green;
-        }
-        #plus4btn {
-            color: white;
-            background-color: darkorange;
-        }
-        #amigabtn {
-            color: black;
-            background-color: aqua;
-        }
-        #c128btn {
-            color: white;
-            background-color: black;
-        }
-        #msdosbtn {
-            color: black;
-            background-color: yellow;
-        }
-        .gameselect {
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            place-content: center;
-            margin: 15px;
-            column-gap: 90px;
-            row-gap: 20px;
-        }
-        .gamemenu1 {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 5px solid #FF5454;
-            padding: 10px;
-            border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-        .imggame {
-            width: 220px;
-            height: 300px;
-        }
-        .agame {
-            text-decoration: none;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-        }
-        .agame:hover {
-            transition: 0.4s ease;
-            transform: scale(0.8);
-        }
-        .consoleselect:hover {
-            transform: scale(1.1);
-            transition: 0.2 ease;
-        }
-        .infoconsole {
-            width: 250px;
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 10vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 250px;
             height: 100px;
             padding: 10px;
             border-radius: 20px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .infoconsole:hover {
+		}
+		.infoconsole:hover {
             transition: 0.2s ease;
             transform: scale(1.1);
         }
-    </style>
-    <script src="computer.js" defer></script>
-</head>
-<body>
-    <header>Computer Games</header>
-    <a class="Inibtn" href="/../index.html">🏠</a>
-    <div class="console">
-        <div class="container1">
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDCGlgB8YWWDlluHagjaU3z-ZsQqJ-miqPPQ&s" />
-
-            <p class="pconsole" id="pet">Commodore PET</p>
-
-            <p class="infoconsole">Fue la primera computadora personal de Commodore, destacada por su diseño "todo en uno" con monitor monocromático y teclado incorporado.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/f/f1/Commodore-VIC-20-FL.jpg" />
-
-            <p class="pconsole" id="vic20">Commodore VIC-20</p>
-
-            <p class="infoconsole">Conocida como "la computadora amiga", fue la primera en vender un millón de unidades y llevó el color a los hogares de forma asequible.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtiv1NJE3viIPHKhWSMHF29jSS85RbkNHaYg&s" />
-
-            <p class="pconsole" id="c64">Commodore 64</p>
-
-            <p class="infoconsole">Es la computadora más vendida de la historia y una leyenda del gaming gracias a su chip de sonido SID y su chip gráfico con sprites.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuXY1kjFoaXMsVDhyGS1x965QhLuGrozzHxg&s" />
-
-            <p class="pconsole" id="plus4">Commodore Plus/4</p>
-
-            <p class="infoconsole">Lanzada como una versión orientada a la productividad con software de oficina integrado, ofrecía una paleta de colores superior al C64.</p>
-        </div>
-        </div>
-        <div class="container2">
-        <div class="modelconsole">
-            <img class="imgconsole1" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdjjtyEBCV7pYcqywvBysQXA4bhEdCATmRKQ&s" />
-
-            <p class="pconsole" id="c128">Commodore 128</p>
-
-            <p class="infoconsole">Fue la última gran apuesta de 8 bits de la marca, diseñada como tres computadoras en una: un C64 mejorado, un modo CP/M para negocios y un modo nativo más potente.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCln93EV2Iv6F3lr2hXe4To7scD3VeAcPKgA&s" />
-
-            <p class="pconsole" id="amiga">Commodore Amiga</p>
-
-            <p class="infoconsole">Representó un salto cuántico hacia los 16 bits, ofreciendo gráficos y sonido que humillaban a cualquier otra computadora de su tiempo.</p>
-        </div>
-        <div class="modelconsole">
-            <img class="imgconsole" srcset="https://upload.wikimedia.org/wikipedia/commons/e/ea/Msdos-icon.svg" />
-
-            <p class="pconsole" id="msdos">MS-DOS 6.22</p>
-
-            <p class="infoconsole">Esta versión representa la madurez total del sistema operativo antes de la llegada masiva de Windows 95. Fue la era dorada de los juegos de PC.</p>
-        </div>
-        </div>
-    </div>
-    <div class="consolebtn">
-        <button class="consolebtn1" onclick="location.reload()">Computer Games</button>
-    </div>
-    <div class="consolebtn">
-        <div class="btncontainer1">
-        <button class="consoleselect" id="petbtn">Commodore PET</button>
-        <button class="consoleselect" id="vic20btn">Commodore VIC-20</button>
-        <button class="consoleselect" id="c64btn">Commodore 64</button>
-        <button class="consoleselect" id="plus4btn">Commodore Plus/4</button>
-        <button class="consoleselect" id="c128btn">Commodore 128</button>
-        <button class="consoleselect" id="amigabtn">Commodore Amiga</button>
-        </div>
-        <div class="btncontainer2">
-        <button class="consoleselect" id="msdosbtn">MS-DOS</button>
-        </div>
-    </div>
-    <div class="gameselect">
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrmqBxKICNLWdDA-WL_Ea1IMw7cfrQ7zlQ_A&s" />
-
-            <a class="agame" id="petbtn" href="./pet/donkeykong.html">Donkey Kong</a>
-        </div>
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrZxrDxQmt69XIiLcr8IhzFH6yTy3qtIo9ww&s" />
-
-            <a class="agame" id="petbtn" href="./pet/galaga.html">Galaga</a>
-        </div>
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkFqpdfxbBZh0OPZcEazn_iDLgCC-uL5tNBA&s" />
-
-            <a class="agame" id="petbtn" href="./pet/microchess2.html">Micro Chess 2</a>
-        </div>
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6dZDYpfMJ6uuRninhy1gxDvjlCRLN41Xyng&s" />
-
-            <a class="agame" id="petbtn" href="./pet/miner.html">Miner!</a>
-        </div>
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://www.high-voltage.cz/hvobsah/trekwar-commodore-pet.png" />
-
-            <a class="agame" id="petbtn" href="./pet/trekwar.html">TrekWar!</a>
-        </div>
-        <div class="gamemenu1" id="petgame">
-            <img class="imggame" srcset="https://i.ebayimg.com/images/g/ZosAAeSwb79oq7nY/s-l400.jpg" />
-
-            <a class="agame" id="petbtn" href="./pet/zork1.html">Zork 1</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://www.myabandonware.com/media/screenshots/f/falcon-patrol-de6/falcon-patrol_2.png" />
-
-            <a class="agame" id="vic20btn" href="./vic120/falconpatrol.html">Falcon Patrol</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/cXf6j2hSk20/maxresdefault.jpg" />
-
-            <a class="agame" id="vic20btn" href="./vic120/gridrunner.html">Gridrunner</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/uRoAAOSwW91jVIOi/$_57.JPG?set_id=880000500F" />
-
-            <a class="agame" id="vic20btn" href="./vic120/jellymonsters.html">Jelly Monsters</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/tAItz1ig6B0/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGH8gHigTMA8=&rs=AOn4CLAhuBXQknqk2q2FpckCTDV-4NDrmg" />
-
-            <a class="agame" id="vic20btn" href="./vic120/mountainking.html">Mountain King</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGV5zT9V-IuuJmLaYVPZbfZrwvgQOPMkbfAA&s" />
-
-            <a class="agame" id="vic20btn" href="./vic120/peirlswilly.html">The peirls of Willy</a>
-        </div>
-        <div class="gamemenu1" id="vic20game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTVOe-8-7aJ6hB0s7JY0CfES4hlXUXVUZL_w&s" />
-
-            <a class="agame" id="vic20btn" href="./vic120/shamus.html">Shamus</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzvaz77chpyePjxEKUPgur1brMyprpYTfPOQ&s" />
-
-            <a class="agame" id="c64btn" href="./c64/elite.html">Elite</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPadwPLQiuExMZpNK3Rn6y0vU5wxUwkAvErQ&s" />
-
-            <a class="agame" id="c64btn" href="./c64/ikplus.html">IK+</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyQMEgkbg9pI4pS4nX6Qp7_ywBpuQAAxHJhw&s" />
-
-            <a class="agame" id="c64btn" href="./c64/maniac.html">Maniac Mansion</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/WDSnKrqgCE0/maxresdefault.jpg" />
-
-            <a class="agame" id="c64btn" href="./c64/paradro1.html">Paradroid</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUCIX1dI_omQxS6k1dsgXeYsI6zofFWTKTgg&s" />
-
-            <a class="agame" id="c64btn" href="./c64/turri2do.html">Turrican II</a>
-        </div>
-        <div class="gamemenu1" id="c64game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLCsoyuGvInGYtKWH-2LGy-uI2E1AmItKTGQ&s" />
-
-            <a class="agame" id="c64btn" href="./c64/wizball.html">Wizball</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV1SbU6FLlVte9i3R8q8NzcGzG6F8JBNfDXg&s" />
-
-            <a class="agame" id="plus4btn" href="./plus4/ghost.html">Ghost´N Goblins</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://wowroms-photos.com/emulators-roms-logo/22/130144/420-420/Gun-Fight.jpg" />
-
-            <a class="agame" id="plus4btn" href="./plus4/gunfight.html">Gun Fight</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc2_d0PXAsw3xPqlCjdFD9zCZ0z0u6BE_h3g&s" />
-
-            <a class="agame" id="plus4btn" href="./plus4/lastninga.html">Last Ninja</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEaQ_BBzYa5wJpRX3Axt9AkZsLXnVe9Ee1Jw&s" />
-
-            <a class="agame" id="plus4btn" href="./plus4/neptune.html">Neptune</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSroNTLITduGhf9Bkxx7sLR_cCZons-ovSRUg&s" />
-
-            <a class="agame" id="plus4btn" href="./plus4/stuncar.html">StunCar Racer</a>
-        </div>
-        <div class="gamemenu1" id="plus4game">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/nCkm6F3mv10/maxresdefault.jpg" />
-
-            <a class="agame" id="plus4btn" href="./plus4/earthdefender.html">Defender of the Earth</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_PJgBMcs2w1KMPVU-WFo0ljCd7TzFX6wf_A&s" />
-
-            <a class="agame" id="c128btn" href="./c128/backgramon.html">Backgramon</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://upload.wikimedia.org/wikipedia/en/0/0a/Beyond_Zork_game_box_cover.jpg" />
-
-            <a class="agame" id="c128btn" href="./c128/beyondzork.html">Beyond Zork</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://i.ebayimg.com/images/g/f0YAAOSwVnllWW4m/s-l400.png" />
-
-            <a class="agame" id="c128btn" href="./c128/bureaucracy.html">Bureaucrazy</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHPtGxyK8MaieiH5VlgLNhztkOisxBqI17mg&s" />
-
-            <a class="agame" id="c128btn" href="./c128/burgerwhop.html">Burgerwhop</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU_Kc9ecX_eVTXQk8JG0rAf3P4h_noO-MoqA&s" />
-
-            <a class="agame" id="c128btn" href="./c128/diceporker.html">Dice Poker</a>
-        </div>
-        <div class="gamemenu1" id="c128game">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7mNbmUNvyKQ9U4zrxMkn_nU5PoYjoF8KmQ&s" />
-
-            <a class="agame" id="c128btn" href="./c128/elite128.html">Elite 128</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/lvsIHyI_Ir4/maxresdefault.jpg" />
-
-            <a class="agame" id="amigabtn" href="./amiga/anotherworld.html">Another World</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwxFtdxbFRxlIL-eZIocr2SA4QKBIBtRuJQ&s" />
-
-            <a class="agame" id="amigabtn" href="./amiga/lemmings.html">Lemmings</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVlNZqiZDGISudbeAzcyRxu0mT5QF0Ft9bUQ&s" />
-
-            <a class="agame" id="amigabtn" href="./amiga/monkeyisland.html">TS Monkey Island</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUmW7QSNVPvOVtTPJYVZPWOnEmZsZ88tDIoQ&s" />
-
-            <a class="agame" id="amigabtn" href="./amiga/sensiblesoccer.html">Sensible Soccer</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://i.ytimg.com/vi/y9BltSvKMlQ/maxresdefault.jpg" />
-
-            <a class="agame" id="amigabtn" href="./amiga/shadowbeast.html">Shadow Beast</a>
-        </div>
-        <div class="gamemenu1" id="amigagame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1EIFiHJ9DsA1BKsfS3NEb_ONl7JVeiNJQFQ&s" />
-
-            <a class="agame" id="amigabtn" href="./amiga/speedball2.html">SpeedBall II</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoP9KvcFw59yBCtKhedVgjBPCUn1X_-wJsFw&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/fifa94/">FIFA 94</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9tgOe0YFKE5hQT0tGoGfg-SPHo8cr_4ngg&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/aloneinthedark/">Alone In The Dark</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvaDCUawlgw7-qKPOP9OILYJt2SrNQ5erzsQ&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/doom/">DOOM</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJA2vUeZQ3BXMxUd0WR3wHPVixGP6oMiI81A&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/monkeyisland/">T.S. Monkey Island</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0lL_9P4_YlCnwlCSNmvPx9CfSScWXAmlbjA&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/persia/">Prince Of Persia</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRez8eCkkEuwbgeLMbK80S82RYHLLRxVCL57g&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/simcity/">SimCity 2000</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-iRWmrb_HFAXjJF2OorHvKjJ8YDCaddOww&s" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/tentacledays/">D.O. The Tentacle</a>
-        </div>
-        <div class="gamemenu1" id="msdosgame">
-            <img class="imggame" srcset="https://dosgames.com/screens/wolf3d.png" />
-
-            <a class="agame" id="msdosbtn" href="./dosgames/wol3d/">Wolfenstein 3D</a>
-        </div>
-    </div>
-    <footer>
-        <p class="pfooter">About:</p>
-
-        <p class="pfooter">L1 Games 2026</p>
-    </footer>
-</body>
+		.consolename {
+		    border-radius: 10px;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+			color: white;
+		}
+		#console2 {
+		    background-color: green;
+			color: white;
+		}
+		#console3 {
+		    background-color: blue;
+			color: white;
+		}
+		#console4 {
+		    background-color: darkorange;
+			color: black;
+		}
+		#console5 {
+		    background-color: aqua;
+			color: black;
+		}
+		#console6 {
+		    background-color: black;
+			color: white;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			padding: 3vh;
+		}
+		.btnconsole1 {
+		    background-color: red;
+			color: white;
+		}
+		.btnconsole2 {
+		    background-color: green;
+			color: white;
+		}
+		.btnconsole3 {
+		    background-color: blue;
+			color: white;
+		}
+		.btnconsole4 {
+		    background-color: darkorange;
+			color: black;
+		}
+		.btnconsole5 {
+		    background-color: aqua;
+			color: black;
+		}
+		.btnconsole6 {
+		    background-color: black;
+			color: white;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">Commodore Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDCGlgB8YWWDlluHagjaU3z-ZsQqJ-miqPPQ&s">
+			  <p id="console1" class="consolename">Commodore PET</p>
+			  <p class="infoconsole">Fue la primera computadora personal de Commodore, destacada por su diseño "todo en uno" con monitor monocromático y teclado incorporado.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/f/f1/Commodore-VIC-20-FL.jpg">
+			  <p id="console2" class="consolename">Commodore VIC-20</p>
+			  <p class="infoconsole">Conocida como "la computadora amiga", fue la primera en vender un millón de unidades y llevó el color a los hogares de forma asequible.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtiv1NJE3viIPHKhWSMHF29jSS85RbkNHaYg&s">
+			  <p id="console3" class="consolename">Commodore 64</p>
+			  <p class="infoconsole">Es la computadora más vendida de la historia y una leyenda del gaming gracias a su chip de sonido SID y su chip gráfico con sprites.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuXY1kjFoaXMsVDhyGS1x965QhLuGrozzHxg&s">
+			  <p id="console4" class="consolename">Commodore Plus/4</p>
+			  <p class="infoconsole">Lanzada como una versión orientada a la productividad con software de oficina integrado, ofrecía una paleta de colores superior al C64.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdjjtyEBCV7pYcqywvBysQXA4bhEdCATmRKQ&s">
+			  <p id="console5" class="consolename">Commodore 128</p>
+			  <p class="infoconsole">Fue la última gran apuesta de 8 bits de la marca, diseñada como tres computadoras en una: un C64 mejoradoy un modo nativo más potente.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCln93EV2Iv6F3lr2hXe4To7scD3VeAcPKgA&s">
+			  <p id="console6" class="consolename">Commodore Amiga</p>
+			  <p class="infoconsole">Representó un salto cuántico hacia los 16 bits, ofreciendo gráficos y sonido que humillaban a cualquier otra computadora de su tiempo.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">Commodore Games</button>
+		</div>
+		<div class="consoleselect">
+		   <button id="btn1" class="btnconsole1">Commodore PET</button>
+		   <button id="btn2" class="btnconsole2">Commodore VIC-20</button>
+		   <button id="btn3" class="btnconsole3">Commodore 64</button>
+		   <button id="btn4" class="btnconsole4">Commodore Plus/4</button>
+		   <button id="btn5" class="btnconsole5">Commodore 128</button>
+		   <button id="btn6" class="btnconsole6">Commodore Amiga</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game" id="petgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrmqBxKICNLWdDA-WL_Ea1IMw7cfrQ7zlQ_A&s">
+			 <a href="./pet/donkeykong.html" id="console1">Donkey Kong</a>
+		   </div>
+		   <div class="game" id="petgame">
+		     <img src="https://www.commodoregames.net/Screenshots/d/DRAGON-ISLAND.JPG">
+			 <a href="./pet/dragonisland.html" id="console1">Dragon Island</a>
+		   </div>
+		   <div class="game" id="petgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZWfsWg2rZde18necOxDBtzL8_ZkoMu8fD2w&s">
+			 <a href="./pet/gridrunner.html" id="console1">Grid Runner</a>
+		   </div>
+		   <div class="game" id="petgame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6dZDYpfMJ6uuRninhy1gxDvjlCRLN41Xyng&">
+			 <a href="./pet/miner.html" id="console1">Miner!</a>
+		   </div>
+		   <div class="game" id="petgame">
+		     <img src="https://www.high-voltage.cz/hvobsah/trekwar-commodore-pet.png">
+			 <a href="./pet/trekwar.html" id="console1">TrekWar!</a>
+		   </div>
+		   <div class="game" id="petgame">
+		     <img src="https://i.ebayimg.com/images/g/ZosAAeSwb79oq7nY/s-l400.jpg">
+			 <a href="./pet/zork1.html" id="console1">Zork 1</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBAZrsiw-sYllfVrgnNtUSy7mffOjrapYaSw&s">
+			 <a href="./vic120/gorf.html" id="console2">Gorf</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://i.ytimg.com/vi/cXf6j2hSk20/maxresdefault.jpg">
+			 <a href="./vic120/gridrunner.html" id="console2">Gridrunner</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://i.ebayimg.com/00/s/MTYwMFgxMjAw/z/uRoAAOSwW91jVIOi/$_57.JPG?set_id=880000500F">
+			 <a href="./vic120/jellymonsters.html" id="console2">Jelly Monsters</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMFzNw03LPl9L8i8vuPXWJCOa1qxrscmw1jg&s">
+			 <a href="./vic120/jellymonsters.html" id="console2">Mutant Camels</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBfb4CRrGgFm3GcJZ5XGR9I613H2NEtF0hdQ&s">
+			 <a href="./vic120/galaxian.html" id="console2">Galaxian</a>
+		   </div>
+		   <div class="game" id="vic20game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTVOe-8-7aJ6hB0s7JY0CfES4hlXUXVUZL_w&s">
+			 <a href="./vic120/shamus.html" id="console2">Shamus</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLCsoyuGvInGYtKWH-2LGy-uI2E1AmItKTGQ&s">
+			 <a href="./c64/wizball.html" id="console3">Wizball</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkZNu3_WVdUSUpsR5lBWxlXoQjZSOvZSa99Q&s">
+			 <a href="./c64/digdug.html" id="console3">Dig Dug</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoR-gK3p6zkWas2imkXj17dSI15UpH7tioxA&s">
+			 <a href="./c64/fred.html" id="console3">Fred</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-Qf0zuvzhyJDNYEn1xePjfFGdQ6zzjlRKKg&s">
+			 <a href="./c64/greenberet.html" id="console3">Green Beret</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn0ygnfgb2uU5GucxJG-ngATyMXDBoUl7_Og&s">
+			 <a href="./c64/junglejunt.html" id="console3">Jungle Hunt</a>
+		   </div>
+		   <div class="game" id="c64game">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/2/22/Pitstop_II_cover.jpg">
+			 <a href="./c64/pitstop2.html" id="console3">Pitstop 2</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy1ndEy6xtjNTW_ileNVqB6tdUP_VYwNwNeA&s">
+			 <a href="./plus4/jackattack.html" id="console4">Jack Attack</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://plus4world.powweb.com/dl/covers/m/mercenary_ce_front.jpg">
+			 <a href="./plus4/mercenary.html" id="console4">Mercenary</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc2_d0PXAsw3xPqlCjdFD9zCZ0z0u6BE_h3g&s">
+			 <a href="./plus4/lastninga.html" id="console4">Last Ninja</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEaQ_BBzYa5wJpRX3Axt9AkZsLXnVe9Ee1Jw&s">
+			 <a href="./plus4/neptune.html" id="console4">Neptune</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSroNTLITduGhf9Bkxx7sLR_cCZons-ovSRUg&s">
+			 <a href="./plus4/stuncar.html" id="console4">StunCar Racer</a>
+		   </div>
+		   <div class="game" id="plus4game">
+		     <img src="https://i.ytimg.com/vi/nCkm6F3mv10/maxresdefault.jpg">
+			 <a href="./plus4/earthdefender.html" id="console4">Defender of the Earth</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU_Kc9ecX_eVTXQk8JG0rAf3P4h_noO-MoqA&s">
+			 <a href="./c128/diceporker.html" id="console5">Dice Poker</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr1mBZakVS8q7q0xEFb6f27A0d5uErr1gs7w&s">
+			 <a href="./c128/qix.html" id="console5">QIX</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKX1aqnlStSI3gKkBuZvYg8z_7hbt3rdCkBg&s">
+			 <a href="./c128/kickstart2.html" id="console5">KickStart 2</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI5-ZXrnW_ivPxbk4mkv0pg81m_1vJ8JCnzw&s">
+			 <a href="./c128/lastv8.html" id="console5">Last V8</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUFqFi8dfM_YaVzx0NHoYcHQLQUBID628bOg&s">
+			 <a href="./c128/thefighter.html" id="console5">The Fighter</a>
+		   </div>
+		   <div class="game" id="c128game">
+		     <img src="https://img.magnific.com/foto-gratis/fondo-abstracto-oscuro_1048-1920.jpg?w=360">
+			 <a href="./c128/unicron2.html" id="console5">Unicron 2</a>
+		   </div>	   
+		   <div class="game" id="amigagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-ZWcOAN2NOPKliOCOeRFbEQcs38Z-hlHWPg&s">
+			 <a href="../vamigaemu/sensiblesoccer9596.html" id="console6">Sensible Soccer</a>
+		   </div>
+		   <div class="game" id="amigagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1EIFiHJ9DsA1BKsfS3NEb_ONl7JVeiNJQFQ&s">
+			 <a href="../vamigaemu/speedball2.html" id="console6">SpeedBall II</a>
+		   </div>
+		   <div class="game" id="amigagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTni2H-iz3jU1SSfxFTlAF_XXk2axmbsfb9_g&s">
+			 <a href="../vamigaemu/populous.html" id="console6">Populous</a>
+		   </div>
+		   <div class="game" id="amigagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAwxFtdxbFRxlIL-eZIocr2SA4QKBIBtRuJQ&s">
+			 <a href="../vamigaemu/lemmings.html" id="console6">lemmings</a>
+		   </div>
+		   <div class="game" id="amigagame">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq6sIg5KTMonnxFRp_ptOhqH6EVivWhm-LpA&s">
+			 <a href="../vamigaemu/dungeonmaster.html" id="console6">Dungeon Master</a>
+		   </div>
+		   <div class="game" id="amigagame">
+		     <img src="https://i.ytimg.com/vi/lvsIHyI_Ir4/maxresdefault.jpg">
+			 <a href="../vamigaemu/anotherworld.html" id="console6">Another World</a>
+		   </div> 
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
 </html>
