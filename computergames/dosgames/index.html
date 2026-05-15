@@ -1,1 +1,233 @@
-FAVOR DE DIRIJIRSE A LA PAGINA PRINCIPAL
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>MS-DOS Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos creados para el sistema operativo MS-DOS de Microsoft (versión 6.22).">
+	<link rel="icon" href="../assets/msdos.jpg" type="image/png">
+	<script src="atari.js" defer=""></script>
+    <style>
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+			height: 100%;
+        }
+        header {
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
+        }
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
+        }
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 350px;
+            height: 175px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: orange;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+			background-color: #FF5454;
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">MS-DOS Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Msdos-icon.svg/250px-Msdos-icon.svg.png">
+			  <p id="console1" class="consolename">¿Qué es?</p>
+			  <p class="infoconsole">MS-DOS (Microsoft Disk Operating System) fue el pilar fundamental de la informática personal en los años 80 y principios de los 90. Se caracteriza por ser un sistema operativo de línea de comandos, lo que significa que el usuario interactuaba con la computadora escribiendo instrucciones textuales directas en lugar de usar un ratón. Su estructura era de monotarea y monousuario.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpaGWC43rEyZ1pBLERX8fqQT5vB-vSvlNMWA&s">
+			  <p id="console2" class="consolename">Puntos importantes:</p>
+			  <p class="infoconsole">Uno de sus puntos más importantes es la gestión de archivos mediante una estructura jerárquica de directorios. Introdujo conceptos que aún utilizamos hoy, como las extensiones de archivos (por ejemplo, .exe, .bat o .com) y el uso de comandos internos y externos para gestionar el almacenamiento en disquetes y discos duros. s. El sistema se cargaba a través de archivos críticos como IO.SYS, MSDOS.SYS.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfNA4pp3Rlg2xSveHfQRugRI9kszLccmEh_w&s">
+			  <p id="console3" class="consolename">Barreras tecnológicas:</p>
+			  <p class="infoconsole">Finalmente, el sistema destacaba por su gestión de memoria básica, limitada inicialmente a los famosos 640 KB de memoria convencional. Para superar estas barreras técnicas, los usuarios debían configurar manualmente archivos como CONFIG.SYS y AUTOEXEC.BAT, optimizando la carga de controladores en la memoria superior. Aunque fue reemplazado por entornos gráficos como Windows.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">MS-DOS Games</button>
+		</div>
+		
+		<div class="gameselect">
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp05NkH-MRP-hnFtvmxOAHu53pu8ULk2qsNQ&s">
+			 <a href="./aloneinthedark/">Alone in the Dark</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://upload.wikimedia.org/wikipedia/en/5/57/Doom_cover_art.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original">
+			 <a href="./doom/">DOOM</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://archive.org/services/img/msdos_FIFA_International_Soccer_1994">
+			 <a href="./fifa94/">FIFA 94</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://archive.org/download/monkey_dos/bandicam%202020-12-13%2020-44-31-849.jpg">
+			 <a href="./monkeyisland/">Monkey Island</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl_boOYuf2H688mvH1kFH2Z6JCDCa7qLuBHg&s">
+			 <a href="./persia/">Prince of Persia</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRez8eCkkEuwbgeLMbK80S82RYHLLRxVCL57g&s">
+			 <a href="./simcity/">SIM City 2000</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ-iRWmrb_HFAXjJF2OorHvKjJ8YDCaddOww&s">
+			 <a href="./tentacledays/">Day of the Tentacle</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://archive.org/serve/WOLF3D-MS-DOS/MV5BMmM1MjQyNDAtOWI1Yi00MzdhLWIxNDMtOTdiMGZhZDA4ZmU4L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg">
+			 <a href="./wol3d/">Wolfenstein 3D</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
+</html>
