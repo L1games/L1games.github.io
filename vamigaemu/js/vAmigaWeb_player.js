@@ -512,3 +512,11 @@ ${this.overlay_on_icon}
         vAmigaWeb_player.load(element,encodeURIComponent(JSON.stringify(config)));
     }
 }
+
+document.addEventListener('keydown', function(event) {
+        
+        if (event.key.toLowerCase() === 'p') {
+            
+            window.location.href = '../index.html'; 
+        }
+    });
