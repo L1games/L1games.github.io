@@ -16,6 +16,9 @@
 		.divbtn {
 		    display: none;
 		}
+		.startdiv {
+			grid-template-columns: repeat(1, auto) !important; 
+		}
        }
 	    body {
             margin: 0;
@@ -97,7 +100,8 @@
 		.startdiv {
 		    display: grid;
 			place-content: center;
-			grid-template-columns: repeat(1fr, auto);
+			grid-template-columns: repeat(2, auto);
+			gap: 5vh;
 			margin-top: 1vw;
 		}
 		.gamebar {
@@ -209,7 +213,12 @@
 	</script>
     <main class="content">
         <div class="startdiv">
-		   <img src="./assets/portada.jpg" />
+			<div>
+		       <img src="./assets/portada.jpg" />
+			</div>
+			<div>
+				<iframe src="https://la14hd.com/vivo/canales.php?stream=liga1max" width="500" height="297"></iframe>
+			</div>
 		</div>
 		<div class="notification">
 		    <p>Para regresar a la página principal en un juego, presiona le tecla "P".</P>
