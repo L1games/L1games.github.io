@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Amiga Game</title>
+    <script src="https://vAmigaWeb.github.io/js/vAmigaWeb_player.js"></script>
+	<style>
+	    html, body {
+		    width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		body {
+		    background-color: black;
+		}
+        #player_container {
+            background-color: black;
+        }
+        #vAmigaWeb {
+            border:none;
+        }
+        .player_icon_btn {
+            background-color: transparent;
+            color: white;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .btn_play {
+            color: #2575ff;
+            cursor: pointer;
+        }
+		.gameimg {
+		    display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		.gameimg img {
+		    max-width: 100%;
+            height: auto;
+		}
+			
+</style>
+  </head>
+  <body>
+    <div class="gameimg">
+      <img width="640" height="550" id="my_preview_pic_123" src="./folder/play.png" 
+       onclick="
+    let touch=(typeof touched!='undefined')?touched:false;
+    touched=false;
+    let config=
+    {
+      touch:touch,
+      AROS:true,
+      navbar:false,
+      wide:true,
+      border:0.3,
+      port2:true,
+      url:'./folder/lemmings.html'
+    }; 
+    vAmigaWeb_player.load(this,encodeURIComponent(JSON.stringify(config)));
+    return false;
+  "		
+      />
+	</div>
+  </body>
+</html>
