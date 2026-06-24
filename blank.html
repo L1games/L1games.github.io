@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Page</title>
+  </head>
+  <body>
+    <input type="text" id="urlInput" placeholder="https://example.com">
+    <button onclick="openGame()">Ejecutar</button>
+    <script>
+      function openGame() {
+        var userUrl = document.getElementById('urlInput').value;
+
+        if (!userUrl) {
+            alert("Insert a valid URL.");
+            return;
+        }
+        var win = window.open();
+        var url = userUrl; 
+        var iframe = win.document.createElement('iframe');
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        iframe.src = url;
+        
+        win.document.body.style.margin = "0";
+        win.document.body.appendChild(iframe);
+       }
+    </script>
+  </body>
+</html>
