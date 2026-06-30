@@ -1,0 +1,202 @@
+<html lang="es">
+  <head>
+    <title>J2ME Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos creados en Java para la plataforma J2ME utilizada en m贸viles antiguos.">
+	<link rel="icon" href="../favicon.png" type="image/png">
+    <style>
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+		    grid-template-columns: repeat(2, auto) !important; 
+		}
+       }
+	    body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+			height: 100%;
+        }
+        header {
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
+        }
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
+        }
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(3, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 350px;
+            height: 160px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			color: white;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		#console1 {
+		    background-color: red;
+		}
+		#console2 {
+		    background-color: green;
+		}
+		#console3 {
+		    background-color: orange;
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+			background-color: #FF5454;
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">J2ME Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="./favicon.png">
+			  <p id="console1" class="consolename">¿Qué es?</p>
+			  <p class="infoconsole">Los juegos J2ME (Java 2 Platform, Micro Edition) representan la primera gran revolución del entretenimiento en dispositivos móviles, definiendo la experiencia de juego de toda una generación durante la década de los 2000. Antes de la llegada de las tiendas de apps, esta tecnología permitió a fabricantes como Nokia, Sony Ericsson y Motorola ejecutar videojuegos independientes del hardware del teléfono.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThQX1u_SNB9fQsr-AHhGuA5f5suKKEiKaKEA&amp;s">
+			  <p id="console2" class="consolename">El ingenio detrás de los juegos:</p>
+			  <p class="infoconsole">Obligados a trabajar bajo estrictas limitaciones de hardware, con memorias RAM que a menudo se medían en kilobytes y controles limitados al teclado numérico, los desarrolladores de la era J2ME hicieron gala de una creatividad asombrosa. El catálogo de Java móvil destaca por su increíble diversidad, albergando hasta franquicias como Doom, FIFA, Assassin's Creed o God of War.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTafbMeXnBSDLNjf5GkJiemPqWQFwKdqrUW2w&amp;s">
+			  <p id="console3" class="consolename">Legado actual:</p>
+			  <p class="infoconsole">Hoy en día, el ecosistema J2ME es recordado con profunda nostalgia y valorado como una pieza histórica fundamental en la evolución de la industria del videojuego. Aunque la llegada de los teléfonos inteligentes basados en Android y iOS desplazó esta tecnología, miles de estos títulos se preservan celosamente gracias a comunidades de emulación y catálogos retro.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">J2ME Games</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFf6ozOBYF5gYWyNNGeFQ2NOPi0ncNF-5V7g&amp;s">
+			 <a href="./realfootball12.html">Real Football 2012</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  
+</body></html>
