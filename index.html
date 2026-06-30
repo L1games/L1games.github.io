@@ -100,8 +100,9 @@
 		.startdiv {
 		    display: grid;
 			place-content: center;
-			grid-template-columns: repeat(1, auto);
+			grid-template-columns: repeat(2, auto);
 			margin-top: 1vw;
+			gap: 10vh;
 		}
 		.gamebar {
 		    gap: 20px;
@@ -209,7 +210,13 @@
     <main class="content">
         <div class="startdiv">
 			<div>
-				<iframe src="https://lox-oss429.github.io/Ciencia/" width="600" height="370"></iframe>
+				<video width="500" height="310" controls>
+                  <source src="./assets/video.mp4" type="video/mp4">
+                   Tu navegador no soporta el elemento de video.
+                </video>
+			</div>
+			<div>
+				<iframe src="https://lox-oss429.github.io/Ciencia/" width="500" height="310"></iframe>
 			</div>
 		</div>
 		<div class="notification">
