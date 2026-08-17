@@ -1,1 +1,284 @@
-dd
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>O2EM Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Juegos de la consola Magnavox Odyssey 2.">
+	<link rel="icon" href="../assets/o2em.jpg" type="image/png">
+    <style>
+	@media (max-width: 1214px) {
+		body {
+		    width: 100% !important; 
+		}
+       .gameselect {
+            grid-template-columns: repeat(2, auto) !important; 
+        }
+		.consoletable {
+			gap: 1.5vw !important;
+		}
+       }
+	    body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+			height: 100%;
+        }
+        header {
+            border: none;
+            background-color: #FF5454;
+            color: white;
+            text-align: center;
+            position: sticky;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
+			z-index: 1000;            
+            transition: all 0.3s; 
+			top: 0; 
+        }
+		header h1 {
+            font-size: 35px;
+		}
+		.oculto {
+            visibility: hidden;
+        }
+		.inibtn {
+		    padding: 2vw;
+			border: none;
+			font-size: 20px;
+			cursor: pointer;
+			background-color: white;
+		}
+		.consoletable {
+		    display: grid;
+			grid-template-columns: repeat(2, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 20vw;
+		}
+		.console {
+		    display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+		.console img {
+		    width: 300px;
+			height: 300px;
+		}
+		.infoconsole {
+		    width: 350px;
+            height: 125px;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+		}
+		.infoconsole:hover {
+            transition: 0.2s ease;
+            transform: scale(1.1);
+        }
+		.consolename {
+		    border-radius: 10px;
+			padding: 3vh;
+		}
+		.consolename:hover {
+		    transition: 0.3s ease;
+			transform: scale(0.8);
+		}
+		.btnreset {
+		    display: grid;
+            place-content: center;
+            padding: 20px;
+            margin-top: 30px;
+		}
+		.btnreset button:hover {
+            transition: 0.6s ease;
+            transform: scale(0.87);
+        }
+		.btnreset button {
+            background-color: #FF5454;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+		.gameselect {
+		    display: grid;
+			grid-template-columns: repeat(4, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 5vh;
+		}
+		.game {
+		    display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: 10px;
+            border: 4px #FF5454 solid;
+            padding: 3vh;
+		}
+		.game img {
+		    width: 220px;
+            height: 300px;
+		}
+		.game a {
+		    color: white;
+			text-decoration: none;
+			border-radius: 20px;
+            padding: 20px;
+		}
+		.consoleselect {
+		    display: grid;
+			grid-template-columns: repeat(2, auto);
+			place-content: center;
+			margin-top: 3vh;
+			gap: 3vh;
+			padding: 2vh;
+		}
+		.consoleselect button {
+		    border: none;
+			border-radius: 5px;
+			padding: 3vh;
+		}
+		.consoleselect button:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		.game a:hover {
+		    transition: 0.3s ease;
+			transform: scale(1.1);
+		}
+		footer {
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 20vh;
+            color: white;
+            height: 20%;
+            text-align: center;
+			flex-shrink: 0;
+			margin-top: 5vh;
+        }
+		#console1 {
+		    background-color: #CF302A;
+			color: white;
+		}
+	</style>
+  </head>
+  <body>
+     <header>
+	    <div class="inibtn">
+	      <a href="/../index.html">🏠</a>
+	    </div>
+	    <h1 class="title">O2EM Games</h1>
+	    <a class="oculto">a</a>
+	 </header>
+	 <main>
+	    <div class="consoletable">
+		   <div class="console">
+		      <img srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUf5rZqjFaAxoPdScTU9J5zNr2VhogWcZc4gesibi17A&s=10">
+			  <p id="console1" class="consolename">Introducción</p>
+			  <p class="infoconsole">La Magnavox Odyssey² (conocida también como Philips Odyssey) fue una videoconsola de segunda generación lanzada en 1978. Destacó en el mercado por incluir un teclado de membrana integrado y joysticks digitales, compitiendo directamente contra la famosa Atari 2600 en los hogares de la época.</p>
+		   </div>
+		   <div class="console">
+		      <img srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Videopac-pete-screen-800px.jpg/250px-Videopac-pete-screen-800px.jpg?utm_source=es.wikipedia.org&utm_campaign=parser&utm_content=thumbnail">
+			  <p id="console1" class="consolename">Sistema</p>
+			  <p class="infoconsole">El sistema combinó el entretenimiento electrónico con opciones educativas, logrando una base fiel de jugadores antes de la gran crisis de los videojuegos de 1983. Aunque tuvo menor apoyo de desarrolladores externos frente a sus grandes rivales, dejó una huella notable en la historia del entretenimiento digital temprano.</p>
+		   </div>
+		</div>
+		<div class="btnreset">
+		   <button onclick="location.reload()">O2EM Games</button>
+		</div>
+		<div class="gameselect">
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfloybvrxM0KxHzP_aOePtpeyBkYyywntChOyin8t1TiJ-AogADqVutiWL&s=10">
+			 <a href="./games/alpineskiing.html" id="console1">Alpine Skiing</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6isL9g1DdLaJ0ba-3Lc0YQr2OwqK9H0hnczGk7lJqbQ&s=10">
+			 <a href="./games/billiardamericain.html" id="console1">Billiard Americain</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5EsoKqkDeo8Q1TV1TxxMnAF4F9xoEJ-XK-3jiaTdsdw&s=10">
+			 <a href="./games/bowbasketball.html" id="console1">Bowling + Basketball</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh2t_orV4rjqK1mBLh_r2SATp0UQU6Qd5mwKFJjt4jIrRcQkVJ9lGf9izL&s=10">
+			 <a href="./games/catch&noughts.html" id="console1">Catch the Ball + Noughts</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK9fV3aSyXAFRyB4E8qli2_nCV8OowSRNT9FYWWRUL8A&s=10">
+			 <a href="./games/courseauto.html" id="console1">Course + Auto/Cripto</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV3M0kqxERo4Q9hBV6CNyjnh2OmQNK-t0zH2uQZwvZF9MIp0aXzU3P_C0&s=10">
+			 <a href="./games/demmonattack.html" id="console1">Demon Attack</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK4LnaDTiZZFg-U-1k21VdcwfxIuXn6MYfzXiKfci0zQ&s">
+			 <a href="./games/tablesoccer.html" id="console1">Electronic Table Soccer</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVnOregbxFab-v1PCAR8nqxeHo_79BigFW18Jq1XzkBw&s=10">
+			 <a href="./games/football.html" id="console1">Football</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuUz5oRQoHbPRoPtruoLR7hxGxP0bc0aC7duHiRS3c9w&s=10">
+			 <a href="./games/munchkin.html" id="console1">K.C. Munchkin</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpz4J0DRqvLoyprAl-WA2p9g59CfwoNHUtBcXd8D6Cpw&s">
+			 <a href="./games/keycreations.html" id="console1">Keyboard Creations</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQknvM4CFi6ifToYybJwnYWrcqmUG4HaM0ycc5zQhvSQ&s=10">
+			 <a href="./games/labsuper.html" id="console1">Labyrinth + Supermind</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5khasbO46VNxq3_V9-Jn_ZgMwZQRi9nOYiZ1l5Zo4XA&s">
+			 <a href="./games/nightmare.html" id="console1">Nightmare</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmpSCIfmpuXM4RKIs-ohOUXuV3EcCA-QAtY-E4rfUXO2pXgQwyIJ8lHGY&s=10">
+			 <a href="./games/numbersned.html" id="console1">Nimble Numbers Ned</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQDkelDRwAofeO9sFgnQRKjx3yKUCqtI1TUvVkWOIUIA&s=10">
+			 <a href="./games/pocketbilliards.html" id="console1">Pocket Billiards</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkFw--QSp2DmjVzdeul62W_psSMp5YXInDHDhfuL5kpQ&s=10">
+			 <a href="./games/powerlords.html" id="console1">Power Lords</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRzItuo4UFf5l4ZwYFcXud2bQ_Z9djp_m_iFHCULOn-A&s=10">
+			 <a href="./games/qbBert.html" id="console1">Q-Bert</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWQT8YNLjMLUBalmsqp-86XPnMxnUMtYhZW1d_K9aaaw&s=10">
+			 <a href="./games/sattack.html" id="console1">Satellite Attack</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_gWCzEhdlccdTasHFCFCE3ljbtWzcigeinf9GGja9_Q&s=10">
+			 <a href="./games/typetell.html" id="console1">Type & Tell</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnS3dx5VQ7di-9rxy8AsnfjODR9nK1fJmPFDLeTHV3jA&s=10">
+			 <a href="./games/ufo.html" id="console1">UFO</a>
+		   </div>
+		   <div class="game">
+		     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuRnEwl7Fys82lC2uLa65_4uVq5cvmmYGViPteMjDEEA&s=10">
+			 <a href="./games/warofnerves.html" id="console1">War of Nerves</a>
+		   </div>
+		</div>
+		<footer>
+           <p>About:</p>
+           <p>L1 Games 2026</p>
+        </footer>
+	 </main>
+  </body>
+</html>
