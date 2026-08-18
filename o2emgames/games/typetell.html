@@ -46,7 +46,7 @@
     preRun: [function() {
       Module.addRunDependency('load-rom');
 
-      fetch('/ROMS/typetell.bin')
+      fetch('./ROMS/typetell.bin')
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
           const data = new Uint8Array(arrayBuffer);
