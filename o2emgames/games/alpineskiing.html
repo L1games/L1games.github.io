@@ -46,12 +46,12 @@
     preRun: [function() {
       Module.addRunDependency('load-rom');
 
-      fetch('/folder/Alpine Skiing (1980)(Philips)(EU-US).bin')
+      fetch('/ROMS/alpineskiing.bin')
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
           const data = new Uint8Array(arrayBuffer);
           if (!FS.analyzePath('/ROMS').exists) FS.mkdir('/ROMS');
-          FS.writeFile('/ROMS/Alpine Skiing (1980)(Philips)(EU-US).bin', data);
+          FS.writeFile('/ROMS/alpineskiing.bin', data);
           console.log("ROM inyectada exitosamente.");
           
           Module.removeRunDependency('load-rom');
