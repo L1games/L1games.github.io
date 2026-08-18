@@ -46,12 +46,12 @@
     preRun: [function() {
       Module.addRunDependency('load-rom');
 
-      fetch('/folder/Billiard Americain (France).bin')
+      fetch('/ROMS/billiardamericain.bin')
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
           const data = new Uint8Array(arrayBuffer);
           if (!FS.analyzePath('/ROMS').exists) FS.mkdir('/ROMS');
-          FS.writeFile('/folder/Billiard Americain (France).bin', data);
+          FS.writeFile('/ROMS/billiardamericain.bin', data);
           console.log("ROM inyectada exitosamente.");
           
           Module.removeRunDependency('load-rom');
