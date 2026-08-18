@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <title>O2EM Emulator</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: black;
+        overflow: hidden;
+    }
+    #canvas {
+        width: 800px;
+        height: 600px;
+        image-rendering: pixelated;
+        display: block;
+    }
+    </style>
+  </head>
+  <body>     
+    <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+	<script type='text/javascript'>
+  document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+      console.log("Pestaña oculta: Pausando emulador...");
+      if (Module._PauseEmulator) { 
+        Module._PauseEmulator(); 
+      }
+    } else {
+      console.log("Pestaña visible: Reanudando emulador...");
+      if (Module._ResumeEmulator) {
+        Module._ResumeEmulator();
+      }
+    }
+  });
+</script>
+
+<script type='text/javascript'>
+  var Module = {
+    canvas: document.getElementById('canvas'),
+    
+    preRun: [function() {
+      Module.addRunDependency('load-rom');
+
+      fetch('/ROMS/warofnerves.bin')
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => {
+          const data = new Uint8Array(arrayBuffer);
+          if (!FS.analyzePath('/ROMS').exists) FS.mkdir('/ROMS');
+          FS.writeFile('/ROMS/warofnerves.bin', data);
+          console.log("ROM inyectada exitosamente.");
+          
+          Module.removeRunDependency('load-rom');
+        })
+        .catch(err => {
+          console.error("Error al cargar ROM:", err);
+          Module.removeRunDependency('load-rom'); 
+        });
+    }],
+  };
+</script>
+    
+    <script src="o2em.html.js"></script>
+  </body>
+</html>
