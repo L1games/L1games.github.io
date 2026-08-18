@@ -46,7 +46,7 @@
     preRun: [function() {
       Module.addRunDependency('load-rom');
 
-      fetch('/ROMS/keycreations.bin')
+      fetch('./ROMS/keycreations.bin')
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
           const data = new Uint8Array(arrayBuffer);
