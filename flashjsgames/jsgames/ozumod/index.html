@@ -1,1 +1,1008 @@
-dd
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>osu! Web Player</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body {
+            background-color: #050508;
+            color: #fff;
+            font-family: 'Comfortaa', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #bg-video-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050508;
+        }
+        #bg-video, #bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            object-fit: cover;
+            opacity: 0.25;
+            transition: opacity 0.4s ease;
+        }
+
+        .card {
+            background: rgba(13, 13, 18, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 102, 170, 0.15);
+            border-radius: 24px;
+            padding: 30px;
+            width: 440px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .logo-container img {
+            width: 170px;
+            height: auto;
+            filter: drop-shadow(0 0 12px rgba(255, 102, 170, 0.25));
+        }
+
+        .mode-container { text-align: left; margin-bottom: 16px; }
+        .mode-label { font-size: 10px; color: #ff66aa; font-weight: 700; display: block; margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .select-input {
+            background: rgba(20, 20, 28, 0.8);
+            border: 1px solid rgba(255, 102, 170, 0.3);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.2s ease;
+            font-family: 'Comfortaa', sans-serif;
+        }
+        .select-input:hover, .select-input:focus {
+            border-color: #ff66aa;
+            background: rgba(30, 30, 42, 0.9);
+        }
+
+        p { color: #888898; font-size: 12px; margin-bottom: 18px; font-weight: 500; }
+
+        .drop-zone {
+            border: 1.5px dashed rgba(255, 102, 170, 0.35);
+            border-radius: 14px;
+            padding: 24px 16px;
+            cursor: pointer;
+            background: rgba(255, 102, 170, 0.02);
+            transition: all 0.25s ease;
+            margin-bottom: 18px;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            background: rgba(255, 102, 170, 0.07);
+            border-color: #ff66aa;
+            box-shadow: 0 0 20px rgba(255, 102, 170, 0.15);
+        }
+
+        .diff-section {
+            background: rgba(255, 102, 170, 0.04);
+            border: 1px solid rgba(255, 102, 170, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .btn-play {
+            width: 100%;
+            background: linear-gradient(135deg, #ff66aa, #ff3388);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 900;
+            font-family: 'Exo 2', sans-serif;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(255, 102, 170, 0.3);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+        .btn-play:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 102, 170, 0.5);
+            background: linear-gradient(135deg, #ff80bf, #ff4d94);
+        }
+
+        .config-section {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .config-title { color: #ff66aa; font-weight: 700; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+        .config-row { display: flex; justify-content: space-between; align-items: center; color: #aaa; }
+
+        .keys-container { display: flex; gap: 5px; }
+        .key-btn {
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 102, 170, 0.25); 
+            color: #fff;
+            padding: 4px 9px; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            font-size: 11px;
+        }
+
+        .controls { display: flex; gap: 8px; align-items: center; }
+        .btn-speed {
+            background: rgba(255, 102, 170, 0.15); 
+            border: 1px solid rgba(255, 102, 170, 0.3); 
+            color: #ff66aa;
+            width: 24px; height: 24px; border-radius: 50%;
+            cursor: pointer; font-weight: bold; font-size: 13px; 
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .btn-speed:hover {
+            background: #ff66aa;
+            color: #fff;
+        }
+
+        input[type="range"] { accent-color: #ff66aa; cursor: pointer; }
+
+        #game-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: none;
+        }
+        #gameCanvas { width: 100%; height: 100%; display: block; }
+        .esc-hint {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: rgba(13, 13, 18, 0.8);
+            backdrop-filter: blur(10px);
+            color: #ff66aa;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 102, 170, 0.25);
+            z-index: 101;
+        }
+
+        #pause-menu {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .pause-card {
+            background: rgba(13, 13, 18, 0.95);
+            border: 1px solid rgba(255, 102, 170, 0.25);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 320px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .pause-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 102, 170, 0.2);
+            color: #fff;
+            padding: 11px;
+            margin-top: 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+        .pause-btn:hover {
+            background: #ff66aa;
+            border-color: #ff66aa;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-video-container">
+        <img id="bg-image" style="display: none;">
+        <video id="bg-video" loop muted style="display: none;"></video>
+    </div>
+
+    <div class="card" id="main-ui">
+        <div class="logo-container">
+            <img src="logo.png" alt="WEB OSU PLAYER">
+        </div>
+
+        <div class="mode-container">
+            <span class="mode-label">Modo Activo</span>
+            <select id="mode-select" class="select-input" onchange="actualizarModoInterfaz(this.value)">
+                <option value="mania">osu!mania 4K</option>
+                <option value="catch">osu!catch / Converted</option>
+            </select>
+        </div>
+
+        <p id="song-info">Arrastra tu archivo .osz para comenzar</p>
+
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+            <span id="drop-icon" style="font-size: 24px;">🎵</span>
+            <p style="margin: 6px 0 0 0; color:#fff; font-weight:700; font-size: 12px;">Suelta tu archivo .osz aquí</p>
+            <input type="file" id="file-input" accept=".osz,.osu" style="display: none;" onchange="procesarArchivo(this.files[0])">
+        </div>
+
+        <div id="diff-container" class="diff-section" style="display: none;">
+            <span style="font-size: 10px; color: #ff99cc; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">⚡ Dificultad detectada</span>
+            <select id="diff-select" class="select-input" style="margin-top: 6px;" onchange="cargarDificultadSeleccionada()">
+            </select>
+
+            <button class="btn-play" onclick="iniciarJuego()">
+                <span>▶</span> JUGAR AHORA
+            </button>
+        </div>
+
+        <div class="config-section">
+            <div class="config-title">Ajustes de Juego</div>
+
+            <div id="opts-mania">
+                <div class="config-row">
+                    <span>Skin de Notas</span>
+                    <select id="skin-style" class="select-input" style="width: 150px; padding: 6px;">
+                        <option value="circles">Círculos (STD)</option>
+                        <option value="bars">Barra (Mania)</option>
+                    </select>
+                </div>
+                <div class="config-row" style="margin-top: 8px;">
+                    <span>Teclas (4K)</span>
+                    <div class="keys-container">
+                        <button class="key-btn">A</button><button class="key-btn">S</button>
+                        <button class="key-btn">K</button><button class="key-btn">L</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="opts-catch" style="display: none;">
+                <div class="config-row">
+                    <span>Controles</span>
+                    <div class="keys-container">
+                        <button class="key-btn">← / A</button>
+                        <button class="key-btn">→ / D</button>
+                        <button class="key-btn">SHIFT</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-row" style="margin-top: 4px;">
+                <span>Velocidad de Caída</span>
+                <div class="controls">
+                    <button class="btn-speed" onclick="ajustarSpeed(-1)">-</button>
+                    <span id="speed-val" style="font-weight: 700; color: #fff;">6</span>
+                    <button class="btn-speed" onclick="ajustarSpeed(1)">+</button>
+                </div>
+            </div>
+
+            <div class="config-row" style="margin-top: 2px;">
+                <span>Oscurecer Fondo (Dim)</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="range" id="bg-dim" min="0" max="100" value="70" oninput="cambiarBgDim(this.value)">
+                    <span id="dim-val" style="font-size: 11px; width: 30px; text-align: right;">70%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen">
+        <div class="esc-hint">Presiona [ESC] para pausar</div>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Menú de Pausa -->
+    <div id="pause-menu">
+        <div class="pause-card">
+            <h2 style="margin-bottom: 15px; font-family: 'Exo 2', sans-serif; color: #ff66aa; font-size: 20px; letter-spacing: 1px;">JUEGO PAUSADO</h2>
+            <button class="pause-btn" onclick="reanudarJuego()">Reanudar</button>
+            <button class="pause-btn" onclick="reiniciarPartida()">Reiniciar</button>
+            <button class="pause-btn" style="border-color: rgba(255, 51, 51, 0.3); color: #ff6666;" onclick="salirDelJuego()">Salir al Menú</button>
+        </div>
+    </div>
+
+    <script>
+        let zipArchivos = {};
+        let mapasOsu = [];
+        let mapDataActual = null;
+        let audioPlayer = new Audio();
+        let gameLoopReq = null;
+        let isVideoLoaded = false;
+        let isPaused = false;
+        let breakPeriods = []; 
+
+        const VIDEO_EXTENSIONS = ['.avi', '.mp4', '.flv', '.mkv', '.webm', '.wmv', '.mov', '.m4v', '.mpg', '.mpeg'];
+
+        const dropZone = document.getElementById('drop-zone');
+        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('dragover'); };
+        dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) procesarArchivo(e.dataTransfer.files[0]);
+        };
+
+        audioPlayer.onended = () => {
+            finalizarPartida();
+        };
+
+        function buscarArchivoEnZip(nombreBuscado) {
+            if (!nombreBuscado) return null;
+            let limpio = nombreBuscado.replace(/"/g, '').replace(/,/g, '.').trim().toLowerCase();
+            if (limpio.includes('/')) limpio = limpio.split('/').pop();
+            if (limpio.includes('\\')) limpio = limpio.split('\\').pop();
+
+            return Object.keys(zipArchivos).find(k => {
+                let keyLimpia = k.toLowerCase();
+                if (keyLimpia.includes('/')) keyLimpia = keyLimpia.split('/').pop();
+                return keyLimpia === limpio;
+            });
+        }
+
+        function buscarCualquierVideoEnZip() {
+            return Object.keys(zipArchivos).find(k => {
+                const lower = k.toLowerCase();
+                return VIDEO_EXTENSIONS.some(ext => lower.endsWith(ext));
+            });
+        }
+
+        async function procesarArchivo(file) {
+            if (!file) return;
+
+            if (file.name.toLowerCase().endsWith('.osz')) {
+                const zip = new JSZip();
+                const zipContent = await zip.loadAsync(file);
+                zipArchivos = zipContent.files;
+                mapasOsu = [];
+
+                const diffSelect = document.getElementById('diff-select');
+                diffSelect.innerHTML = '';
+
+                for (let fileName in zipArchivos) {
+                    if (fileName.toLowerCase().endsWith('.osu')) {
+                        const text = await zipArchivos[fileName].async('text');
+                        mapasOsu.push({ name: fileName, content: text });
+
+                        const versionMatch = text.match(/Version:(.*)/i);
+                        const diffName = versionMatch ? versionMatch[1].trim() : fileName;
+                        
+                        const opt = document.createElement('option');
+                        opt.value = mapasOsu.length - 1;
+                        opt.textContent = diffName;
+                        diffSelect.appendChild(opt);
+                    }
+                }
+
+                if (mapasOsu.length > 0) {
+                    document.getElementById('diff-container').style.display = 'block';
+                    cargarDificultadSeleccionada();
+                }
+            }
+        }
+
+        function parseEvents(text) {
+            breakPeriods = [];
+            const eventsSplit = text.split(/\[Events\]/i);
+            if (eventsSplit.length > 1) {
+                const eventsBlock = eventsSplit[1].split('[')[0];
+                const lines = eventsBlock.split('\n');
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith('2,')) {
+                        const parts = line.split(',');
+                        if (parts.length >= 3) {
+                            const startTime = parseInt(parts[1]);
+                            const endTime = parseInt(parts[2]);
+                            breakPeriods.push({ start: startTime, end: endTime });
+                        }
+                    }
+                }
+            }
+        }
+
+        async function cargarDificultadSeleccionada() {
+            const idx = document.getElementById('diff-select').value;
+            const mapa = mapasOsu[idx];
+            if (!mapa) return;
+
+            const contenido = mapa.content;
+            parseEvents(contenido);
+
+            const modeMatch = contenido.match(/Mode:\s*(\d)/i);
+            const csMatch = contenido.match(/CircleSize:\s*(\d+)/i);
+            const modo = modeMatch ? modeMatch[1] : "0";
+            const keys = csMatch ? csMatch[1] : "4";
+
+            if (modo === "3" && keys === "4") {
+                document.getElementById('mode-select').value = 'mania';
+                actualizarModoInterfaz('mania');
+            } else {
+                document.getElementById('mode-select').value = 'catch';
+                actualizarModoInterfaz('catch');
+            }
+
+            const titleMatch = contenido.match(/Title:(.*)/i);
+            const artistMatch = contenido.match(/Artist:(.*)/i);
+            if (titleMatch && artistMatch) {
+                document.getElementById('song-info').textContent = `${artistMatch[1].trim()} - ${titleMatch[1].trim()}`;
+            }
+
+            const audioMatch = contenido.match(/AudioFilename:\s*(.*)/i);
+            if (audioMatch) {
+                const fileKey = buscarArchivoEnZip(audioMatch[1]);
+                if (fileKey) {
+                    const blob = await zipArchivos[fileKey].async('blob');
+                    audioPlayer.src = URL.createObjectURL(blob);
+                }
+            }
+
+            const videoElement = document.getElementById('bg-video');
+            const imgElement = document.getElementById('bg-image');
+            isVideoLoaded = false;
+
+            let videoFileKey = null;
+
+            const eventsSplit = contenido.split(/\[Events\]/i);
+            if (eventsSplit.length > 1) {
+                const eventsBlock = eventsSplit[1].split('[')[0];
+                const lineasEvents = eventsBlock.split('\n');
+                
+                for (let linea of lineasEvents) {
+                    const coincidencia = linea.match(/([a-zA-Z0-9_\- \(\)\.,]+[\.,](avi|mp4|flv|mkv|webm|wmv|mov|m4v|mpg|mpeg))/i);
+                    if (coincidencia && coincidencia[1]) {
+                        const encontrado = buscarArchivoEnZip(coincidencia[1]);
+                        if (encontrado) {
+                            videoFileKey = encontrado;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!videoFileKey) {
+                videoFileKey = buscarCualquierVideoEnZip();
+            }
+
+            if (videoFileKey) {
+                const videoBlob = await zipArchivos[videoFileKey].async('blob');
+                videoElement.src = URL.createObjectURL(videoBlob);
+                videoElement.style.display = 'block';
+                imgElement.style.display = 'none';
+                isVideoLoaded = true;
+            }
+
+            if (!isVideoLoaded) {
+                videoElement.style.display = 'none';
+                const imgMatch = contenido.match(/(?:0,0|\d+),\d+,"?([^",\r\n]+\.(jpg|jpeg|png))"?/i);
+                if (imgMatch && imgMatch[1]) {
+                    const fileKey = buscarArchivoEnZip(imgMatch[1]);
+                    if (fileKey) {
+                        const imgBlob = await zipArchivos[fileKey].async('blob');
+                        imgElement.src = URL.createObjectURL(imgBlob);
+                        imgElement.style.display = 'block';
+                    }
+                }
+            }
+
+            mapDataActual = parseHitObjects(contenido);
+        }
+
+        function parseHitObjects(text) {
+            const lines = text.split('\n');
+            let parsing = false;
+            let hitObjects = [];
+
+            for (let line of lines) {
+                line = line.trim();
+                if (line === '[HitObjects]') { parsing = true; continue; }
+                if (parsing && line.startsWith('[')) break;
+                if (parsing && line.length > 0) {
+                    const parts = line.split(',');
+                    if (parts.length >= 4) {
+                        const type = parseInt(parts[3]);
+                        let isSlider = (type & 2) !== 0;
+                        let isSpinner = (type & 8) !== 0;
+                        let endTime = parseInt(parts[2]);
+
+                        if (isSlider && parts.length >= 8) {
+                            if (parts[5] && parts[5].includes(':')) {
+                                endTime = parseInt(parts[5].split(':')[0]);
+                            }
+                        } else if (isSpinner && parts.length >= 6) {
+                            endTime = parseInt(parts[5]);
+                        }
+
+                        hitObjects.push({
+                            x: parseInt(parts[0]),
+                            y: parseInt(parts[1]),
+                            time: parseInt(parts[2]),
+                            endTime: endTime,
+                            isSlider: isSlider,
+                            isSpinner: isSpinner,
+                            hit: false
+                        });
+                    }
+                }
+            }
+            return hitObjects;
+        }
+
+        function actualizarModoInterfaz(modo) {
+            const optsMania = document.getElementById('opts-mania');
+            const optsCatch = document.getElementById('opts-catch');
+            const dropIcon = document.getElementById('drop-icon');
+
+            if (modo === 'catch') {
+                optsMania.style.display = 'none';
+                optsCatch.style.display = 'block';
+                dropIcon.textContent = '🟩';
+            } else {
+                optsMania.style.display = 'block';
+                optsCatch.style.display = 'none';
+                dropIcon.textContent = '🎵';
+            }
+        }
+
+        function cambiarBgDim(val) {
+            document.getElementById('dim-val').textContent = val + '%';
+            const opacity = (100 - val) / 100;
+            document.getElementById('bg-video').style.opacity = opacity;
+            document.getElementById('bg-image').style.opacity = opacity;
+        }
+
+        let speed = 6;
+        function ajustarSpeed(delta) {
+            speed = Math.max(1, Math.min(20, speed + delta));
+            document.getElementById('speed-val').textContent = speed;
+        }
+
+        function iniciarJuego() {
+            if (!mapDataActual || mapDataActual.length === 0) {
+                alert("Selecciona un archivo .osz válido primero.");
+                return;
+            }
+
+            document.getElementById('main-ui').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            isPaused = false;
+            
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            window.onresize = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+
+            const modo = document.getElementById('mode-select').value;
+            const skinStyle = document.getElementById('skin-style').value;
+
+            mapDataActual.forEach(obj => obj.hit = false);
+
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+
+            const videoElement = document.getElementById('bg-video');
+            if (isVideoLoaded) {
+                videoElement.currentTime = 0;
+                videoElement.play();
+            }
+
+            let kpsHits = [];
+            let combo = 0;
+            let score = 0;
+            let hp = 100;
+            let totalHits = 0;
+            let accuracyPoints = 0;
+            let activeJudgements = [];
+            
+            let catcherX = canvas.width / 2;
+            let catcherSpeed = 16;
+            let keysPressed = {};
+
+            const maniaColumnWidth = 105; 
+            const maniaTotalWidth = maniaColumnWidth * 4;
+            const hitPosOffsetFromBottom = 120;
+
+            const laneKeys = ['KeyA', 'KeyS', 'KeyK', 'KeyL'];
+            const lanePressed = [false, false, false, false];
+
+            window.onkeydown = (e) => {
+                if (e.code === 'Escape') {
+                    togglePausa();
+                    return;
+                }
+                if (isPaused) return;
+
+                keysPressed[e.code] = true;
+
+                if (modo === 'mania') {
+                    const laneIndex = laneKeys.indexOf(e.code);
+                    if (laneIndex !== -1 && !lanePressed[laneIndex]) {
+                        lanePressed[laneIndex] = true;
+                        kpsHits.push(performance.now());
+                        evaluarHitMania(laneIndex, canvas.height - hitPosOffsetFromBottom);
+                    }
+                }
+            };
+
+            window.onkeyup = (e) => {
+                if (isPaused) return;
+                keysPressed[e.code] = false;
+                if (modo === 'mania') {
+                    const laneIndex = laneKeys.indexOf(e.code);
+                    if (laneIndex !== -1) {
+                        lanePressed[laneIndex] = false;
+                    }
+                }
+            };
+
+            function togglePausa() {
+                isPaused = !isPaused;
+                const pauseMenu = document.getElementById('pause-menu');
+                if (isPaused) {
+                    audioPlayer.pause();
+                    if (isVideoLoaded) videoElement.pause();
+                    pauseMenu.style.display = 'flex';
+                } else {
+                    pauseMenu.style.display = 'none';
+                    audioPlayer.play();
+                    if (isVideoLoaded) videoElement.play();
+                    gameLoopReq = requestAnimationFrame(render);
+                }
+            }
+
+            window.reanudarJuego = () => {
+                togglePausa();
+            };
+
+            window.reiniciarPartida = () => {
+                document.getElementById('pause-menu').style.display = 'none';
+                iniciarJuego();
+            };
+
+            function evaluarHitMania(lane, hitPos) {
+                const songTime = audioPlayer.currentTime * 1000;
+
+                for (let note of mapDataActual) {
+                    const rawLane = Math.floor(note.x / (512 / 4));
+                    const noteLane = Math.min(3, Math.max(0, rawLane));
+
+                    if (noteLane === lane && !note.hit) {
+                        const diff = Math.abs(note.time - songTime);
+                        if (diff < 300) {
+                            note.hit = true;
+                            if (diff < 50) registrarJudgement('300 MAX', '#00ffff', 300, 300);
+                            else if (diff < 100) registrarJudgement('300', '#ffcc00', 300, 300);
+                            else if (diff < 160) registrarJudgement('200', '#00ff00', 200, 200);
+                            else if (diff < 220) registrarJudgement('100', '#ff9900', 100, 100);
+                            else registrarJudgement('50', '#888888', 50, 50);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            function registrarJudgement(text, color, pts, accPts) {
+                totalHits++;
+                accuracyPoints += accPts;
+
+                if (pts > 0) {
+                    combo++;
+                    score += pts * combo;
+                    hp = Math.min(100, hp + 2);
+                } else {
+                    combo = 0;
+                    hp = Math.max(0, hp - 8);
+                }
+                activeJudgements.push({ text: text, color: color, startTime: performance.now() });
+            }
+
+            window.salirDelJuego = () => {
+                document.getElementById('pause-menu').style.display = 'none';
+                audioPlayer.pause();
+                if (isVideoLoaded) videoElement.pause();
+                document.getElementById('game-screen').style.display = 'none';
+                document.getElementById('main-ui').style.display = 'block';
+                cancelAnimationFrame(gameLoopReq);
+            };
+
+            function finalizarPartida() {
+                cancelAnimationFrame(gameLoopReq);
+                audioPlayer.pause();
+                if (isVideoLoaded) {
+                    document.getElementById('bg-video').pause();
+                }
+                alert("¡Canción terminada!");
+                salirDelJuego();
+            }
+
+            function render() {
+                if (isPaused) return;
+
+                const now = performance.now();
+                const songTime = audioPlayer.currentTime * 1000;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (modo === 'mania') {
+                    const trackWidth = maniaTotalWidth;
+                    const laneWidth = maniaColumnWidth;
+                    const trackX = (canvas.width - trackWidth) / 2;
+                    const hitPos = canvas.height - hitPosOffsetFromBottom;
+
+                    ctx.fillStyle = "rgba(12, 12, 18, 0.92)";
+                    ctx.fillRect(trackX, 0, trackWidth, canvas.height);
+                    
+                    ctx.strokeStyle = "rgba(255, 102, 170, 0.4)";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(trackX, 0, trackWidth, canvas.height);
+
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+                    for (let i = 1; i < 4; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(trackX + i * laneWidth, 0);
+                        ctx.lineTo(trackX + i * laneWidth, canvas.height);
+                        ctx.stroke();
+                    }
+
+                    for (let i = 0; i < 4; i++) {
+                        const rX = trackX + i * laneWidth + laneWidth / 2;
+                        const rRadius = laneWidth * 0.42;
+
+                        ctx.beginPath();
+                        ctx.arc(rX, hitPos, rRadius, 0, Math.PI * 2);
+                        ctx.lineWidth = 3;
+                        ctx.strokeStyle = lanePressed[i] ? "#ffffff" : "rgba(255, 102, 170, 0.8)";
+                        ctx.fillStyle = lanePressed[i] ? "rgba(255, 102, 170, 0.6)" : "rgba(0, 0, 0, 0.4)";
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+
+                    for (let note of mapDataActual) {
+                        const rawLane = Math.floor(note.x / (512 / 4));
+                        const lane = Math.min(3, Math.max(0, rawLane));
+                        
+                        let noteY;
+                        const timeDiff = note.time - songTime;
+                        const pixelsPerMs = speed * 0.12; 
+
+                        noteY = hitPos - (timeDiff * pixelsPerMs);
+
+                        let missedCondition = (noteY > canvas.height + 50 && !note.hit);
+
+                        if (missedCondition) {
+                            note.hit = true;
+                            registrarJudgement('MISS', '#ff3333', 0, 0);
+                        }
+
+                        if (!note.hit && noteY > -200 && noteY < canvas.height + 200) {
+                            const nX = trackX + lane * laneWidth + laneWidth / 2;
+
+                            if (skinStyle === 'circles') {
+                                const radius = laneWidth * 0.42;
+                                ctx.beginPath();
+                                ctx.arc(nX, noteY, radius, 0, Math.PI * 2);
+                                ctx.fillStyle = (lane === 1 || lane === 2) ? "#00ccff" : "#ff3388";
+                                ctx.fill();
+                                ctx.lineWidth = 3;
+                                ctx.strokeStyle = "#ffffff";
+                                ctx.stroke();
+                            } else {
+                                ctx.fillStyle = (lane === 1 || lane === 2) ? "#66ccff" : "#ff66aa";
+                                ctx.fillRect(trackX + lane * laneWidth + 6, noteY - 12, laneWidth - 12, 24);
+                                ctx.strokeStyle = "#ffffff";
+                                ctx.strokeRect(trackX + lane * laneWidth + 6, noteY - 12, laneWidth - 12, 24);
+                            }
+                        }
+                    }
+
+                    let isInBreak = false;
+                    for (let b of breakPeriods) {
+                        if (songTime >= b.start && songTime <= b.end) {
+                            isInBreak = true;
+                            break;
+                        }
+                    }
+
+                    if (isInBreak) {
+                        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+                        ctx.fillRect(0, canvas.height / 2 - 40, canvas.width, 80);
+                        
+                        ctx.fillStyle = "#ffffff";
+                        ctx.font = "900 28px 'Exo 2', sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.shadowColor = "#ff66aa";
+                        ctx.shadowBlur = 10;
+                        ctx.fillText("☕ REST (BREAK)", canvas.width / 2, canvas.height / 2 + 10);
+                        ctx.shadowBlur = 0;
+                    }
+
+                    activeJudgements = activeJudgements.filter(j => now - j.startTime < 600);
+                    if (activeJudgements.length > 0) {
+                        const lastJ = activeJudgements[activeJudgements.length - 1];
+                        ctx.fillStyle = lastJ.color;
+                        ctx.font = "900 32px 'Exo 2', sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.shadowColor = lastJ.color;
+                        ctx.shadowBlur = 14;
+                        const judgeY = hitPos - 90;
+                        ctx.fillText(lastJ.text, canvas.width / 2, judgeY);
+                        ctx.shadowBlur = 0;
+                    }
+
+                    kpsHits = kpsHits.filter(t => now - t <= 1000);
+                    ctx.fillStyle = "#ff66aa";
+                    ctx.font = "bold 16px Comfortaa";
+                    ctx.textAlign = "left";
+                    ctx.fillText(`KPS: ${kpsHits.length}`, trackX + trackWidth + 25, 120);
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "900 32px 'Exo 2', sans-serif";
+                    ctx.textAlign = "right";
+                    ctx.fillText(String(score).padStart(8, '0'), canvas.width - 40, 50);
+
+                    const acc = totalHits > 0 ? ((accuracyPoints / (totalHits * 300)) * 100).toFixed(2) : "100.00";
+                    ctx.fillStyle = "#ff66aa";
+                    ctx.font = "bold 18px 'Exo 2'";
+                    ctx.fillText(`${acc}%`, canvas.width - 40, 80);
+
+                    if (combo > 0) {
+                        ctx.fillStyle = "#ff66aa";
+                        ctx.font = "900 40px 'Exo 2', sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.fillText(`${combo}x`, canvas.width / 2, hitPos + 80);
+                    }
+
+                } else {
+                    const fieldWidth = 512;
+                    const fieldX = (canvas.width - fieldWidth) / 2;
+                    const catcherY = canvas.height - 120;
+
+                    ctx.fillStyle = "rgba(12, 12, 18, 0.85)";
+                    ctx.fillRect(fieldX, 0, fieldWidth, canvas.height);
+                    ctx.strokeStyle = "rgba(255, 102, 170, 0.4)";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(fieldX, 0, fieldWidth, canvas.height);
+
+                    let moveSpeed = (keysPressed['ShiftLeft'] || keysPressed['ShiftRight']) ? catcherSpeed * 2.0 : catcherSpeed;
+                    if (keysPressed['ArrowLeft'] || keysPressed['KeyA']) catcherX -= moveSpeed;
+                    if (keysPressed['ArrowRight'] || keysPressed['KeyD']) catcherX += moveSpeed;
+                    
+                    catcherX = Math.max(fieldX + 40, Math.min(fieldX + fieldWidth - 40, catcherX));
+
+                    ctx.fillStyle = "#ff66aa";
+                    ctx.fillRect(catcherX - 45, catcherY, 90, 16);
+                    ctx.fillStyle = "#00ffff";
+                    ctx.fillRect(catcherX - 15, catcherY + 14, 30, 8);
+
+                    for (let note of mapDataActual) {
+                        const timeDiff = note.time - songTime;
+                        const pixelsPerMs = speed * 0.035; 
+                        const noteY = catcherY - (timeDiff * pixelsPerMs);
+
+                        let missedCondition = (noteY > catcherY + 30 && !note.hit);
+                        if (missedCondition) {
+                            note.hit = true;
+                            combo = 0;
+                            hp = Math.max(0, hp - 5);
+                            totalHits++;
+                        }
+
+                        if (!note.hit && noteY >= catcherY - 10 && noteY <= catcherY + 20) {
+                            const noteScreenX = fieldX + (note.x / 512) * fieldWidth;
+                            if (Math.abs(noteScreenX - catcherX) < 55) {
+                                note.hit = true;
+                                combo++;
+                                score += 300 * combo;
+                                accuracyPoints += 300;
+                                totalHits++;
+                            }
+                        }
+
+                        if (!note.hit && noteY > -50 && noteY < canvas.height + 50) {
+                            const noteScreenX = fieldX + (note.x / 512) * fieldWidth;
+                            ctx.beginPath();
+                            ctx.arc(noteScreenX, noteY, 12, 0, Math.PI * 2);
+                            ctx.fillStyle = "#ff3388";
+                            ctx.fill();
+                            ctx.lineWidth = 2;
+                            ctx.strokeStyle = "#ffffff";
+                            ctx.stroke();
+                        }
+                    }
+
+                    let isInBreak = false;
+                    for (let b of breakPeriods) {
+                        if (songTime >= b.start && songTime <= b.end) {
+                            isInBreak = true;
+                            break;
+                        }
+                    }
+
+                    if (isInBreak) {
+                        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+                        ctx.fillRect(0, canvas.height / 2 - 40, canvas.width, 80);
+                        
+                        ctx.fillStyle = "#ffffff";
+                        ctx.font = "900 28px 'Exo 2', sans-serif";
+                        ctx.textAlign = "center";
+                        ctx.shadowColor = "#ff66aa";
+                        ctx.shadowBlur = 10;
+                        ctx.fillText("☕ REST (BREAK)", canvas.width / 2, canvas.height / 2 + 10);
+                        ctx.shadowBlur = 0;
+                    }
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.font = "900 32px 'Exo 2', sans-serif";
+                    ctx.textAlign = "right";
+                    ctx.fillText(String(score).padStart(8, '0'), canvas.width - 60, 60);
+
+                    const acc = totalHits > 0 ? ((accuracyPoints / (totalHits * 300)) * 100).toFixed(2) : "100.00";
+                    ctx.fillStyle = "#ff66aa";
+                    ctx.font = "bold 18px 'Exo 2'";
+                    ctx.fillText(`${acc}%`, canvas.width - 60, 90);
+
+                    ctx.fillStyle = "#ff66aa";
+                    ctx.font = "bold 28px Comfortaa";
+                    ctx.textAlign = "left";
+                    ctx.fillText(`${combo}x`, 60, canvas.height - 80);
+                }
+
+                gameLoopReq = requestAnimationFrame(render);
+            }
+
+            gameLoopReq = requestAnimationFrame(render);
+        }
+    </script>
+</body>
+</html>
